@@ -1,0 +1,45 @@
+/* background */
+.bg-white {
+  background-color: white;
+}
+
+.bg-purple {
+  background-color: #aca0eb;
+}
+
+.bg-btn-disabled {
+  background-color: #aca0eb;
+}
+
+.bg-btn-enabled {
+  background-color: #7f6aee;
+}
+
+.bg-gray {
+  background-color: #d9d9d9;
+}
+
+.bg-black {
+  background-color: black;
+}
+
+.bg-black-alpha-half {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* text */
+.text-red {
+  color: #ff0000;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-black {
+  color: black;
+}
+
+.text-gray {
+  color: #838486;
+}
