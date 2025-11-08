@@ -8,6 +8,15 @@ body {
   overflow: hidden;
 }
 
+.container {
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .hidden {
   display: none !important;
 }

@@ -1,10 +1,3 @@
-.container-board {
-  width: 500px;
-  max-width: 90%;
-  margin-top: 30px;
-  text-align: center;
-}
-
 .greeting {
   line-height: 0.8;
   font-size: 20px;
