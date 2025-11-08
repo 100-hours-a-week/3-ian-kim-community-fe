@@ -2,6 +2,7 @@ import { MESSAGES } from "../../../common/constants.js";
 import Header from "../../../components/header/Header.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 import {
+  addUploadProfileImageEvent,
   addValidationEvents,
   checkAllInputValid,
   isButtonEnabled,
@@ -85,23 +86,13 @@ export default class Register {
     });
 
     // 이미지 업로드
-    this.#profilePreview.addEventListener("click", () =>
-      this.#inputs.image.click()
+    addUploadProfileImageEvent(
+      this.#inputs,
+      this.#helperTexts,
+      this.#profilePreview,
+      this.#profileImage,
+      this.#registerBtn
     );
-
-    this.#inputs.image.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.#profileImage.src = reader.result;
-        this.#profileImage.classList.remove("hidden");
-        this.#helperTexts.image.textContent = "";
-        checkAllInputValid(this.#inputs, this.#helperTexts, this.#registerBtn);
-      };
-      reader.readAsDataURL(file);
-    });
 
     // 회원가입 API 요청
     this.#registerBtn.addEventListener("click", () => {

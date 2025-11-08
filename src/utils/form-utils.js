@@ -42,3 +42,27 @@ export const setInputElemets = (inputs, helperTexts, VALIDATORS) => {
     helperTexts[key] = document.querySelector(`.helper-text-${key}`);
   });
 };
+
+export const addUploadProfileImageEvent = (
+  inputs,
+  helperTexts,
+  profilePreview,
+  profileImage,
+  button
+) => {
+  profilePreview.addEventListener("click", () => inputs.image.click());
+
+  inputs.image.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      profileImage.src = reader.result;
+      profileImage.classList.remove("hidden");
+      helperTexts.image.textContent = "";
+      checkAllInputValid(inputs, helperTexts, button);
+    };
+    reader.readAsDataURL(file);
+  });
+};
