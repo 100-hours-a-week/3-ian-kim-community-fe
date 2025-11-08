@@ -1,20 +1,13 @@
 import { formatCompactNumber } from "../../../utils/fomat-utils.js";
 
 export default class PostCard {
-  #target;
   #post;
 
-  constructor({ target, post }) {
-    this.#target = target;
+  constructor({ post }) {
     this.#post = post;
-    this.#render();
   }
 
-  #render() {
-    this.#target.insertAdjacentHTML("beforeend", this.#template());
-  }
-
-  #template() {
+  template() {
     return /*html*/ `
       <article class="post-card" data-post-id=${this.#post.postId}>
         <h3 class="post-title">${this.#post.title.slice(0, 26)}</h3>
