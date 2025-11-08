@@ -19,7 +19,10 @@ export default class PostList {
     this.#posts = dummyPosts;
 
     this.#posts.forEach((post) => {
-      new PostCard({ target: this.#target, post });
+      this.#target.insertAdjacentHTML(
+        "beforeend",
+        new PostCard({ post }).template()
+      );
     });
 
     this.#setElements();
