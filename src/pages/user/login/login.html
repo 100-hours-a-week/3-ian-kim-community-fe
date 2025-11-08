@@ -3,12 +3,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/index.css" />
+    <link rel="stylesheet" href="/src/styles/color.css" />
     <link rel="stylesheet" href="/src/styles/header.css" />
+    <link rel="stylesheet" href="/src/styles/helper-text.css" />
+    <link rel="stylesheet" href="/src/styles/user-form-input.css" />
     <link rel="stylesheet" href="/src/pages/user/login/login.css" />
     <title>로그인 - 아무 말 대잔치</title>
   </head>
   <body>
     <header class="header"></header>
+
+    <main class="user-form-container">
+      <h1>로그인</h1>
+
+      <form class="user-form">
+        <div class="user-form-input-group login-form-input-group">
+          <label for="email">이메일</label>
+          <input
+            type="text"
+            id="email"
+            class="input-email"
+            placeholder="이메일을 입력하세요." />
+        </div>
+
+        <div class="user-form-input-group login-form-input-group">
+          <label for="password">비밀번호</label>
+          <input
+            type="password"
+            id="password"
+            class="input-password"
+            autocomplete="off"
+            placeholder="비밀번호를 입력하세요." />
+        </div>
+
+        <p class="helper-text text-red"></p>
+
+        <button
+          type="button"
+          class="btn-login user-form-button bg-btn-disabled text-white">
+          로그인
+        </button>
+      </form>
+
+      <a href="#" class="link-register user-form-link text-black">회원가입</a>
+    </main>
 
     <script type="module" src="/src/pages/user/login/login.js"></script>
   </body>
