@@ -1,7 +1,25 @@
-export const emailValidator = (email) => {
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PASSWORD_PATTERN =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
-  if (!emailPattern.test(email.trim())) {
+const isEmpty = (value) => {
+  return !value.trim();
+};
+
+const isNotMatch = (pattern, value) => {
+  return !pattern.test(value);
+};
+
+const hasWhitespace = (value) => {
+  return value.includes(" ");
+};
+
+const isOverSize = (value, maxLen) => {
+  return value.length > maxLen;
+};
+
+export const emailValidator = (email) => {
+  if (isNotMatch(EMAIL_PATTERN, email)) {
     return "*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)";
   }
 
@@ -9,26 +27,23 @@ export const emailValidator = (email) => {
 };
 
 export const passwordValidator = (password) => {
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
-
-  if (!password.trim()) {
+  if (isEmpty(password)) {
     return "*비밀번호를 입력해주세요.";
   }
 
-  if (!passwordRegex.test(password)) {
+  if (isNotMatch(PASSWORD_PATTERN, password)) {
     return "*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.";
   }
 
   return "";
 };
 
-export const passwordCheckValidator = (password, passwordCheck) => {
-  if (!passwordCheck.trim()) {
+export const passwordConfirmValidator = (password, confirm) => {
+  if (isEmpty(confirm)) {
     return "*비밀번호를 한번 더 입력해주세요.";
   }
 
-  if (password !== passwordCheck) {
+  if (password !== confirm) {
     return "*비밀번호가 다릅니다.";
   }
 
@@ -36,17 +51,21 @@ export const passwordCheckValidator = (password, passwordCheck) => {
 };
 
 export const nicknameValidator = (nickname) => {
-  if (!nickname.trim()) {
+  if (isEmpty(nickname)) {
     return "*닉네임을 입력해주세요.";
   }
 
-  if (nickname.includes(" ")) {
+  if (hasWhitespace(nickname)) {
     return "*띄어쓰기를 없애주세요.";
   }
 
-  if (nickname.length > 10) {
+  if (isOverSize(nickname, 10)) {
     return "*닉네임은 최대 10자까지 작성 가능합니다.";
   }
 
   return "";
+};
+
+export const profileImageValidator = (image) => {
+  return image ? "" : "*프로필 사진을 추가해주세요.";
 };

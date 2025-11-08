@@ -1,21 +1,27 @@
+import { MESSAGES } from "../../../common/constants.js";
 import Header from "../../../components/header/Header.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
-import { enableButton, disableButton } from "../../../utils/button-utils.js";
+import {
+  addValidationEvents,
+  isButtonEnabled,
+  setInputElemets,
+} from "../../../utils/form-utils.js";
 import {
   emailValidator,
   passwordValidator,
 } from "../../../utils/validation-utils.js";
 
 export default class Login {
-  #INPUT_KEYS = { email, password };
+  #VALIDATORS = {
+    email: emailValidator,
+    password: passwordValidator,
+  };
   #inputs = {};
+  #helperTexts = {};
   #loginBtn;
   #registerLink;
-  #helperText;
-  #isBtnEnabled;
 
   constructor() {
-    this.#isBtnEnabled = false;
     this.#render();
   }
 
@@ -26,24 +32,23 @@ export default class Login {
   }
 
   #selectElements() {
-    Object.keys(this.#INPUT_KEYS).forEach(
-      (key) => (this.#inputs[key] = document.querySelector(`.input-${key}`))
-    );
-
+    setInputElemets(this.#inputs, this.#helperTexts, this.#VALIDATORS);
     this.#loginBtn = document.querySelector(".btn-login");
     this.#registerLink = document.querySelector(".link-register");
-    this.#helperText = document.querySelector(".helper-text");
   }
 
   #addEvents() {
-    Object.values(this.#inputs).forEach((input) => {
-      input.addEventListener("blur", () => {
-        this.#validateInput();
-      });
-    });
+    // 입력값 검증
+    addValidationEvents(
+      this.#inputs,
+      this.#helperTexts,
+      this.#loginBtn,
+      this.#VALIDATORS
+    );
 
+    // 로그인 API 요청
     this.#loginBtn.addEventListener("click", () => {
-      if (!this.#isBtnEnabled) {
+      if (!isButtonEnabled(this.#loginBtn)) {
         return;
       }
 
@@ -51,23 +56,17 @@ export default class Login {
       const isLoginSuccess = false;
 
       if (isLoginSuccess) {
+        alert("로그인에 성공했습니다.");
         navigateTo(ROUTES.POST_LIST);
       }
+
+      this.#helperTexts.email.textContent = MESSAGES.wrongEmailOrPassword;
     });
 
+    // 페이지 이동
     this.#registerLink.addEventListener("click", () => {
       navigateTo(ROUTES.REGISTER);
     });
-  }
-
-  #validateInput() {
-    const hasError =
-      emailValidator(this.#inputs.email.value) ||
-      passwordValidator(this.#inputs.password.value);
-
-    this.#isBtnEnabled = !hasError;
-    this.#helperText.textContent = hasError || "";
-    hasError ? disableButton(this.#loginBtn) : enableButton(this.#loginBtn);
   }
 }
 

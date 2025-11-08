@@ -3,12 +3,98 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/index.css" />
+    <link rel="stylesheet" href="/src/styles/color.css" />
     <link rel="stylesheet" href="/src/styles/header.css" />
+    <link rel="stylesheet" href="/src/styles/helper-text.css" />
+    <link rel="stylesheet" href="/src/styles/user-form-input.css" />
     <link rel="stylesheet" href="/src/pages/user/register/register.css" />
     <title>회원가입 - 아무 말 대잔치</title>
   </head>
   <body>
     <header class="header"></header>
+
+    <main class="user-form-container">
+      <h1>회원가입</h1>
+
+      <form class="user-form">
+        <div class="user-form-input-group register-form-input-group">
+          <label for="image" class="label">프로필 사진 *</label>
+
+          <p class="helper-text helper-text-image text-red">
+            *프로필 사진을 추가해주세요.
+          </p>
+
+          <div class="profile-preview bg-gray">
+            <span class="plus-icon">+</span>
+            <img class="profile-image hidden" />
+          </div>
+          <input
+            type="file"
+            id="image"
+            class="input-image hidden"
+            accept="image/*"
+            autocomplete="off" />
+        </div>
+
+        <div class="user-form-input-group register-form-input-group">
+          <label for="email" class="label">이메일 *</label>
+          <input
+            type="email"
+            id="email"
+            class="input-email"
+            autocomplete="off"
+            placeholder="이메일을 입력하세요." />
+
+          <p class="helper-text helper-text-email text-red"></p>
+        </div>
+
+        <div class="user-form-input-group register-form-input-group">
+          <label for="password" class="label">비밀번호 *</label>
+          <input
+            type="password"
+            id="password"
+            class="input-password"
+            autocomplete="off"
+            placeholder="비밀번호를 입력하세요." />
+
+          <p class="helper-text helper-text-password text-red"></p>
+        </div>
+
+        <div class="user-form-input-group register-form-input-group">
+          <label for="confirm" class="label">비밀번호 확인*</label>
+          <input
+            type="password"
+            id="confirm"
+            class="input-confirm"
+            autocomplete="off"
+            placeholder="비밀번호를 한번 더 입력하세요." />
+
+          <p class="helper-text helper-text-confirm text-red"></p>
+        </div>
+
+        <div class="user-form-input-group register-form-input-group">
+          <label for="nickname" class="label">닉네임*</label>
+          <input
+            type="text"
+            id="nickname"
+            class="input-nickname"
+            autocomplete="off"
+            placeholder="닉네임을 입력하세요." />
+
+          <p class="helper-text helper-text-nickname text-red"></p>
+        </div>
+
+        <button
+          type="button"
+          class="btn-register user-form-button bg-btn-disabled text-white">
+          회원가입
+        </button>
+      </form>
+
+      <a href="#" class="link-login user-form-link text-black"
+        >로그인하러 가기</a
+      >
+    </main>
 
     <script type="module" src="/src/pages/user/register/register.js"></script>
   </body>

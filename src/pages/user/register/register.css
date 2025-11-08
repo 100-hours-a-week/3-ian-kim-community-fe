@@ -1,0 +1,11 @@
+.register-form-input-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.plus-icon {
+  position: absolute;
+  font-size: 30px;
+}
