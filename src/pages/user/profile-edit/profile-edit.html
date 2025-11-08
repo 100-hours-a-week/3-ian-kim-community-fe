@@ -3,7 +3,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/index.css" />
+    <link rel="stylesheet" href="/src/styles/color.css" />
     <link rel="stylesheet" href="/src/styles/header.css" />
+    <link rel="stylesheet" href="/src/styles/helper-text.css" />
+    <link rel="stylesheet" href="/src/styles/user-form-input.css" />
+    <link rel="stylesheet" href="/src/styles/modal.css" />
     <link
       rel="stylesheet"
       href="/src/pages/user/profile-edit/profile-edit.css" />
@@ -11,6 +15,67 @@
   </head>
   <body>
     <header class="header"></header>
+
+    <main class="user-form-container">
+      <h1>회원정보수정</h1>
+
+      <form class="user-form">
+        <div class="user-form-input-group profile-edit-form-input-group">
+          <label for="image" class="label">프로필 사진 *</label>
+
+          <p class="helper-text helper-text-image text-red"></p>
+
+          <div class="profile-preview bg-gray">
+            <img class="profile-image" />
+            <button
+              type="button"
+              class="btn-edit-image bg-black-alpha-half text-white">
+              변경
+            </button>
+          </div>
+          <input
+            type="file"
+            id="image"
+            class="input-image hidden"
+            accept="image/*"
+            autocomplete="off" />
+        </div>
+
+        <div class="user-form-input-group profile-edit-form-input-group">
+          <span class="label">이메일</span>
+          <p class="email">startupcode@gmail.com</p>
+        </div>
+
+        <div class="user-form-input-group profile-edit-form-input-group">
+          <label for="nickname" class="label">닉네임 *</label>
+          <input
+            type="text"
+            id="nickname"
+            class="input-nickname"
+            value="스타트업코드"
+            placeholder="닉네임을 입력하세요."
+            required />
+
+          <p class="helper-text helper-text-nickname text-red"></p>
+        </div>
+
+        <button
+          type="button"
+          class="btn-edit user-form-button bg-btn-disabled text-white">
+          수정하기
+        </button>
+      </form>
+
+      <button type="button" class="btn-delete-account text-black">
+        회원탈퇴
+      </button>
+
+      <div class="toast-complete bg-purple text-white hidden">수정완료</div>
+    </main>
+
+    <div
+      id="modal-delete-account"
+      class="modal bg-black-alpha-half hidden"></div>
 
     <script
       type="module"
