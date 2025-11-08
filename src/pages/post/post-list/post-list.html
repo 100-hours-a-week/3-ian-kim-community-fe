@@ -3,12 +3,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/index.css" />
+    <link rel="stylesheet" href="/src/styles/color.css" />
     <link rel="stylesheet" href="/src/styles/header.css" />
+    <link rel="stylesheet" href="/src/styles/author.css" />
+    <link rel="stylesheet" href="/src/styles/date.css" />
     <link rel="stylesheet" href="/src/pages/post/post-list/post-list.css" />
+    <link rel="stylesheet" href="/src/pages/post/post-list/post-card.css" />
     <title>게시글 목록 - 아무 말 대잔치</title>
   </head>
   <body>
     <header class="header"></header>
+
+    <main class="container-board">
+      <div class="greeting">
+        <p>안녕하세요,</p>
+        <p>아무 말 대잔치 <strong>게시판</strong>입니다.</p>
+      </div>
+
+      <button class="btn-write bg-purple text-white">게시글 작성</button>
+
+      <section class="post-list"></section>
+    </main>
 
     <script type="module" src="/src/pages/post/post-list/post-list.js"></script>
   </body>
