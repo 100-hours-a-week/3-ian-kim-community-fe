@@ -1,5 +1,6 @@
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
+import Toast from "../../../components/toast/Toast.js";
 import {
   addUploadProfileImageEvent,
   addValidationEvents,
@@ -23,7 +24,7 @@ export default class ProfileEdit {
   #editBtn;
   #deleteAccountBtn;
   #modal;
-  #completeToast;
+  #toast;
 
   constructor() {
     this.#render();
@@ -37,6 +38,7 @@ export default class ProfileEdit {
       id: "modal-delete-account",
       acceptFunc: () => {}, // todo: 회원탈퇴 API 요청
     });
+    this.#toast = new Toast();
     this.#selectElements();
     this.#addEvents();
   }
@@ -48,7 +50,6 @@ export default class ProfileEdit {
     this.#editBtn = document.querySelector(".btn-edit");
     this.#deleteAccountBtn = document.querySelector(".btn-delete-account");
     this.#modal = document.querySelector(".modal");
-    this.#completeToast = document.querySelector(".toast-complete");
   }
 
   #addEvents() {
@@ -88,7 +89,7 @@ export default class ProfileEdit {
       const isEditSuccess = true;
 
       if (isEditSuccess) {
-        this.#showToast();
+        this.#toast.show();
       }
     });
 
@@ -96,14 +97,6 @@ export default class ProfileEdit {
     this.#deleteAccountBtn.addEventListener("click", () => {
       this.#modal.classList.toggle("hidden");
     });
-  }
-
-  #showToast() {
-    this.#completeToast.classList.replace("hidden", "show");
-
-    setTimeout(() => {
-      this.#completeToast.classList.replace("show", "hidden");
-    }, 2000);
   }
 }
 
