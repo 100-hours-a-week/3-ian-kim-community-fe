@@ -1,3 +1,5 @@
+import { navigateTo, ROUTES } from "../../router/router.js";
+
 export default class Header {
   #hasBackBtn;
   #hasProfileIcon;
@@ -5,6 +7,9 @@ export default class Header {
   #headerProfile;
   #dropdownProfile;
   #headerProfileIcon;
+  #editProfileBtn;
+  #resetPasswordBtn;
+  #logoutBtn;
 
   constructor({ hasBackBtn = false, hasProfileIcon = false } = {}) {
     this.#hasBackBtn = hasBackBtn;
@@ -32,6 +37,9 @@ export default class Header {
     this.#headerProfile = document.querySelector(".header-profile");
     this.#dropdownProfile = document.querySelector(".dropdown-profile");
     this.#headerProfileIcon = document.querySelector(".header-profile-icon");
+    this.#editProfileBtn = document.querySelector(".btn-to-profile-edit");
+    this.#resetPasswordBtn = document.querySelector(".btn-to-password-reset");
+    this.#logoutBtn = document.querySelector(".btn-logout");
   }
 
   #addEvents() {
@@ -48,6 +56,20 @@ export default class Header {
       if (!this.#dropdownProfile.classList.contains("hidden")) {
         this.#dropdownProfile.classList.add("hidden");
       }
+    });
+
+    this.#editProfileBtn.addEventListener("click", () => {
+      navigateTo(ROUTES.PROFILE_EDIT);
+    });
+
+    this.#resetPasswordBtn.addEventListener("click", () => {
+      navigateTo(ROUTES.PASSWORD_RESET);
+    });
+
+    this.#logoutBtn.addEventListener("click", () => {
+      // todo: 로그아웃 API 요청
+      alert("로그아웃 되었습니다.");
+      navigateTo(ROUTES.LOGIN);
     });
   }
 
