@@ -1,0 +1,17 @@
+.author-profile {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.author-profile-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.author-name {
+  font-size: 13px;
+}

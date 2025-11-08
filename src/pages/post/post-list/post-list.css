@@ -1,0 +1,41 @@
+.container-board {
+  width: 500px;
+  max-width: 90%;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.greeting {
+  line-height: 0.8;
+  font-size: 20px;
+}
+
+.btn-write {
+  display: block;
+  margin-left: auto;
+  width: 100px;
+  border: none;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.btn-write:hover {
+  background-color: #7f6aee;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.post-list::-webkit-scrollbar {
+  display: none;
+}
