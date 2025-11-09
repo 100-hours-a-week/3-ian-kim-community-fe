@@ -1,6 +1,7 @@
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
 import Toast from "../../../components/toast/Toast.js";
+import { navigateTo, ROUTES } from "../../../router/router.js";
 import {
   addUploadProfileImageEvent,
   addValidationEvents,
@@ -19,6 +20,7 @@ export default class ProfileEdit {
   };
   #inputs = {};
   #helperTexts = {};
+  #targetModal;
   #profilePreview;
   #profileImage;
   #editBtn;
@@ -27,17 +29,24 @@ export default class ProfileEdit {
   #toast;
 
   constructor() {
+    this.#targetModal = document.querySelector("#modal-account-delete");
     this.#render();
   }
 
   #render() {
     new Header({ hasBackBtn: true, hasProfileIcon: true });
-    new Modal({
+    const modal = new Modal({
       title: "회원탈퇴 하시겠습니까?",
       content: "작성한 게시글과 댓글은 삭제됩니다.",
-      id: "modal-delete-account",
-      acceptFunc: () => {}, // todo: 회원탈퇴 API 요청
+      id: "modal-account-delete",
+      acceptFunc: () => {
+        // todo: 회원탈퇴 API 요청
+        alert("회원탈퇴가 완료되었습니다.");
+        navigateTo(ROUTES.LOGIN);
+      },
     });
+    this.#targetModal.innerHTML = modal.template();
+    modal.render();
     this.#toast = new Toast();
     this.#selectElements();
     this.#addEvents();
@@ -48,7 +57,7 @@ export default class ProfileEdit {
     this.#profilePreview = document.querySelector(".profile-preview");
     this.#profileImage = document.querySelector(".profile-image");
     this.#editBtn = document.querySelector(".btn-edit");
-    this.#deleteAccountBtn = document.querySelector(".btn-delete-account");
+    this.#deleteAccountBtn = document.querySelector(".btn-account-delete");
     this.#modal = document.querySelector(".modal");
   }
 
@@ -93,7 +102,6 @@ export default class ProfileEdit {
       }
     });
 
-    // 회원탈퇴 API 요청
     this.#deleteAccountBtn.addEventListener("click", () => {
       this.#modal.classList.toggle("hidden");
     });

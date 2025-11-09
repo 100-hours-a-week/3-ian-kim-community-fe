@@ -3,31 +3,37 @@ export default class Modal {
   #content;
   #target;
   #acceptFunc;
+  #cancelBtn;
+  #acceptBtn;
 
   constructor({ title, content, id, acceptFunc }) {
     this.#title = title;
     this.#content = content;
     this.#target = document.querySelector(`#${id}`);
-    this.acceptFunc = acceptFunc;
-    this.#render();
+    this.#acceptFunc = acceptFunc;
   }
 
-  #render() {
-    this.#target.innerHTML = this.#template();
+  render() {
+    this.#setElements();
     this.#addEvents();
   }
 
+  #setElements() {
+    this.#cancelBtn = document.querySelector(".btn-cancel");
+    this.#acceptBtn = document.querySelector(".btn-accept");
+  }
+
   #addEvents() {
-    document.querySelector(".btn-cancel").addEventListener("click", () => {
+    this.#cancelBtn.addEventListener("click", () => {
       this.#target.classList.toggle("hidden");
     });
 
-    document.querySelector(".btn-accept").addEventListener("click", () => {
+    this.#acceptBtn.addEventListener("click", () => {
       this.#acceptFunc();
     });
   }
 
-  #template() {
+  template() {
     return /*html*/ `
       <div class="modal-content bg-white">
         <h3 class="modal-title">${this.#title}</h3>
