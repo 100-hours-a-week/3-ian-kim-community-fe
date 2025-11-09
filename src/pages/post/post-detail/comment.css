@@ -1,0 +1,49 @@
+.comment-section {
+  padding: 10px 0;
+}
+
+.input-comment {
+  width: 100%;
+  height: 100px;
+  border-radius: 16px;
+  padding: 20px;
+  resize: none;
+}
+
+.btn-create-box {
+  margin: 10px 0;
+  text-align: right;
+}
+
+.btn-create {
+  border: none;
+  border-radius: 16px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.comment-item {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.comment-content {
+  font-size: 13px;
+  margin-left: 40px;
+}
