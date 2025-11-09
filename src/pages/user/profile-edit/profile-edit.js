@@ -1,11 +1,19 @@
+import { isSuccess, parseData } from "../../../api/base-api.js";
+import {
+  editAccount,
+  myPage,
+  nicknameValidation,
+} from "../../../api/user-api.js";
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
 import Toast from "../../../components/toast/Toast.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
+import { validateAuth } from "../../../store/auth-store.js";
 import {
   addUploadProfileImageEvent,
   addValidationEvents,
   isButtonEnabled,
+  parseInputValues,
   setInputElemets,
 } from "../../../utils/form-utils.js";
 import {
@@ -16,7 +24,7 @@ import {
 export default class ProfileEdit {
   #VALIDATORS = {
     nickname: nicknameValidator,
-    image: profileImageValidator,
+    // image: profileImageValidator,
   };
   #inputs = {};
   #helperTexts = {};
@@ -29,24 +37,31 @@ export default class ProfileEdit {
   #toast;
 
   constructor() {
+    validateAuth();
     this.#targetModal = document.querySelector("#modal-account-delete");
     this.#render();
   }
 
   #render() {
     new Header({ hasBackBtn: true, hasProfileIcon: true });
-    const modal = new Modal({
+
+    new Modal(this.#targetModal, {
       title: "회원탈퇴 하시겠습니까?",
       content: "작성한 게시글과 댓글은 삭제됩니다.",
-      id: "modal-account-delete",
-      acceptFunc: () => {
+      onAccept: () => {
         // todo: 회원탈퇴 API 요청
         alert("회원탈퇴가 완료되었습니다.");
         navigateTo(ROUTES.LOGIN);
       },
     });
-    this.#targetModal.innerHTML = modal.template();
-    modal.render();
+
+    window.addEventListener("load", async () => {
+      const response = await myPage();
+      const user = await parseData(response);
+      this.#inputs.nickname.value = user.nickname;
+      document.querySelector(".email").textContent = user.email;
+    });
+
     this.#toast = new Toast();
     this.#selectElements();
     this.#addEvents();
@@ -70,34 +85,39 @@ export default class ProfileEdit {
       this.#VALIDATORS
     );
 
-    this.#inputs.nickname.addEventListener("blur", (e) => {
-      // todo: 닉네임 중복 검사 API 요청
-      const isNicknameAvailable = true;
+    this.#inputs.nickname.addEventListener("blur", async (e) => {
+      const nickname = e.target.value;
 
-      if (!isNicknameAvailable) {
+      if (nicknameValidator(nickname)) {
+        return;
+      }
+
+      const response = await nicknameValidation({ nickname });
+      const data = await parseData(response);
+
+      if (isSuccess(response) && !data.available) {
         this.#helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
       }
     });
 
-    // 이미지 업로드
-    addUploadProfileImageEvent(
-      this.#inputs,
-      this.#helperTexts,
-      this.#profilePreview,
-      this.#profileImage,
-      this.#editBtn
-    );
+    // // todo: 이미지 업로드
+    // addUploadProfileImageEvent(
+    //   this.#inputs,
+    //   this.#helperTexts,
+    //   this.#profilePreview,
+    //   this.#profileImage,
+    //   this.#editBtn
+    // );
 
     // 회원정보 수정 API 요청
-    this.#editBtn.addEventListener("click", () => {
+    this.#editBtn.addEventListener("click", async () => {
       if (!isButtonEnabled(this.#editBtn)) {
         return;
       }
 
-      // todo: 회원정보 수정 API 요청
-      const isEditSuccess = true;
+      const response = await editAccount(parseInputValues(this.#inputs));
 
-      if (isEditSuccess) {
+      if (isSuccess(response)) {
         this.#toast.show();
       }
     });

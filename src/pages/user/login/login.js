@@ -7,6 +7,7 @@ import { Auth } from "../../../store/auth-store.js";
 import {
   addValidationEvents,
   isButtonEnabled,
+  parseInputValues,
   setInputElemets,
 } from "../../../utils/form-utils.js";
 import {
@@ -55,11 +56,7 @@ export default class Login {
         return;
       }
 
-      const request = Object.fromEntries(
-        Object.entries(this.#inputs).map(([key, input]) => [key, input.value])
-      );
-
-      const response = await login(request);
+      const response = await login(parseInputValues(this.#inputs));
 
       if (isSuccess(response)) {
         alert("로그인에 성공했습니다.");
