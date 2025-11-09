@@ -1,7 +1,7 @@
 const LOCAL_SERVER_URL = "http://localhost:8080";
 
-const getFullApiUrl = (TYPE) => {
-  return LOCAL_SERVER_URL + TYPE.path;
+const getFullApiUrl = (path) => {
+  return LOCAL_SERVER_URL + path;
 };
 
 export const isSuccess = (response) => {
@@ -13,19 +13,36 @@ export const parseData = async (response) => {
   return json.data;
 };
 
-export const get = (TYPE, queryParams) => {
-  let url = getFullApiUrl(TYPE);
-  if (queryParams) {
-    url += queryParams;
+export const get = (path, params) => {
+  let url = getFullApiUrl(path);
+  if (params) {
+    url += params;
   }
-  return fetch(url, { method: TYPE.method, credentials: "include" });
+
+  return fetch(url, { method: "GET", credentials: "include" });
 };
 
-export const requestJson = (TYPE, request) => {
-  return fetch(getFullApiUrl(TYPE), {
-    method: TYPE.method,
+export const postJson = (path, request) => {
+  return fetch(getFullApiUrl(path), {
+    method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(request),
+    credentials: "include",
+  });
+};
+
+export const patchJson = (path, request) => {
+  return fetch(getFullApiUrl(path), {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(request),
+    credentials: "include",
+  });
+};
+
+export const deleteRequest = (path, request) => {
+  return fetch(getFullApiUrl(path), {
+    method: "DELETE",
     credentials: "include",
   });
 };
