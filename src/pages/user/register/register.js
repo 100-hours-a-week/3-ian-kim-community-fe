@@ -1,3 +1,9 @@
+import { isSuccess, parseData } from "../../../api/base-api.js";
+import {
+  emailValidation,
+  nicknameValidation,
+  register,
+} from "../../../api/user-api.js";
 import { MESSAGES } from "../../../common/constants.js";
 import Header from "../../../components/header/Header.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
@@ -23,7 +29,7 @@ export default class Register {
     confirm: (value, inputs) =>
       passwordConfirmValidator(inputs.password.value, value),
     nickname: nicknameValidator,
-    image: profileImageValidator,
+    // image: profileImageValidator,
   };
   #inputs = {};
   #helperTexts = {};
@@ -67,43 +73,58 @@ export default class Register {
       checkAllInputValid(this.#inputs, this.#helperTexts, this.#registerBtn);
     });
 
-    this.#inputs.email.addEventListener("blur", (e) => {
-      // todo: 이메일 중복 검사 API 요청
-      const isEmailAvailable = true;
+    this.#inputs.email.addEventListener("blur", async (e) => {
+      const email = e.target.value;
 
-      if (!isEmailAvailable) {
+      if (emailValidator(email)) {
+        return;
+      }
+
+      const response = await emailValidation({ email });
+      const data = await parseData(response);
+
+      if (isSuccess(response) && !data.available) {
         this.#helperTexts.email.textContent = MESSAGES.duplicatedEmail;
       }
     });
 
-    this.#inputs.nickname.addEventListener("blur", (e) => {
-      // todo: 닉네임 중복 검사 API 요청
-      const isNicknameAvailable = true;
+    this.#inputs.nickname.addEventListener("blur", async (e) => {
+      const nickname = e.target.value;
 
-      if (!isNicknameAvailable) {
+      if (nicknameValidator(nickname)) {
+        return;
+      }
+
+      const response = await nicknameValidation({ nickname });
+      const data = await parseData(response);
+
+      if (isSuccess(response) && !data.available) {
         this.#helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
       }
     });
 
-    // 이미지 업로드
-    addUploadProfileImageEvent(
-      this.#inputs,
-      this.#helperTexts,
-      this.#profilePreview,
-      this.#profileImage,
-      this.#registerBtn
-    );
+    // todo: 이미지 업로드
+    // addUploadProfileImageEvent(
+    //   this.#inputs,
+    //   this.#helperTexts,
+    //   this.#profilePreview,
+    //   this.#profileImage,
+    //   this.#registerBtn
+    // );
 
     // 회원가입 API 요청
-    this.#registerBtn.addEventListener("click", () => {
+    this.#registerBtn.addEventListener("click", async () => {
       if (!isButtonEnabled(this.#registerBtn)) {
         return;
       }
 
-      // todo: 회원가입 API 요청
-      const isRegisterSuccess = true;
+      const request = Object.fromEntries(
+        Object.entries(this.#inputs).map(([key, input]) => [key, input.value])
+      );
 
-      if (isRegisterSuccess) {
+      const response = await register(request);
+
+      if (isSuccess(response)) {
         alert("회원가입에 성공했습니다.");
         navigateTo(ROUTES.LOGIN);
       }
