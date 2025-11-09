@@ -69,3 +69,11 @@ export const nicknameValidator = (nickname) => {
 export const profileImageValidator = (image) => {
   return image ? "" : "*프로필 사진을 추가해주세요.";
 };
+
+export const postTitleValidator = (title) => {
+  return title ? "" : "*제목, 내용을 모두 작성해주세요";
+};
+
+export const postContentValidator = (content) => {
+  return content ? "" : "*제목, 내용을 모두 작성해주세요";
+};
