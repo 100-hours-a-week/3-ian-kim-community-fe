@@ -14,15 +14,19 @@ export const parseData = async (response) => {
 };
 
 export const get = (TYPE, queryParams) => {
-  const url = `${getFullApiUrl(TYPE)}?${queryParams}`;
-  return fetch(url, { method: TYPE.method });
+  let url = getFullApiUrl(TYPE);
+  if (queryParams) {
+    url += queryParams;
+  }
+  return fetch(url, { method: TYPE.method, credentials: "include" });
 };
 
-export const postJson = (TYPE, request) => {
+export const requestJson = (TYPE, request) => {
   return fetch(getFullApiUrl(TYPE), {
     method: TYPE.method,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(request),
+    credentials: "include",
   });
 };
 

@@ -66,3 +66,9 @@ export const addUploadProfileImageEvent = (
     reader.readAsDataURL(file);
   });
 };
+
+export const parseInputValues = (inputs) => {
+  return Object.fromEntries(
+    Object.entries(inputs).map(([key, input]) => [key, input.value])
+  );
+};

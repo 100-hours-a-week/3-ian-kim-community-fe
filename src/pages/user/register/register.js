@@ -12,6 +12,7 @@ import {
   addValidationEvents,
   checkAllInputValid,
   isButtonEnabled,
+  parseInputValues,
   setInputElemets,
 } from "../../../utils/form-utils.js";
 import {
@@ -118,11 +119,7 @@ export default class Register {
         return;
       }
 
-      const request = Object.fromEntries(
-        Object.entries(this.#inputs).map(([key, input]) => [key, input.value])
-      );
-
-      const response = await register(request);
+      const response = await register(parseInputValues(this.#inputs));
 
       if (isSuccess(response)) {
         alert("회원가입에 성공했습니다.");
