@@ -40,7 +40,7 @@ export default class PostDetailPage extends Component {
         this.$postDeleteModal.classList.toggle("hidden");
       },
       onClickEdit: () => {
-        navigateTo(`${ROUTES.POST_EDIT}?id=${this.states.post.postId}`);
+        navigateTo(`${ROUTES.POST_EDIT}?id=${data.postId}`);
       },
       onClickLike: (postLikeBtn, postLikeCnt) =>
         this.handlePostLike(postLikeBtn, postLikeCnt),

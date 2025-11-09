@@ -7,6 +7,7 @@ import {
 import {
   addValidationEvents,
   isButtonEnabled,
+  parseInputValues,
   setInputElemets,
 } from "../../utils/form-utils.js";
 
@@ -42,7 +43,8 @@ export default class PostForm extends Component {
         return;
       }
 
-      this.props.onSubmit();
+      const request = parseInputValues(this.$inputs);
+      this.props.onSubmit(request);
     });
   }
 

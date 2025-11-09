@@ -1,4 +1,4 @@
-import { API, get } from "./base-api.js";
+import { API, get, patchJson, postJson } from "./base-api.js";
 
 export const getPostList = (page) => {
   const size = 10;
@@ -8,4 +8,12 @@ export const getPostList = (page) => {
 
 export const getPostDetail = (postId) => {
   return get(API.POST_DETAIL.path(postId));
+};
+
+export const createPost = ({ title, content }) => {
+  return postJson(API.CREATE_POST.path, { title, content });
+};
+
+export const updatePost = (postId, { title, content }) => {
+  return patchJson(API.UPDATE_POST.path(postId), { title, content });
 };
