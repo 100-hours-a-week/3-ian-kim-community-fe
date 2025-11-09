@@ -16,3 +16,7 @@ export const register = ({ email, password, nickname, profileImage }) => {
     profileImage,
   });
 };
+
+export const login = ({ email, password }) => {
+  return postJson(API.LOGIN, { email, password });
+};

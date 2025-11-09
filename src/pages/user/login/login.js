@@ -1,6 +1,9 @@
+import { isSuccess } from "../../../api/base-api.js";
+import { login } from "../../../api/user-api.js";
 import { MESSAGES } from "../../../common/constants.js";
 import Header from "../../../components/header/Header.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
+import { Auth } from "../../../store/auth-store.js";
 import {
   addValidationEvents,
   isButtonEnabled,
@@ -47,16 +50,20 @@ export default class Login {
     );
 
     // 로그인 API 요청
-    this.#loginBtn.addEventListener("click", () => {
+    this.#loginBtn.addEventListener("click", async () => {
       if (!isButtonEnabled(this.#loginBtn)) {
         return;
       }
 
-      // todo: 로그인 API 요청
-      const isLoginSuccess = false;
+      const request = Object.fromEntries(
+        Object.entries(this.#inputs).map(([key, input]) => [key, input.value])
+      );
 
-      if (isLoginSuccess) {
+      const response = await login(request);
+
+      if (isSuccess(response)) {
         alert("로그인에 성공했습니다.");
+        Auth.login();
         navigateTo(ROUTES.POST_LIST);
       }
 
