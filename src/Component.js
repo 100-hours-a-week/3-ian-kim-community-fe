@@ -18,7 +18,9 @@ export default class Component {
   afterMounted() {}
 
   render() {
-    this.target.innerHTML = this.template();
+    if (this.target) {
+      this.target.innerHTML = this.template();
+    }
   }
 
   setEvents() {}
