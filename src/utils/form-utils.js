@@ -1,11 +1,11 @@
 const btnDisabled = "bg-btn-disabled";
 const btnEnabled = "bg-btn-enabled";
 
-const enableButton = (button) => {
+export const enableButton = (button) => {
   button.classList.replace(btnDisabled, btnEnabled);
 };
 
-const disableButton = (button) => {
+export const disableButton = (button) => {
   button.classList.replace(btnEnabled, btnDisabled);
 };
 

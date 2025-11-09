@@ -12,3 +12,7 @@ export const ROUTES = Object.freeze({
 export const navigateTo = (path) => {
   window.location.assign(path);
 };
+
+export const getUrlSearchParam = (name) => {
+  return new URLSearchParams(window.location.search).get(name);
+};
