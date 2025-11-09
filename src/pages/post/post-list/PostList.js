@@ -11,20 +11,18 @@ export default class PostList extends Component {
     this.hasNextPage = false;
   }
 
-  afterMounted() {
+  async afterMounted() {
     new Header({ hasProfileIcon: true });
 
     // todo: 무한스크롤 구현
-    window.addEventListener("load", async () => {
-      const response = await getPostList(this.page);
-      const data = await parseData(response);
+    const response = await getPostList(this.page);
+    const data = await parseData(response);
 
-      this.hasNextPage = data.page.number < data.page.totalPages;
+    this.hasNextPage = data.page.number < data.page.totalPages;
 
-      data.content.forEach((post) => {
-        new PostCard(document.querySelector(".post-list"), {
-          post,
-        });
+    data.content.forEach((post) => {
+      new PostCard(document.querySelector(".post-list"), {
+        post,
       });
     });
   }

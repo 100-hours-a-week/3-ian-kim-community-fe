@@ -12,15 +12,16 @@ export default class PostCard extends Component {
   }
 
   setEvents() {
-    document.querySelector(".post-card").addEventListener("click", (e) => {
-      const postId = e.currentTarget.dataset.postId;
-      navigateTo(`${ROUTES.POST_DETAIL}?id=${postId}`);
-    });
+    document
+      .querySelector(`.post-card-${this.post.postId}`)
+      .addEventListener("click", () => {
+        navigateTo(`${ROUTES.POST_DETAIL}?id=${this.post.postId}`);
+      });
   }
 
   template() {
     return /*html*/ `
-      <article class="post-card" data-post-id=${this.post.postId}>
+      <article class="post-card post-card-${this.post.postId}">
         <h3 class="post-title">${this.post.title.slice(0, 26)}</h3>
         <div class="post-info">
           <div class="post-stats">

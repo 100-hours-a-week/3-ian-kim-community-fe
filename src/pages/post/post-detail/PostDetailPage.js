@@ -1,10 +1,11 @@
+import { parseData } from "../../../api/base-api.js";
+import { getPostDetail } from "../../../api/post-api.js";
 import Component from "../../../Component.js";
 import CommentSection from "../../../components/comment/CommentSection.js";
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
 import PostDetail from "../../../components/post/PostDetail.js";
 import { dummyComments } from "../../../data/dummy-comments.js";
-import { dummyPostDetails } from "../../../data/dummy-post-details.js";
 import {
   getUrlSearchParam,
   navigateTo,
@@ -13,16 +14,17 @@ import {
 import { formatCompactNumber } from "../../../utils/fomat-utils.js";
 
 export default class PostDetailPage extends Component {
-  setUp() {
-    // todo: 게시글 상세 조회 API 요청
-    const postId = getUrlSearchParam("id");
-    this.states.post = dummyPostDetails[postId];
-
+  async setUp() {
     // todo: 댓글 목록 API 요청
     this.states.comments = dummyComments;
   }
 
-  afterMounted() {
+  async afterMounted() {
+    const postId = getUrlSearchParam("id");
+
+    const response = await getPostDetail(postId);
+    const data = await parseData(response);
+
     new Header({ hasBackBtn: true, hasProfileIcon: true });
 
     this.$postDeleteModal = document.querySelector("#modal-post-delete");
@@ -33,7 +35,7 @@ export default class PostDetailPage extends Component {
     });
 
     new PostDetail(document.querySelector(".post-detail"), {
-      post: this.states.post,
+      post: data,
       onClickDelete: () => {
         this.$postDeleteModal.classList.toggle("hidden");
       },
