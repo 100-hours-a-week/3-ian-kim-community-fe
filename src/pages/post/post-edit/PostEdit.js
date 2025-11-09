@@ -1,6 +1,7 @@
+import { parseData } from "../../../api/base-api.js";
+import { getPostDetail, updatePost } from "../../../api/post-api.js";
 import Component from "../../../Component.js";
 import PostForm from "../../../components/post/PostForm.js";
-import { dummyPostDetails } from "../../../data/dummy-post-details.js";
 import {
   getUrlSearchParam,
   navigateTo,
@@ -8,29 +9,28 @@ import {
 } from "../../../router/router.js";
 
 export default class PostEdit extends Component {
-  setUp() {
-    // todo: 게시글 상세 조회 API 요청
+  async afterMounted() {
     const postId = getUrlSearchParam("id");
-    this.states.post = dummyPostDetails[postId];
-  }
+    const response = await getPostDetail(postId);
+    this.post = await parseData(response);
 
-  afterMounted() {
     new PostForm(document.querySelector(".container"), {
       title: "게시글 수정",
       btnName: "수정하기",
-      onSubmit: () => this.handleSubmit(),
-      post: this.states.post,
+      onSubmit: (request) => this.handleSubmit(request),
+      post: this.post,
     });
   }
 
-  handleSubmit() {
-    // todo: 게시글 수정 API 요청
-    const isPostUpdateSuccess = true;
+  async handleSubmit(request) {
+    const response = await updatePost(this.post.postId, request);
 
-    if (isPostUpdateSuccess) {
+    if (isSuccess(response)) {
       alert("게시글이 수정되었습니다.");
       navigateTo(`${ROUTES.POST_DETAIL}?id=${this.states.post.postId}`);
     }
+
+    alert("게시글 수정에 실패했습니다.");
   }
 
   render() {

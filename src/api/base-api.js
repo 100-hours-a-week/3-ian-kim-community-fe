@@ -40,7 +40,7 @@ export const patchJson = (path, request) => {
   });
 };
 
-export const deleteRequest = (path, request) => {
+export const deleteRequest = (path) => {
   return fetch(getFullApiUrl(path), {
     method: "DELETE",
     credentials: "include",
