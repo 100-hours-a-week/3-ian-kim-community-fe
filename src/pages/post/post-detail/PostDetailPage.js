@@ -23,15 +23,12 @@ export default class PostDetailPage extends Component {
     if (!Auth.validateAuth()) {
       return;
     }
-
-    this.commentPage = 0;
-    this.hasCommentNextPage = false;
   }
 
   async afterRendered() {
     const postId = getUrlSearchParam("id");
     this.post = await this.handleGetPostDetail(postId);
-    this.comments = await this.handleGetCommentList(postId, this.commentPage);
+    this.comments = await this.handleGetCommentList(postId);
 
     new Header(document.querySelector(".header"), {
       hasBackBtn: true,
@@ -68,10 +65,9 @@ export default class PostDetailPage extends Component {
     return parseData(postResponse);
   }
 
-  async handleGetCommentList(postId, commentPage) {
-    const commentResponse = await getCommentList(postId, commentPage);
+  async handleGetCommentList(postId) {
+    const commentResponse = await getCommentList(postId);
     const data = await parseData(commentResponse);
-    this.hasNextPage = data.page.number < data.page.totalPages;
     return data.content;
   }
 

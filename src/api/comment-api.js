@@ -1,8 +1,7 @@
 import { API, deleteRequest, get, patchJson, postJson } from "./base-api.js";
 
 export const getCommentList = (postId, page) => {
-  const size = 5;
-  return get(API.COMMENT_LIST.path(postId), `?page=${page}&size=${size}`);
+  return get(API.COMMENT_LIST.path(postId));
 };
 
 export const createComment = (postId, { content }) => {
