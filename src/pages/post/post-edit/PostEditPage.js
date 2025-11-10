@@ -8,8 +8,15 @@ import {
   navigateTo,
   ROUTES,
 } from "../../../router/router.js";
+import { Auth } from "../../../store/auth-store.js";
 
 export default class PostEditPage extends Component {
+  beforeRendered() {
+    if (!Auth.validateAuth()) {
+      return;
+    }
+  }
+
   async afterRendered() {
     new Header(document.querySelector(".header"), {
       hasBackBtn: true,

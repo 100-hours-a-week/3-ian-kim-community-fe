@@ -12,11 +12,13 @@ export const Auth = {
   logout: () => {
     localStorage.removeItem(key);
   },
-};
 
-export const validateAuth = () => {
-  if (!Auth.isLoggedIn) {
-    alert("로그인이 필요합니다.");
-    navigateTo(ROUTES.LOGIN);
-  }
+  validateAuth: () => {
+    if (!Auth.isLoggedIn()) {
+      alert("로그인이 필요합니다.");
+      navigateTo(ROUTES.LOGIN);
+      return false;
+    }
+    return true;
+  },
 };

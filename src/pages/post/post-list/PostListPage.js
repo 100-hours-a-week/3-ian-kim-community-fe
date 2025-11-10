@@ -4,9 +4,14 @@ import { getPostList } from "../../../api/post-api.js";
 import Header from "../../../components/header/Header.js";
 import PostCard from "../../../components/post/PostCard.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
+import { Auth } from "../../../store/auth-store.js";
 
 export default class PostListPage extends Component {
   beforeRendered() {
+    if (!Auth.validateAuth()) {
+      return;
+    }
+
     this.page = 0;
     this.hasNextPage = false;
   }

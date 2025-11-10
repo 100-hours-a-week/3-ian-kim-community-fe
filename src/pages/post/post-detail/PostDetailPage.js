@@ -15,10 +15,15 @@ import {
   navigateTo,
   ROUTES,
 } from "../../../router/router.js";
+import { Auth } from "../../../store/auth-store.js";
 import { formatCompactNumber } from "../../../utils/fomat-utils.js";
 
 export default class PostDetailPage extends Component {
   beforeRendered() {
+    if (!Auth.validateAuth()) {
+      return;
+    }
+
     this.commentPage = 0;
     this.hasCommentNextPage = false;
   }

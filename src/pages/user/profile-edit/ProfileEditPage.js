@@ -23,9 +23,14 @@ import {
   nicknameValidator,
   profileImageValidator,
 } from "../../../utils/validation-utils.js";
+import { Auth } from "../../../store/auth-store.js";
 
 export default class ProfileEditPage extends Component {
   beforeRendered() {
+    if (!Auth.validateAuth()) {
+      return;
+    }
+
     this.VALIDATORS = {
       nickname: nicknameValidator,
       // image: profileImageValidator,
