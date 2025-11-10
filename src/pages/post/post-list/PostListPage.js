@@ -5,7 +5,7 @@ import Header from "../../../components/header/Header.js";
 import PostCard from "../../../components/post/PostCard.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 
-export default class PostList extends Component {
+export default class PostListPage extends Component {
   beforeRendered() {
     this.page = 0;
     this.hasNextPage = false;
@@ -49,4 +49,4 @@ export default class PostList extends Component {
   }
 }
 
-new PostList(document.querySelector(".container"));
+new PostListPage(document.querySelector(".container"));

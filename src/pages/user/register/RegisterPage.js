@@ -24,7 +24,7 @@ import {
   profileImageValidator,
 } from "../../../utils/validation-utils.js";
 
-export default class Register extends Component {
+export default class RegisterPage extends Component {
   beforeRendered() {
     this.VALIDATORS = {
       email: emailValidator,
@@ -215,4 +215,4 @@ export default class Register extends Component {
   }
 }
 
-new Register(document.querySelector(".container"));
+new RegisterPage(document.querySelector(".container"));

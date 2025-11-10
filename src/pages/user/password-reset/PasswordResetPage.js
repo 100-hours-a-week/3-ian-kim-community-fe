@@ -13,7 +13,7 @@ import {
   passwordValidator,
 } from "../../../utils/validation-utils.js";
 
-export default class PasswordReset extends Component {
+export default class PasswordResetPage extends Component {
   beforeRendered() {
     this.VALIDATORS = {
       password: passwordValidator,
@@ -104,4 +104,4 @@ export default class PasswordReset extends Component {
   }
 }
 
-new PasswordReset(document.querySelector(".container"));
+new PasswordResetPage(document.querySelector(".container"));

@@ -24,7 +24,7 @@ import {
   profileImageValidator,
 } from "../../../utils/validation-utils.js";
 
-export default class ProfileEdit extends Component {
+export default class ProfileEditPage extends Component {
   beforeRendered() {
     this.VALIDATORS = {
       nickname: nicknameValidator,
@@ -202,4 +202,4 @@ export default class ProfileEdit extends Component {
   }
 }
 
-new ProfileEdit(document.querySelector(".container"));
+new ProfileEditPage(document.querySelector(".container"));
