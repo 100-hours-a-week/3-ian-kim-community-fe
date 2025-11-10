@@ -1,12 +1,10 @@
 export default class Component {
   target;
   props;
-  states;
 
   constructor(target, props) {
     this.target = target;
     this.props = props;
-    this.states = {};
     this.setUp();
     this.render();
     this.afterMounted();

@@ -27,7 +27,7 @@ export default class PostEdit extends Component {
 
     if (isSuccess(response)) {
       alert("게시글이 수정되었습니다.");
-      navigateTo(`${ROUTES.POST_DETAIL}?id=${this.states.post.postId}`);
+      navigateTo(`${ROUTES.POST_DETAIL}?id=${this.post.postId}`);
       return;
     }
 
