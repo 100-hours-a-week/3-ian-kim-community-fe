@@ -1,5 +1,8 @@
+import { isSuccess } from "../../api/base-api.js";
+import { logout } from "../../api/user-api.js";
 import Component from "../../Component.js";
 import { navigateTo, ROUTES } from "../../router/router.js";
+import { Auth } from "../../store/auth-store.js";
 
 export default class Header extends Component {
   setUp() {
@@ -53,10 +56,16 @@ export default class Header extends Component {
       navigateTo(ROUTES.PASSWORD_RESET);
     });
 
-    this.$logoutBtn.addEventListener("click", () => {
-      // todo: 로그아웃 API 요청
-      alert("로그아웃 되었습니다.");
-      navigateTo(ROUTES.LOGIN);
+    this.$logoutBtn.addEventListener("click", async () => {
+      const response = await logout();
+
+      if (isSuccess(response)) {
+        alert("로그아웃 되었습니다.");
+        Auth.logout();
+        navigateTo(ROUTES.LOGIN);
+      }
+
+      alert("로그아웃에 실패했습니다.");
     });
   }
 
