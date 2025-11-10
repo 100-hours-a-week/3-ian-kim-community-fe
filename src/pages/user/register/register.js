@@ -27,6 +27,7 @@ import {
 export default class Register extends Component {
   beforeRendered() {
     this.VALIDATORS = {
+      email: emailValidator,
       password: passwordValidator,
       confirm: (value, inputs) =>
         passwordConfirmValidator(inputs.password.value, value),
