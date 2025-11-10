@@ -1,6 +1,7 @@
-import { parseData } from "../../../api/base-api.js";
+import { isSuccess, parseData } from "../../../api/base-api.js";
 import { getPostDetail, updatePost } from "../../../api/post-api.js";
 import Component from "../../../Component.js";
+import Header from "../../../components/header/Header.js";
 import PostForm from "../../../components/post/PostForm.js";
 import {
   getUrlSearchParam,
@@ -10,6 +11,11 @@ import {
 
 export default class PostEdit extends Component {
   async afterRendered() {
+    new Header(document.querySelector(".header"), {
+      hasBackBtn: true,
+      hasProfileIcon: true,
+    });
+
     const postId = getUrlSearchParam("id");
     const response = await getPostDetail(postId);
     this.post = await parseData(response);
