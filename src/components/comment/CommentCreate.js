@@ -59,8 +59,9 @@ export default class CommentCreate extends Component {
       }
 
       const response = await updateComment(comment.commentId, {
-        content: this.$textArea.textContent,
+        content: this.$textArea.value,
       });
+
       if (isSuccess(response)) {
         alert("댓글이 수정되었습니다.");
         window.location.reload();
