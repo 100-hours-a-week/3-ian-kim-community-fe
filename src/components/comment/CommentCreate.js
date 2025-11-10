@@ -1,3 +1,5 @@
+import { isSuccess } from "../../api/base-api.js";
+import { createComment, updateComment } from "../../api/comment-api.js";
 import Component from "../../Component.js";
 import {
   disableButton,
@@ -6,9 +8,29 @@ import {
 } from "../../utils/form-utils.js";
 
 export default class CommentCreate extends Component {
+  setUp() {
+    this.postId = this.props.postId;
+  }
+
   afterMounted() {
     this.$createBtn = document.querySelector(".btn-create");
     this.$textArea = document.querySelector(".input-comment");
+
+    this.commentCreateListener = async () => {
+      if (!isButtonEnabled(this.$createBtn)) {
+        return;
+      }
+
+      const response = await createComment(this.postId, {
+        content: this.$textArea.value,
+      });
+      if (isSuccess(response)) {
+        alert("댓글이 생성되었습니다.");
+        window.location.reload();
+      }
+
+      alert("댓글 생성에 실패했습니다.");
+    };
   }
 
   setEvents() {
@@ -24,36 +46,26 @@ export default class CommentCreate extends Component {
   }
 
   changeToEditMode(comment) {
-    this.$textArea.textContent = comment.content;
+    this.$textArea.value = comment.content;
     this.$createBtn.textContent = "댓글 수정";
 
     this.$createBtn.removeEventListener("click", this.commentCreateListener);
 
-    this.$createBtn.addEventListener("click", () => {
+    this.$createBtn.addEventListener("click", async () => {
       if (!isButtonEnabled(this.$createBtn)) {
         return;
       }
 
-      // 댓글 수정 API 요청
-      const isCommentUpdateSuccess = true;
-      if (isCommentUpdateSuccess) {
+      const response = await updateComment(comment.commentId, {
+        content: this.$textArea.textContent,
+      });
+      if (isSuccess(response)) {
         alert("댓글이 수정되었습니다.");
         window.location.reload();
       }
+
+      alert("댓글 수정에 실패했습니다.");
     });
-  }
-
-  commentCreateListener() {
-    if (!isButtonEnabled(this.$createBtn)) {
-      return;
-    }
-
-    // 댓글 생성 API 요청
-    const isCommentCreateSuccess = true;
-    if (isCommentCreateSuccess) {
-      alert("댓글이 생성되었습니다.");
-      window.location.reload();
-    }
   }
 
   template() {

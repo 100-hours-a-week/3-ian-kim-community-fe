@@ -1,19 +1,29 @@
+import { isSuccess } from "../../api/base-api.js";
+import { deleteComment } from "../../api/comment-api.js";
 import Component from "../../Component.js";
 import CommentCreate from "./CommentCreate.js";
 import CommentItem from "./CommentItem.js";
 
 export default class CommentSection extends Component {
+  setUp() {
+    this.postId = this.props.postId;
+    this.comments = this.props.comments;
+  }
+
   afterMounted() {
     this.commentCreate = new CommentCreate(
-      document.querySelector(".comment-create")
+      document.querySelector(".comment-create"),
+      {
+        postId: this.postId,
+      }
     );
 
     const $commentList = document.querySelector(".comment-list");
-    this.props.comments.forEach((comment) => {
+    this.comments.forEach((comment) => {
       new CommentItem($commentList, {
         comment,
         onClickEdit: (comment) => this.handleCommentEdit(comment),
-        onDelete: () => this.handleCommentDelete(),
+        onDelete: (commentId) => this.handleCommentDelete(commentId),
       });
     });
   }
@@ -22,13 +32,15 @@ export default class CommentSection extends Component {
     this.commentCreate.changeToEditMode(comment);
   }
 
-  handleCommentDelete() {
-    // todo: 댓글 삭제 API 요청
-    const isCommentDeleteSuccess = true;
-    if (isCommentDeleteSuccess) {
+  async handleCommentDelete(commentId) {
+    const response = await deleteComment(commentId);
+
+    if (isSuccess(response)) {
       alert("댓글이 삭제되었습니다.");
       window.location.reload();
     }
+
+    alert("댓글 삭제에 실패했습니다.");
   }
 
   template() {

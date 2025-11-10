@@ -1,11 +1,11 @@
 import { isSuccess, parseData } from "../../../api/base-api.js";
+import { getCommentList } from "../../../api/comment-api.js";
 import { deletePost, getPostDetail } from "../../../api/post-api.js";
 import Component from "../../../Component.js";
 import CommentSection from "../../../components/comment/CommentSection.js";
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
 import PostDetail from "../../../components/post/PostDetail.js";
-import { dummyComments } from "../../../data/dummy-comments.js";
 import {
   getUrlSearchParam,
   navigateTo,
@@ -14,16 +14,15 @@ import {
 import { formatCompactNumber } from "../../../utils/fomat-utils.js";
 
 export default class PostDetailPage extends Component {
-  async setUp() {
-    // todo: 댓글 목록 API 요청
-    this.states.comments = dummyComments;
+  setUp() {
+    this.commentPage = 0;
+    this.hasCommentNextPage = false;
   }
 
   async afterMounted() {
     const postId = getUrlSearchParam("id");
-
-    const response = await getPostDetail(postId);
-    this.post = await parseData(response);
+    this.post = await this.handleGetPostDetail(postId);
+    this.comments = await this.handleGetCommentList(postId, this.commentPage);
 
     new Header({ hasBackBtn: true, hasProfileIcon: true });
 
@@ -47,8 +46,21 @@ export default class PostDetailPage extends Component {
     });
 
     new CommentSection(document.querySelector(".comment-section"), {
-      comments: this.states.comments,
+      postId: this.post.postId,
+      comments: this.comments,
     });
+  }
+
+  async handleGetPostDetail(postId) {
+    const postResponse = await getPostDetail(postId);
+    return await parseData(postResponse);
+  }
+
+  async handleGetCommentList(postId, commentPage) {
+    const commentResponse = await getCommentList(postId, commentPage);
+    const data = await parseData(commentResponse);
+    this.hasNextPage = data.page.number < data.page.totalPages;
+    return data.content;
   }
 
   async handlePostDelete() {
