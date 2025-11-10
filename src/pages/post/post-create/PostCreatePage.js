@@ -4,8 +4,15 @@ import Component from "../../../Component.js";
 import Header from "../../../components/header/Header.js";
 import PostForm from "../../../components/post/PostForm.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
+import { Auth } from "../../../store/auth-store.js";
 
 export default class PostCreatePage extends Component {
+  beforeRendered() {
+    if (!Auth.validateAuth()) {
+      return;
+    }
+  }
+
   afterRendered() {
     new Header(document.querySelector(".header"), {
       hasBackBtn: true,

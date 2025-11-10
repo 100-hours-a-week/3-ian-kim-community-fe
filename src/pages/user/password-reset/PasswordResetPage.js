@@ -3,6 +3,7 @@ import { resetPassword } from "../../../api/user-api.js";
 import Component from "../../../Component.js";
 import Header from "../../../components/header/Header.js";
 import Toast from "../../../components/toast/Toast.js";
+import { Auth } from "../../../store/auth-store.js";
 import {
   addValidationEvents,
   isButtonEnabled,
@@ -15,6 +16,10 @@ import {
 
 export default class PasswordResetPage extends Component {
   beforeRendered() {
+    if (!Auth.validateAuth()) {
+      return;
+    }
+
     this.VALIDATORS = {
       password: passwordValidator,
       confirm: (value, inputs) =>
