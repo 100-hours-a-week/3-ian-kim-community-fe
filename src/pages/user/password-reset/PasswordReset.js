@@ -27,7 +27,10 @@ export default class PasswordReset extends Component {
     this.helperTexts = {};
     this.editBtn = document.querySelector(".btn-reset-password");
 
-    new Header({ hasBackBtn: true, hasProfileIcon: true });
+    new Header(document.querySelector(".header"), {
+      hasBackBtn: true,
+      hasProfileIcon: true,
+    });
     this.toast = new Toast();
     setInputElemets(this.inputs, this.helperTexts, this.VALIDATORS);
   }

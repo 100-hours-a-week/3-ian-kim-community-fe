@@ -43,7 +43,10 @@ export default class ProfileEdit extends Component {
     this.$deleteAccountBtn = document.querySelector(".btn-account-delete");
     this.$modal = document.querySelector(".modal");
 
-    new Header({ hasBackBtn: true, hasProfileIcon: true });
+    new Header(document.querySelector(".header"), {
+      hasBackBtn: true,
+      hasProfileIcon: true,
+    });
 
     new Modal(document.querySelector("#modal-account-delete"), {
       title: "회원탈퇴 하시겠습니까?",

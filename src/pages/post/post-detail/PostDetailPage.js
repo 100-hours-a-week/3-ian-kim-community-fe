@@ -28,7 +28,10 @@ export default class PostDetailPage extends Component {
     this.post = await this.handleGetPostDetail(postId);
     this.comments = await this.handleGetCommentList(postId, this.commentPage);
 
-    new Header({ hasBackBtn: true, hasProfileIcon: true });
+    new Header(document.querySelector(".header"), {
+      hasBackBtn: true,
+      hasProfileIcon: true,
+    });
 
     this.$postDeleteModal = document.querySelector("#modal-post-delete");
     new Modal(this.$postDeleteModal, {
