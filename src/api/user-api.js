@@ -36,3 +36,7 @@ export const resetPassword = ({ password }) => {
 export const deleteAccount = () => {
   return deleteRequest(API.DELETE_ACCOUNT.path);
 };
+
+export const logout = () => {
+  return postJson(API.LOGOUT.path);
+};
