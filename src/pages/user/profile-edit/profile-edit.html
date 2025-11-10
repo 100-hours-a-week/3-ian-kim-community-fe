@@ -16,68 +16,10 @@
   <body>
     <header class="header"></header>
 
-    <main class="container">
-      <h1>회원정보수정</h1>
-
-      <form class="user-form">
-        <div class="user-form-input-group profile-edit-form-input-group">
-          <label for="image" class="label">프로필 사진 *</label>
-
-          <p class="helper-text helper-text-image text-red"></p>
-
-          <div class="profile-preview bg-gray">
-            <img class="profile-image" />
-            <button
-              type="button"
-              class="btn-edit-image bg-black-alpha-half text-white">
-              변경
-            </button>
-          </div>
-          <input
-            type="file"
-            id="image"
-            class="input-image hidden"
-            accept="image/*"
-            autocomplete="off" />
-        </div>
-
-        <div class="user-form-input-group profile-edit-form-input-group">
-          <span class="label">이메일</span>
-          <p class="email"></p>
-        </div>
-
-        <div class="user-form-input-group profile-edit-form-input-group">
-          <label for="nickname" class="label">닉네임 *</label>
-          <input
-            type="text"
-            id="nickname"
-            class="input-nickname"
-            placeholder="닉네임을 입력하세요."
-            required />
-
-          <p class="helper-text helper-text-nickname text-red"></p>
-        </div>
-
-        <button
-          type="button"
-          class="btn-edit user-form-button bg-btn-disabled text-white">
-          수정하기
-        </button>
-      </form>
-
-      <button type="button" class="btn-account-delete text-black">
-        회원탈퇴
-      </button>
-
-      <div class="toast-complete"></div>
-    </main>
-
-    <div
-      id="modal-account-delete"
-      class="modal bg-black-alpha-half hidden"></div>
+    <main class="container"></main>
 
     <script
       type="module"
-      src="/src/pages/user/profile-edit/profile-edit.js"></script>
+      src="/src/pages/user/profile-edit/ProfileEdit.js"></script>
   </body>
 </html>

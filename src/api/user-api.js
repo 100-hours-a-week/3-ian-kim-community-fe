@@ -1,15 +1,15 @@
-import { API, get, requestJson } from "./base-api.js";
+import { API, deleteRequest, get, patchJson, postJson } from "./base-api.js";
 
 export const emailValidation = ({ email }) => {
-  return get(API.EMAIL_VALIDATION, `?email=${email}`);
+  return get(API.EMAIL_VALIDATION.path, `?email=${email}`);
 };
 
 export const nicknameValidation = ({ nickname }) => {
-  return get(API.NICKNAME_VALIDATION, `?nickname=${nickname}`);
+  return get(API.NICKNAME_VALIDATION.path, `?nickname=${nickname}`);
 };
 
 export const register = ({ email, password, nickname, profileImage }) => {
-  return requestJson(API.REGISTER, {
+  return postJson(API.REGISTER.path, {
     email,
     password,
     nickname,
@@ -18,13 +18,21 @@ export const register = ({ email, password, nickname, profileImage }) => {
 };
 
 export const login = ({ email, password }) => {
-  return requestJson(API.LOGIN, { email, password });
+  return postJson(API.LOGIN.path, { email, password });
 };
 
 export const editAccount = ({ nickname, profileImage }) => {
-  return requestJson(API.EDIT_ACCOUNT, { nickname, profileImage });
+  return patchJson(API.EDIT_ACCOUNT.path, { nickname, profileImage });
 };
 
 export const myPage = () => {
-  return get(API.MY_PAGE);
+  return get(API.MY_PAGE.path);
+};
+
+export const resetPassword = ({ password }) => {
+  return patchJson(API.RESET_PASSWORD.path, { password });
+};
+
+export const deleteAccount = () => {
+  return deleteRequest(API.DELETE_ACCOUNT.path);
 };
