@@ -1,4 +1,3 @@
-import Header from "../header/Header.js";
 import Component from "../../Component.js";
 import {
   postContentValidator,
@@ -22,8 +21,6 @@ export default class PostForm extends Component {
   }
 
   afterMounted() {
-    new Header({ hasBackBtn: true, hasProfileIcon: true });
-
     setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);
 
     this.$postBtn = document.querySelector(".btn-post");

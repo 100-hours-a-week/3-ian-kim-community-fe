@@ -44,7 +44,9 @@ export default class Register {
   }
 
   #render() {
-    new Header({ hasBackBtn: true });
+    new Header(document.querySelector(".header"), {
+      hasBackBtn: true,
+    });
     this.#selectElements();
     this.#addEvents();
   }

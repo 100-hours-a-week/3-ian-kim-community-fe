@@ -1,11 +1,17 @@
 import { isSuccess } from "../../../api/base-api.js";
 import { createPost } from "../../../api/post-api.js";
 import Component from "../../../Component.js";
+import Header from "../../../components/header/Header.js";
 import PostForm from "../../../components/post/PostForm.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 
 export default class PostCreate extends Component {
   afterMounted() {
+    new Header(document.querySelector(".header"), {
+      hasBackBtn: true,
+      hasProfileIcon: true,
+    });
+
     new PostForm(document.querySelector(".container"), {
       title: "게시글 생성",
       btnName: "완료",

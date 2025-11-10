@@ -1,79 +1,66 @@
+import Component from "../../Component.js";
 import { navigateTo, ROUTES } from "../../router/router.js";
 
-export default class Header {
-  #hasBackBtn;
-  #hasProfileIcon;
-  #headerBackBtn;
-  #headerProfile;
-  #dropdownProfile;
-  #headerProfileIcon;
-  #editProfileBtn;
-  #resetPasswordBtn;
-  #logoutBtn;
-
-  constructor({ hasBackBtn = false, hasProfileIcon = false } = {}) {
-    this.#hasBackBtn = hasBackBtn;
-    this.#hasProfileIcon = hasProfileIcon;
-    this.#render();
+export default class Header extends Component {
+  setUp() {
+    this.hasBackBtn = this.props.hasBackBtn || false;
+    this.hasProfileIcon = this.props.hasProfileIcon || false;
   }
 
-  #render() {
-    document.querySelector(".header").outerHTML = this.#template();
-    this.#selectElements();
+  render() {
+    this.target.outerHTML = this.template();
+  }
 
-    if (this.#hasBackBtn) {
-      this.#headerBackBtn.classList.remove("hidden");
+  afterMounted() {
+    this.$headerBackBtn = document.querySelector(".header-btn-back");
+    this.$headerProfile = document.querySelector(".header-profile");
+    this.$dropdownProfile = document.querySelector(".dropdown-profile");
+    this.$headerProfileIcon = document.querySelector(".header-profile-icon");
+    this.$editProfileBtn = document.querySelector(".btn-to-profile-edit");
+    this.$resetPasswordBtn = document.querySelector(".btn-to-password-reset");
+    this.$logoutBtn = document.querySelector(".btn-logout");
+
+    if (this.hasBackBtn) {
+      this.$headerBackBtn.classList.remove("hidden");
     }
 
-    if (this.#hasProfileIcon) {
-      this.#headerProfile.classList.remove("hidden");
+    if (this.hasProfileIcon) {
+      this.$headerProfile.classList.remove("hidden");
     }
-
-    this.#addEvents();
   }
 
-  #selectElements() {
-    this.#headerBackBtn = document.querySelector(".header-btn-back");
-    this.#headerProfile = document.querySelector(".header-profile");
-    this.#dropdownProfile = document.querySelector(".dropdown-profile");
-    this.#headerProfileIcon = document.querySelector(".header-profile-icon");
-    this.#editProfileBtn = document.querySelector(".btn-to-profile-edit");
-    this.#resetPasswordBtn = document.querySelector(".btn-to-password-reset");
-    this.#logoutBtn = document.querySelector(".btn-logout");
-  }
-
-  #addEvents() {
-    this.#headerBackBtn.addEventListener("click", () => {
+  setEvents() {
+    this.$headerBackBtn.addEventListener("click", () => {
       history.back();
     });
 
-    this.#headerProfileIcon.addEventListener("click", (e) => {
+    this.$headerProfileIcon.addEventListener("click", (e) => {
       e.stopPropagation();
-      this.#dropdownProfile.classList.toggle("hidden");
+      this.$dropdownProfile.classList.toggle("hidden");
     });
 
     document.addEventListener("click", () => {
-      if (!this.#dropdownProfile.classList.contains("hidden")) {
-        this.#dropdownProfile.classList.add("hidden");
+      if (!this.$dropdownProfile.classList.contains("hidden")) {
+        this.$dropdownProfile.classList.add("hidden");
       }
     });
 
-    this.#editProfileBtn.addEventListener("click", () => {
+    this.$editProfileBtn.addEventListener("click", () => {
       navigateTo(ROUTES.PROFILE_EDIT);
     });
 
-    this.#resetPasswordBtn.addEventListener("click", () => {
+    this.$resetPasswordBtn.addEventListener("click", () => {
       navigateTo(ROUTES.PASSWORD_RESET);
     });
 
-    this.#logoutBtn.addEventListener("click", () => {
+    this.$logoutBtn.addEventListener("click", () => {
       // todo: 로그아웃 API 요청
       alert("로그아웃 되었습니다.");
       navigateTo(ROUTES.LOGIN);
     });
   }
 
-  #template() {
+  template() {
     return /*html*/ `
       <header class="header">
         <button class="header-btn-back hidden" type="button">&lt;</button>

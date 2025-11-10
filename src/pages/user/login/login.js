@@ -1,4 +1,4 @@
-import { isSuccess } from "../../../api/base-api.js";
+import { isSuccess, parseData } from "../../../api/base-api.js";
 import { login } from "../../../api/user-api.js";
 import { MESSAGES } from "../../../common/constants.js";
 import Header from "../../../components/header/Header.js";
@@ -30,7 +30,7 @@ export default class Login {
   }
 
   #render() {
-    new Header();
+    new Header(document.querySelector(".header"), {});
     this.#selectElements();
     this.#addEvents();
   }
@@ -57,10 +57,11 @@ export default class Login {
       }
 
       const response = await login(parseInputValues(this.#inputs));
+      const data = await parseData(response);
 
       if (isSuccess(response)) {
         alert("로그인에 성공했습니다.");
-        Auth.login();
+        Auth.login(data.userId);
         navigateTo(ROUTES.POST_LIST);
       }
 

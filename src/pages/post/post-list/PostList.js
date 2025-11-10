@@ -12,7 +12,9 @@ export default class PostList extends Component {
   }
 
   async afterMounted() {
-    new Header({ hasProfileIcon: true });
+    new Header(document.querySelector(".header"), {
+      hasProfileIcon: true,
+    });
 
     // todo: 무한스크롤 구현
     const response = await getPostList(this.page);
