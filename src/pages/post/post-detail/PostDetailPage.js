@@ -1,5 +1,5 @@
-import { parseData } from "../../../api/base-api.js";
-import { getPostDetail } from "../../../api/post-api.js";
+import { isSuccess, parseData } from "../../../api/base-api.js";
+import { deletePost, getPostDetail } from "../../../api/post-api.js";
 import Component from "../../../Component.js";
 import CommentSection from "../../../components/comment/CommentSection.js";
 import Header from "../../../components/header/Header.js";
@@ -23,7 +23,7 @@ export default class PostDetailPage extends Component {
     const postId = getUrlSearchParam("id");
 
     const response = await getPostDetail(postId);
-    const data = await parseData(response);
+    this.post = await parseData(response);
 
     new Header({ hasBackBtn: true, hasProfileIcon: true });
 
@@ -35,12 +35,12 @@ export default class PostDetailPage extends Component {
     });
 
     new PostDetail(document.querySelector(".post-detail"), {
-      post: data,
+      post: this.post,
       onClickDelete: () => {
         this.$postDeleteModal.classList.toggle("hidden");
       },
       onClickEdit: () => {
-        navigateTo(`${ROUTES.POST_EDIT}?id=${data.postId}`);
+        navigateTo(`${ROUTES.POST_EDIT}?id=${this.post.postId}`);
       },
       onClickLike: (postLikeBtn, postLikeCnt) =>
         this.handlePostLike(postLikeBtn, postLikeCnt),
@@ -51,10 +51,15 @@ export default class PostDetailPage extends Component {
     });
   }
 
-  handlePostDelete() {
-    // todo: 게시글 삭제 API 요청
-    alert("게시글이 삭제되었습니다.");
-    navigateTo(ROUTES.POST_LIST);
+  async handlePostDelete() {
+    const response = await deletePost(this.post.postId);
+
+    if (isSuccess(response)) {
+      alert("게시글이 삭제되었습니다.");
+      navigateTo(ROUTES.POST_LIST);
+    }
+
+    alert("게시글 삭제에 실패했습니다.");
   }
 
   handlePostLike(postLikeBtn, postLikeCnt) {
