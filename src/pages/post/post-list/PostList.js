@@ -6,12 +6,12 @@ import PostCard from "../../../components/post/PostCard.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 
 export default class PostList extends Component {
-  setUp() {
+  beforeRendered() {
     this.page = 0;
     this.hasNextPage = false;
   }
 
-  async afterMounted() {
+  async afterRendered() {
     new Header(document.querySelector(".header"), {
       hasProfileIcon: true,
     });

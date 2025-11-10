@@ -2,11 +2,11 @@ import Component from "../../Component.js";
 import { formatCompactNumber } from "../../utils/fomat-utils.js";
 
 export default class PostDetail extends Component {
-  setUp() {
+  beforeRendered() {
     this.post = this.props.post;
   }
 
-  afterMounted() {
+  afterRendered() {
     this.$deleteBtn = document.querySelector(".btn-post-delete");
     this.$editBtn = document.querySelector(".btn-post-edit");
     this.$likeBtn = document.querySelector(".btn-post-like");

@@ -25,9 +25,8 @@ import {
 } from "../../../utils/validation-utils.js";
 
 export default class Register extends Component {
-  setUp() {
+  beforeRendered() {
     this.VALIDATORS = {
-      email: emailValidator,
       password: passwordValidator,
       confirm: (value, inputs) =>
         passwordConfirmValidator(inputs.password.value, value),
@@ -37,7 +36,8 @@ export default class Register extends Component {
     this.inputs = {};
     this.helperTexts = {};
   }
-  afterMounted() {
+
+  afterRendered() {
     new Header(document.querySelector(".header"), {
       hasBackBtn: true,
     });

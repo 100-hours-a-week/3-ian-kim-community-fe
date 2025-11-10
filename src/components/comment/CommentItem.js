@@ -2,7 +2,7 @@ import Component from "../../Component.js";
 import Modal from "../modal/Modal.js";
 
 export default class CommentItem extends Component {
-  setUp() {
+  beforeRendered() {
     this.comment = this.props.comment;
   }
 
@@ -10,7 +10,7 @@ export default class CommentItem extends Component {
     this.target.insertAdjacentHTML("beforeend", this.template());
   }
 
-  afterMounted() {
+  afterRendered() {
     this.$editBtn = document.querySelector(
       `.comment-item-${this.comment.commentId} .btn-comment-edit`
     );

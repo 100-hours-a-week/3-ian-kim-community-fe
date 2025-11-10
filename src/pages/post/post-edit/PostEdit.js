@@ -9,7 +9,7 @@ import {
 } from "../../../router/router.js";
 
 export default class PostEdit extends Component {
-  async afterMounted() {
+  async afterRendered() {
     const postId = getUrlSearchParam("id");
     const response = await getPostDetail(postId);
     this.post = await parseData(response);

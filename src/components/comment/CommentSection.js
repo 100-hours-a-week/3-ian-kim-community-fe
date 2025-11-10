@@ -5,12 +5,12 @@ import CommentCreate from "./CommentCreate.js";
 import CommentItem from "./CommentItem.js";
 
 export default class CommentSection extends Component {
-  setUp() {
+  beforeRendered() {
     this.postId = this.props.postId;
     this.comments = this.props.comments;
   }
 
-  afterMounted() {
+  afterRendered() {
     this.commentCreate = new CommentCreate(
       document.querySelector(".comment-create"),
       {

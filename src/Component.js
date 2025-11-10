@@ -5,15 +5,15 @@ export default class Component {
   constructor(target, props) {
     this.target = target;
     this.props = props;
-    this.setUp();
+    this.beforeRendered();
     this.render();
-    this.afterMounted();
+    this.afterRendered();
     this.setEvents();
   }
 
-  setUp() {}
+  beforeRendered() {}
 
-  afterMounted() {}
+  afterRendered() {}
 
   render() {
     if (this.target) {

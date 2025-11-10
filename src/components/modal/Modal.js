@@ -1,7 +1,7 @@
 import Component from "../../Component.js";
 
 export default class Modal extends Component {
-  afterMounted() {
+  afterRendered() {
     this.$cancelBtn = this.target.querySelector(".btn-cancel");
     this.$acceptBtn = this.target.querySelector(".btn-accept");
   }

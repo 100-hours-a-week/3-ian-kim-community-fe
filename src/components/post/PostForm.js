@@ -11,7 +11,7 @@ import {
 } from "../../utils/form-utils.js";
 
 export default class PostForm extends Component {
-  setUp() {
+  beforeRendered() {
     this.VALIDATORS = {
       title: postTitleValidator,
       content: postContentValidator,
@@ -20,7 +20,7 @@ export default class PostForm extends Component {
     this.$helperTexts = {};
   }
 
-  afterMounted() {
+  afterRendered() {
     setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);
 
     this.$postBtn = document.querySelector(".btn-post");

@@ -14,7 +14,7 @@ import {
 } from "../../../utils/validation-utils.js";
 
 export default class PasswordReset extends Component {
-  setUp() {
+  beforeRendered() {
     this.VALIDATORS = {
       password: passwordValidator,
       confirm: (value, inputs) =>
@@ -22,7 +22,7 @@ export default class PasswordReset extends Component {
     };
   }
 
-  afterMounted() {
+  afterRendered() {
     this.inputs = {};
     this.helperTexts = {};
     this.editBtn = document.querySelector(".btn-reset-password");
