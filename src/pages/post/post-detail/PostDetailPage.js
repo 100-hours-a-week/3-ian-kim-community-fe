@@ -1,6 +1,10 @@
 import { isSuccess, parseData } from "../../../api/base-api.js";
 import { getCommentList } from "../../../api/comment-api.js";
-import { deletePost, getPostDetail } from "../../../api/post-api.js";
+import {
+  deletePost,
+  getPostDetail,
+  toggleLike,
+} from "../../../api/post-api.js";
 import Component from "../../../Component.js";
 import CommentSection from "../../../components/comment/CommentSection.js";
 import Header from "../../../components/header/Header.js";
@@ -53,7 +57,7 @@ export default class PostDetailPage extends Component {
 
   async handleGetPostDetail(postId) {
     const postResponse = await getPostDetail(postId);
-    return await parseData(postResponse);
+    return parseData(postResponse);
   }
 
   async handleGetCommentList(postId, commentPage) {
@@ -74,18 +78,23 @@ export default class PostDetailPage extends Component {
     alert("게시글 삭제에 실패했습니다.");
   }
 
-  handlePostLike(postLikeBtn, postLikeCnt) {
-    // todo: 좋아요 API 요청
-    this.states.post.liked = !this.states.post.liked;
+  async handlePostLike(postLikeBtn, postLikeCnt) {
+    const response = await toggleLike(this.post.postId);
 
-    if (this.states.post.liked) {
-      postLikeCnt.textContent = formatCompactNumber(
-        ++this.states.post.likeCount
-      );
+    if (isSuccess(response)) {
+      alert("좋아요 요청에 실패했습니다.");
+      return;
+    }
+
+    const data = parseData(response);
+
+    if (data.liked) {
+      postLikeCnt.textContent = formatCompactNumber(++this.post.likeCount);
       postLikeBtn.classList.replace("not-liked", "liked");
       return;
     }
-    postLikeCnt.textContent = formatCompactNumber(--this.states.post.likeCount);
+
+    postLikeCnt.textContent = formatCompactNumber(--this.post.likeCount);
     postLikeBtn.classList.replace("liked", "not-liked");
   }
 
