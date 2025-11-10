@@ -76,6 +76,7 @@ export default class PostDetailPage extends Component {
     if (isSuccess(response)) {
       alert("게시글이 삭제되었습니다.");
       navigateTo(ROUTES.POST_LIST);
+      return;
     }
 
     alert("게시글 삭제에 실패했습니다.");

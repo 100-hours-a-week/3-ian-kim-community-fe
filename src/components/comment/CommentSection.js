@@ -38,6 +38,7 @@ export default class CommentSection extends Component {
     if (isSuccess(response)) {
       alert("댓글이 삭제되었습니다.");
       window.location.reload();
+      return;
     }
 
     alert("댓글 삭제에 실패했습니다.");

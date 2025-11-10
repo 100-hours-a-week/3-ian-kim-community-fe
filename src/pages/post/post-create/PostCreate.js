@@ -25,6 +25,7 @@ export default class PostCreate extends Component {
     if (isSuccess(response)) {
       alert("게시글이 생성되었습니다.");
       navigateTo(ROUTES.POST_LIST);
+      return;
     }
 
     alert("게시글 생성에 실패했습니다.");

@@ -24,9 +24,11 @@ export default class CommentCreate extends Component {
       const response = await createComment(this.postId, {
         content: this.$textArea.value,
       });
+
       if (isSuccess(response)) {
         alert("댓글이 생성되었습니다.");
         window.location.reload();
+        return;
       }
 
       alert("댓글 생성에 실패했습니다.");
@@ -62,6 +64,7 @@ export default class CommentCreate extends Component {
       if (isSuccess(response)) {
         alert("댓글이 수정되었습니다.");
         window.location.reload();
+        return;
       }
 
       alert("댓글 수정에 실패했습니다.");
