@@ -21,3 +21,7 @@ export const updatePost = (postId, { title, content }) => {
 export const deletePost = (postId) => {
   return deleteRequest(API.DELETE_POST.path(postId));
 };
+
+export const toggleLike = (postId) => {
+  return patchJson(API.TOGGLE_LIKE.path(postId));
+};
