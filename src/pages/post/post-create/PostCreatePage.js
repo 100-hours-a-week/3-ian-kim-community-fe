@@ -5,7 +5,7 @@ import Header from "../../../components/header/Header.js";
 import PostForm from "../../../components/post/PostForm.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 
-export default class PostCreate extends Component {
+export default class PostCreatePage extends Component {
   afterRendered() {
     new Header(document.querySelector(".header"), {
       hasBackBtn: true,
@@ -40,4 +40,4 @@ export default class PostCreate extends Component {
   }
 }
 
-new PostCreate(document.querySelector(".container"));
+new PostCreatePage(document.querySelector(".container"));

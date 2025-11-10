@@ -9,7 +9,7 @@ import {
   ROUTES,
 } from "../../../router/router.js";
 
-export default class PostEdit extends Component {
+export default class PostEditPage extends Component {
   async afterRendered() {
     new Header(document.querySelector(".header"), {
       hasBackBtn: true,
@@ -49,4 +49,4 @@ export default class PostEdit extends Component {
   }
 }
 
-new PostEdit(document.querySelector(".container"));
+new PostEditPage(document.querySelector(".container"));

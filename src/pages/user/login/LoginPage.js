@@ -16,7 +16,7 @@ import {
   passwordValidator,
 } from "../../../utils/validation-utils.js";
 
-export default class Login extends Component {
+export default class LoginPage extends Component {
   beforeRendered() {
     this.VALIDATORS = {
       email: emailValidator,
@@ -113,4 +113,4 @@ export default class Login extends Component {
   }
 }
 
-new Login(document.querySelector(".container"));
+new LoginPage(document.querySelector(".container"));
