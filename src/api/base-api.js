@@ -1,3 +1,5 @@
+import { Auth } from "../store/auth-store.js";
+
 const LOCAL_SERVER_URL = "http://localhost:8080";
 
 const getFullApiUrl = (path) => {
@@ -13,17 +15,27 @@ export const parseData = async (response) => {
   return json.data;
 };
 
+const doFetch = (url, options) => {
+  return fetch(url, {
+    ...options,
+    headers: {
+      ...options.headers,
+      Authorization: Auth.getAuth(),
+    },
+  });
+};
+
 export const get = (path, params) => {
   let url = getFullApiUrl(path);
   if (params) {
     url += params;
   }
 
-  return fetch(url, { method: "GET", credentials: "include" });
+  return doFetch(url, { method: "GET", credentials: "include" });
 };
 
 export const postJson = (path, request) => {
-  return fetch(getFullApiUrl(path), {
+  return doFetch(getFullApiUrl(path), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(request),
@@ -32,7 +44,7 @@ export const postJson = (path, request) => {
 };
 
 export const patchJson = (path, request) => {
-  return fetch(getFullApiUrl(path), {
+  return doFetch(getFullApiUrl(path), {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(request),
@@ -41,7 +53,7 @@ export const patchJson = (path, request) => {
 };
 
 export const deleteRequest = (path) => {
-  return fetch(getFullApiUrl(path), {
+  return doFetch(getFullApiUrl(path), {
     method: "DELETE",
     credentials: "include",
   });

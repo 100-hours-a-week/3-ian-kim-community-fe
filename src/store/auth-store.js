@@ -1,16 +1,20 @@
 import { navigateTo, ROUTES } from "../router/router.js";
 
-const key = "isLoggedIn";
+const key = "loggedIn";
 
 export const Auth = {
   isLoggedIn: () => localStorage.getItem(key),
 
-  login: () => {
-    localStorage.setItem(key, true);
+  login: (userId) => {
+    localStorage.setItem(key, userId);
   },
 
   logout: () => {
     localStorage.removeItem(key);
+  },
+
+  getAuth: () => {
+    return Number(localStorage.getItem(key));
   },
 
   validateAuth: () => {
