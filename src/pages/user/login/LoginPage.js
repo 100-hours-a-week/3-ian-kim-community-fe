@@ -51,11 +51,11 @@ export default class LoginPage extends Component {
       }
 
       const response = await login(parseInputValues(this.$inputs));
-      const data = await parseData(response);
+      const user = await parseData(response);
 
       if (isSuccess(response)) {
         alert("로그인에 성공했습니다.");
-        Auth.login(data.userId);
+        Auth.login(user.userId);
         navigateTo(ROUTES.POST_LIST);
         return;
       }
