@@ -3,7 +3,7 @@ import { navigateTo, ROUTES } from "../../router/router.js";
 import { formatCompactNumber } from "../../utils/fomat-utils.js";
 
 export default class PostCard extends Component {
-  setUp() {
+  beforeRendered() {
     this.post = this.props.post;
   }
 

@@ -6,7 +6,7 @@ import PostForm from "../../../components/post/PostForm.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 
 export default class PostCreate extends Component {
-  afterMounted() {
+  afterRendered() {
     new Header(document.querySelector(".header"), {
       hasBackBtn: true,
       hasProfileIcon: true,

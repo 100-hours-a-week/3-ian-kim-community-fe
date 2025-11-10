@@ -8,11 +8,11 @@ import {
 } from "../../utils/form-utils.js";
 
 export default class CommentCreate extends Component {
-  setUp() {
+  beforeRendered() {
     this.postId = this.props.postId;
   }
 
-  afterMounted() {
+  afterRendered() {
     this.$createBtn = document.querySelector(".btn-create");
     this.$textArea = document.querySelector(".input-comment");
 

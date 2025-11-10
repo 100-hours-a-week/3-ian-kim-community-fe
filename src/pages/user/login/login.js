@@ -17,7 +17,7 @@ import {
 } from "../../../utils/validation-utils.js";
 
 export default class Login extends Component {
-  setUp() {
+  beforeRendered() {
     this.VALIDATORS = {
       email: emailValidator,
       password: passwordValidator,
@@ -27,7 +27,7 @@ export default class Login extends Component {
     this.$helperTexts = {};
   }
 
-  afterMounted() {
+  afterRendered() {
     new Header(document.querySelector(".header"), {});
 
     setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);

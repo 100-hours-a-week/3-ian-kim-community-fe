@@ -5,7 +5,7 @@ import { navigateTo, ROUTES } from "../../router/router.js";
 import { Auth } from "../../store/auth-store.js";
 
 export default class Header extends Component {
-  setUp() {
+  beforeRendered() {
     this.hasBackBtn = this.props.hasBackBtn || false;
     this.hasProfileIcon = this.props.hasProfileIcon || false;
   }
@@ -14,7 +14,7 @@ export default class Header extends Component {
     this.target.outerHTML = this.template();
   }
 
-  afterMounted() {
+  afterRendered() {
     this.$headerBackBtn = document.querySelector(".header-btn-back");
     this.$headerProfile = document.querySelector(".header-profile");
     this.$dropdownProfile = document.querySelector(".dropdown-profile");

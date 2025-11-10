@@ -25,7 +25,7 @@ import {
 } from "../../../utils/validation-utils.js";
 
 export default class ProfileEdit extends Component {
-  setUp() {
+  beforeRendered() {
     this.VALIDATORS = {
       nickname: nicknameValidator,
       // image: profileImageValidator,
@@ -34,7 +34,7 @@ export default class ProfileEdit extends Component {
     this.$helperTexts = {};
   }
 
-  async afterMounted() {
+  async afterRendered() {
     setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);
 
     this.$profilePreview = document.querySelector(".profile-preview");

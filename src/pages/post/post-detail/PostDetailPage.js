@@ -18,12 +18,12 @@ import {
 import { formatCompactNumber } from "../../../utils/fomat-utils.js";
 
 export default class PostDetailPage extends Component {
-  setUp() {
+  beforeRendered() {
     this.commentPage = 0;
     this.hasCommentNextPage = false;
   }
 
-  async afterMounted() {
+  async afterRendered() {
     const postId = getUrlSearchParam("id");
     this.post = await this.handleGetPostDetail(postId);
     this.comments = await this.handleGetCommentList(postId, this.commentPage);
