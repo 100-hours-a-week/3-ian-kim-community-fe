@@ -85,12 +85,12 @@ export default class PostDetailPage extends Component {
   async handlePostLike(postLikeBtn, postLikeCnt) {
     const response = await toggleLike(this.post.postId);
 
-    if (isSuccess(response)) {
+    if (!isSuccess(response)) {
       alert("좋아요 요청에 실패했습니다.");
       return;
     }
 
-    const data = parseData(response);
+    const data = await parseData(response);
 
     if (data.liked) {
       postLikeCnt.textContent = formatCompactNumber(++this.post.likeCount);
