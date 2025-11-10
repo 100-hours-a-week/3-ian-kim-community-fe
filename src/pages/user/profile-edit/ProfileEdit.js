@@ -72,6 +72,7 @@ export default class ProfileEdit extends Component {
     if (isSuccess(response)) {
       alert("회원탈퇴가 완료되었습니다.");
       navigateTo(ROUTES.LOGIN);
+      return;
     }
 
     alert("회원탈퇴에 실패했습니다.");

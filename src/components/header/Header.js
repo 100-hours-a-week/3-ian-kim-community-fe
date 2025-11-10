@@ -63,6 +63,7 @@ export default class Header extends Component {
         alert("로그아웃 되었습니다.");
         Auth.logout();
         navigateTo(ROUTES.LOGIN);
+        return;
       }
 
       alert("로그아웃에 실패했습니다.");
