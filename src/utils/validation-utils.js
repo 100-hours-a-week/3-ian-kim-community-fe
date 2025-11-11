@@ -66,7 +66,7 @@ export const nicknameValidator = (nickname) => {
   return "";
 };
 
-export const profileImageValidator = (image) => {
+export const profileValidator = (image) => {
   return image ? "" : "*프로필 사진을 추가해주세요.";
 };
 

@@ -3,6 +3,7 @@ import { logout } from "../../api/user-api.js";
 import Component from "../../Component.js";
 import { navigateTo, ROUTES } from "../../router/router.js";
 import { Auth } from "../../store/auth-store.js";
+import { getUserProfile } from "../../utils/image-utils.js";
 
 export default class Header extends Component {
   beforeRendered() {
@@ -14,7 +15,7 @@ export default class Header extends Component {
     this.target.outerHTML = this.template();
   }
 
-  afterRendered() {
+  async afterRendered() {
     this.$headerBackBtn = document.querySelector(".header-btn-back");
     this.$headerProfile = document.querySelector(".header-profile");
     this.$dropdownProfile = document.querySelector(".dropdown-profile");
@@ -29,6 +30,7 @@ export default class Header extends Component {
 
     if (this.hasProfileIcon) {
       this.$headerProfile.classList.remove("hidden");
+      this.$headerProfileIcon.src = await getUserProfile(Auth.getProfile());
     }
   }
 
