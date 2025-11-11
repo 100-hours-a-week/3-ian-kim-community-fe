@@ -1,20 +1,31 @@
 import { navigateTo, ROUTES } from "../router/router.js";
 
-const key = "loggedIn";
+const loginKey = "loggedIn";
+const profileKey = "profile";
 
 export const Auth = {
-  isLoggedIn: () => localStorage.getItem(key),
+  isLoggedIn: () => sessionStorage.getItem(loginKey),
 
-  login: (userId) => {
-    localStorage.setItem(key, userId);
+  login: (userId, profile) => {
+    sessionStorage.setItem(loginKey, userId);
+    sessionStorage.setItem(profileKey, profile);
   },
 
   logout: () => {
-    localStorage.removeItem(key);
+    sessionStorage.removeItem(loginKey);
+    sessionStorage.removeItem(profileKey);
   },
 
   getAuth: () => {
-    return Number(localStorage.getItem(key));
+    return Number(sessionStorage.getItem(loginKey));
+  },
+
+  updateProfile: (profile) => {
+    sessionStorage.setItem(profileKey, profile);
+  },
+
+  getProfile: () => {
+    return sessionStorage.getItem(profileKey);
   },
 
   validateAuth: () => {

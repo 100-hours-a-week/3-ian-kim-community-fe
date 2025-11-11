@@ -1,4 +1,11 @@
-import { API, deleteRequest, get, patchJson, postJson } from "./base-api.js";
+import {
+  API,
+  deleteRequest,
+  get,
+  patchJson,
+  postJson,
+  requestMultipartForm,
+} from "./base-api.js";
 
 export const emailValidation = ({ email }) => {
   return get(API.EMAIL_VALIDATION.path, `?email=${email}`);
@@ -8,12 +15,12 @@ export const nicknameValidation = ({ nickname }) => {
   return get(API.NICKNAME_VALIDATION.path, `?nickname=${nickname}`);
 };
 
-export const register = ({ email, password, nickname, profileImage }) => {
-  return postJson(API.REGISTER.path, {
+export const register = ({ email, password, nickname, profile }) => {
+  return requestMultipartForm(API.REGISTER.path, API.REGISTER.method, {
     email,
     password,
     nickname,
-    profileImage,
+    profile,
   });
 };
 
@@ -21,8 +28,12 @@ export const login = ({ email, password }) => {
   return postJson(API.LOGIN.path, { email, password });
 };
 
-export const editAccount = ({ nickname, profileImage }) => {
-  return patchJson(API.EDIT_ACCOUNT.path, { nickname, profileImage });
+export const editAccount = (request) => {
+  return requestMultipartForm(
+    API.EDIT_ACCOUNT.path,
+    API.EDIT_ACCOUNT.method,
+    request
+  );
 };
 
 export const myPage = () => {

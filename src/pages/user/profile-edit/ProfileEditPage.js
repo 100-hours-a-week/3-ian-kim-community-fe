@@ -12,18 +12,16 @@ import Modal from "../../../components/modal/Modal.js";
 import Toast from "../../../components/toast/Toast.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 import {
-  addUploadProfileImageEvent,
-  addValidationEvents,
-  disableButton,
+  enableButton,
   isButtonEnabled,
-  parseInputValues,
   setInputElemets,
 } from "../../../utils/form-utils.js";
 import {
   nicknameValidator,
-  profileImageValidator,
+  profileValidator,
 } from "../../../utils/validation-utils.js";
 import { Auth } from "../../../store/auth-store.js";
+import { getUserProfile } from "../../../utils/image-utils.js";
 
 export default class ProfileEditPage extends Component {
   beforeRendered() {
@@ -33,10 +31,11 @@ export default class ProfileEditPage extends Component {
 
     this.VALIDATORS = {
       nickname: nicknameValidator,
-      // image: profileImageValidator,
+      profile: profileValidator,
     };
     this.$inputs = {};
     this.$helperTexts = {};
+    this.request = {};
   }
 
   async afterRendered() {
@@ -47,6 +46,7 @@ export default class ProfileEditPage extends Component {
     this.$editBtn = document.querySelector(".btn-edit");
     this.$deleteAccountBtn = document.querySelector(".btn-account-delete");
     this.$modal = document.querySelector(".modal");
+    this.$email = document.querySelector(".email");
 
     new Header(document.querySelector(".header"), {
       hasBackBtn: true,
@@ -63,7 +63,8 @@ export default class ProfileEditPage extends Component {
     this.user = await this.handleGetProfile();
 
     this.$inputs.nickname.value = this.user.nickname;
-    document.querySelector(".email").textContent = this.user.email;
+    this.$email.textContent = this.user.email;
+    this.$profileImage.src = await getUserProfile(this.user.profile);
   }
 
   async handleGetProfile() {
@@ -85,13 +86,6 @@ export default class ProfileEditPage extends Component {
 
   setEvents() {
     // 입력값 검증
-    addValidationEvents(
-      this.$inputs,
-      this.$helperTexts,
-      this.$editBtn,
-      this.VALIDATORS
-    );
-
     this.$inputs.nickname.addEventListener("blur", async (e) => {
       const nickname = e.target.value;
 
@@ -100,28 +94,45 @@ export default class ProfileEditPage extends Component {
       }
 
       if (nickname === this.user.nickname) {
-        disableButton(this.$editBtn);
+        return;
       }
 
       const response = await nicknameValidation({ nickname });
-      if (isSuccess(response)) {
+      if (!isSuccess(response)) {
         return;
       }
 
       const data = await parseData(response);
       if (!data.available) {
         this.$helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
+        return;
       }
+
+      this.request = { ...this.request, nickname };
+      enableButton(this.$editBtn);
     });
 
-    // // todo: 이미지 업로드
-    // addUploadProfileImageEvent(
-    //   this.$inputs,
-    //   this.$helperTexts,
-    //   this.$profilePreview,
-    //   this.$profileImage,
-    //   this.$editBtn
-    // );
+    // 프로필 업로드
+    this.$profilePreview.addEventListener("click", () =>
+      this.$inputs.profile.click()
+    );
+
+    this.$inputs.profile.addEventListener("change", (e) => {
+      const profile = e.target.files[0];
+
+      if (!profile) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.$profileImage.src = reader.result;
+        this.$profileImage.classList.remove("hidden");
+        this.$helperTexts.profile.textContent = "";
+      };
+      reader.readAsDataURL(profile);
+
+      this.request = { ...this.request, profile };
+      enableButton(this.$editBtn);
+    });
 
     // 회원정보 수정 API 요청
     this.$editBtn.addEventListener("click", async () => {
@@ -129,10 +140,14 @@ export default class ProfileEditPage extends Component {
         return;
       }
 
-      const response = await editAccount(parseInputValues(this.$inputs));
+      const response = await editAccount(this.request);
 
       if (isSuccess(response)) {
+        const user = await parseData(response);
         this.$toast.show();
+        if ("profile" in this.request) {
+          Auth.updateProfile(user.profile);
+        }
         return;
       }
 
@@ -152,7 +167,7 @@ export default class ProfileEditPage extends Component {
         <div class="user-form-input-group profile-edit-form-input-group">
           <label for="image" class="label">프로필 사진 *</label>
 
-          <p class="helper-text helper-text-image text-red"></p>
+          <p class="helper-text helper-text-profile text-red"></p>
 
           <div class="profile-preview bg-gray">
             <img class="profile-image" />
@@ -165,7 +180,7 @@ export default class ProfileEditPage extends Component {
           <input
             type="file"
             id="image"
-            class="input-image hidden"
+            class="input-profile hidden"
             accept="image/*"
             autocomplete="off" />
         </div>

@@ -9,7 +9,6 @@ import Component from "../../../Component.js";
 import Header from "../../../components/header/Header.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 import {
-  addUploadProfileImageEvent,
   addValidationEvents,
   checkAllInputValid,
   isButtonEnabled,
@@ -21,7 +20,7 @@ import {
   passwordValidator,
   passwordConfirmValidator,
   nicknameValidator,
-  profileImageValidator,
+  profileValidator,
 } from "../../../utils/validation-utils.js";
 
 export default class RegisterPage extends Component {
@@ -29,13 +28,14 @@ export default class RegisterPage extends Component {
     this.VALIDATORS = {
       email: emailValidator,
       password: passwordValidator,
-      confirm: (value, inputs) =>
-        passwordConfirmValidator(inputs.password.value, value),
+      confirm: (value, $inputs) =>
+        passwordConfirmValidator($inputs.password.value, value),
       nickname: nicknameValidator,
-      // image: profileImageValidator,
+      profile: profileValidator,
     };
-    this.inputs = {};
-    this.helperTexts = {};
+    this.$inputs = {};
+    this.$helperTexts = {};
+    this.profileFile;
   }
 
   afterRendered() {
@@ -43,31 +43,31 @@ export default class RegisterPage extends Component {
       hasBackBtn: true,
     });
 
-    setInputElemets(this.inputs, this.helperTexts, this.VALIDATORS);
-    this.profilePreview = document.querySelector(".profile-preview");
-    this.profileImage = document.querySelector(".profile-image");
-    this.registerBtn = document.querySelector(".btn-register");
-    this.loginLink = document.querySelector(".link-login");
+    setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);
+    this.$profilePreview = document.querySelector(".profile-preview");
+    this.$profileImage = document.querySelector(".profile-image");
+    this.$registerBtn = document.querySelector(".btn-register");
+    this.$loginLink = document.querySelector(".link-login");
   }
 
   setEvents() {
     // 입력값 검증
     addValidationEvents(
-      this.inputs,
-      this.helperTexts,
-      this.registerBtn,
+      this.$inputs,
+      this.$helperTexts,
+      this.$registerBtn,
       this.VALIDATORS
     );
 
-    this.inputs.password.addEventListener("blur", (e) => {
-      this.helperTexts.confirm.textContent = this.VALIDATORS.confirm(
-        this.inputs.confirm.value,
-        this.inputs
+    this.$inputs.password.addEventListener("blur", (e) => {
+      this.$helperTexts.confirm.textContent = this.VALIDATORS.confirm(
+        this.$inputs.confirm.value,
+        this.$inputs
       );
-      checkAllInputValid(this.inputs, this.helperTexts, this.registerBtn);
+      checkAllInputValid(this.$inputs, this.$helperTexts, this.$registerBtn);
     });
 
-    this.inputs.email.addEventListener("blur", async (e) => {
+    this.$inputs.email.addEventListener("blur", async (e) => {
       const email = e.target.value;
 
       if (emailValidator(email)) {
@@ -78,11 +78,11 @@ export default class RegisterPage extends Component {
       const data = await parseData(response);
 
       if (isSuccess(response) && !data.available) {
-        this.helperTexts.email.textContent = MESSAGES.duplicatedEmail;
+        this.$helperTexts.email.textContent = MESSAGES.duplicatedEmail;
       }
     });
 
-    this.inputs.nickname.addEventListener("blur", async (e) => {
+    this.$inputs.nickname.addEventListener("blur", async (e) => {
       const nickname = e.target.value;
 
       if (nicknameValidator(nickname)) {
@@ -93,26 +93,41 @@ export default class RegisterPage extends Component {
       const data = await parseData(response);
 
       if (isSuccess(response) && !data.available) {
-        this.helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
+        this.$helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
       }
     });
 
-    // todo: 이미지 업로드
-    // addUploadProfileImageEvent(
-    //   this.inputs,
-    //   this.helperTexts,
-    //   this.profilePreview,
-    //   this.profileImage,
-    //   this.registerBtn
-    // );
+    // 프로필 업로드
+    this.$profilePreview.addEventListener("click", () =>
+      this.$inputs.profile.click()
+    );
+
+    this.$inputs.profile.addEventListener("change", (e) => {
+      this.profileFile = e.target.files[0];
+
+      if (!this.profileFile) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.$profileImage.src = reader.result;
+        this.$profileImage.classList.remove("hidden");
+        this.$helperTexts.profile.textContent = "";
+        checkAllInputValid(this.$inputs, this.$helperTexts, this.$registerBtn);
+      };
+      reader.readAsDataURL(this.profileFile);
+    });
 
     // 회원가입 API 요청
-    this.registerBtn.addEventListener("click", async () => {
-      if (!isButtonEnabled(this.registerBtn)) {
+    this.$registerBtn.addEventListener("click", async () => {
+      if (!isButtonEnabled(this.$registerBtn)) {
         return;
       }
 
-      const response = await register(parseInputValues(this.inputs));
+      const request = {
+        ...parseInputValues(this.$inputs),
+        profile: this.profileFile,
+      };
+      const response = await register(request);
 
       if (isSuccess(response)) {
         alert("회원가입에 성공했습니다.");
@@ -124,7 +139,7 @@ export default class RegisterPage extends Component {
     });
 
     // 페이지 이동
-    this.loginLink.addEventListener("click", () => {
+    this.$loginLink.addEventListener("click", () => {
       navigateTo(ROUTES.LOGIN);
     });
   }
@@ -137,7 +152,7 @@ export default class RegisterPage extends Component {
         <div class="user-form-input-group register-form-input-group">
           <label for="image" class="label">프로필 사진 *</label>
 
-          <p class="helper-text helper-text-image text-red">
+          <p class="helper-text helper-text-profile text-red">
             *프로필 사진을 추가해주세요.
           </p>
 
@@ -148,7 +163,7 @@ export default class RegisterPage extends Component {
           <input
             type="file"
             id="image"
-            class="input-image hidden"
+            class="input-profile hidden"
             accept="image/*"
             autocomplete="off" />
         </div>
