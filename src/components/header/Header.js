@@ -3,12 +3,13 @@ import { logout } from "../../api/user-api.js";
 import Component from "../../Component.js";
 import { navigateTo, ROUTES } from "../../router/router.js";
 import { Auth } from "../../store/auth-store.js";
-import { getUserProfile } from "../../utils/image-utils.js";
+import ProfileIcon from "../profile/ProfileIcon.js";
 
 export default class Header extends Component {
   beforeRendered() {
     this.hasBackBtn = this.props.hasBackBtn || false;
     this.hasProfileIcon = this.props.hasProfileIcon || false;
+    this.$profileIcon;
   }
 
   render() {
@@ -19,10 +20,16 @@ export default class Header extends Component {
     this.$headerBackBtn = document.querySelector(".header-btn-back");
     this.$headerProfile = document.querySelector(".header-profile");
     this.$dropdownProfile = document.querySelector(".dropdown-profile");
-    this.$headerProfileIcon = document.querySelector(".header-profile-icon");
+    this.$profileArea = document.querySelector("#profile-area-header");
     this.$editProfileBtn = document.querySelector(".btn-to-profile-edit");
     this.$resetPasswordBtn = document.querySelector(".btn-to-password-reset");
     this.$logoutBtn = document.querySelector(".btn-logout");
+
+    new ProfileIcon(this.$profileArea, {
+      profilePath: Auth.getProfile(),
+      id: "profile-icon-header",
+    });
+    this.$profileIcon = document.querySelector("#profile-icon-header");
 
     if (this.hasBackBtn) {
       this.$headerBackBtn.classList.remove("hidden");
@@ -30,7 +37,6 @@ export default class Header extends Component {
 
     if (this.hasProfileIcon) {
       this.$headerProfile.classList.remove("hidden");
-      this.$headerProfileIcon.src = await getUserProfile(Auth.getProfile());
     }
   }
 
@@ -39,7 +45,7 @@ export default class Header extends Component {
       history.back();
     });
 
-    this.$headerProfileIcon.addEventListener("click", (e) => {
+    this.$profileIcon.addEventListener("click", (e) => {
       e.stopPropagation();
       this.$dropdownProfile.classList.toggle("hidden");
     });
@@ -80,8 +86,8 @@ export default class Header extends Component {
         <h1 class="header-title">아무 말 대잔치</h1>
 
         <div class="header-profile hidden">
-          <img class="header-profile-icon" src="" alt="프로필" />
-          
+          <div id="profile-area-header"></div>
+
           <div class="dropdown-profile hidden">
             <button class="btn-to-profile-edit">회원정보수정</button>
             <button class="btn-to-password-reset">비밀번호수정</button>

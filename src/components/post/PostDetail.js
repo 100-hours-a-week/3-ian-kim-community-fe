@@ -2,6 +2,7 @@ import { getImage } from "../../api/image-api.js";
 import Component from "../../Component.js";
 import { Auth } from "../../store/auth-store.js";
 import { formatCompactNumber } from "../../utils/fomat-utils.js";
+import ProfileIcon from "../profile/ProfileIcon.js";
 
 export default class PostDetail extends Component {
   beforeRendered() {
@@ -16,6 +17,15 @@ export default class PostDetail extends Component {
     this.$likeCnt = document.querySelector(".like-cnt");
     this.$postActions = document.querySelector(".post-actions");
     this.$postImage = document.querySelector(".post-img");
+
+    this.$profileArea = document.querySelector(
+      `#profile-area-post-detail-${this.post.postId}`
+    );
+
+    new ProfileIcon(this.$profileArea, {
+      profilePath: this.post.authorProfile,
+      id: `profile-icon-post-detail-${this.post.postId}`,
+    });
 
     if (!this.isAuthor) {
       this.$postActions.classList.add("visibility-hidden");
@@ -53,8 +63,8 @@ export default class PostDetail extends Component {
 
       <div class="post-header">
         <div class="author-profile">
-          <img src="" alt="작성자 프로필" class="author-profile-icon bg-gray" />
-          <span class="author-name">${this.post.author}</span>
+          <div id="profile-area-post-detail-${this.post.postId}"></div>
+          <span class="author-name">${this.post.authorNickname}</span>
         </div>
 
         <span class="created-date">${this.post.createdDate}</span>

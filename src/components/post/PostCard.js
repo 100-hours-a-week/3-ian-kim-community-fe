@@ -1,6 +1,7 @@
 import Component from "../../Component.js";
 import { navigateTo, ROUTES } from "../../router/router.js";
 import { formatCompactNumber } from "../../utils/fomat-utils.js";
+import ProfileIcon from "../profile/ProfileIcon.js";
 
 export default class PostCard extends Component {
   beforeRendered() {
@@ -9,6 +10,17 @@ export default class PostCard extends Component {
 
   render() {
     this.target.insertAdjacentHTML("beforeend", this.template());
+  }
+
+  afterRendered() {
+    this.$profileArea = document.querySelector(
+      `#profile-area-post-card-${this.post.postId}`
+    );
+
+    new ProfileIcon(this.$profileArea, {
+      profilePath: this.post.authorProfile,
+      id: `profile-icon-post-card-${this.post.postId}`,
+    });
   }
 
   setEvents() {
@@ -41,8 +53,8 @@ export default class PostCard extends Component {
         <hr class="divider" />
 
         <div class="author-profile">
-          <img src="" alt="작성자 프로필" class="author-profile-icon bg-gray" />
-          <span class="author-name">${this.post.author}</span>
+          <div id="profile-area-post-card-${this.post.postId}"></div>
+          <span class="author-name">${this.post.authorNickname}</span>
         </div>
       </article>
     `;
