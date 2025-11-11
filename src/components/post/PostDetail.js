@@ -1,3 +1,4 @@
+import { getImage } from "../../api/image-api.js";
 import Component from "../../Component.js";
 import { Auth } from "../../store/auth-store.js";
 import { formatCompactNumber } from "../../utils/fomat-utils.js";
@@ -14,10 +15,13 @@ export default class PostDetail extends Component {
     this.$likeBtn = document.querySelector(".btn-post-like");
     this.$likeCnt = document.querySelector(".like-cnt");
     this.$postActions = document.querySelector(".post-actions");
+    this.$postImage = document.querySelector(".post-img");
 
     if (!this.isAuthor) {
       this.$postActions.classList.add("visibility-hidden");
     }
+
+    this.getPostImage();
   }
 
   setEvents() {
@@ -32,6 +36,15 @@ export default class PostDetail extends Component {
     this.$likeBtn.addEventListener("click", () => {
       this.props.onClickLike(this.$likeBtn, this.$likeCnt);
     });
+  }
+
+  async getPostImage() {
+    if (this.post.imagePath) {
+      const response = await getImage(this.post.imagePath);
+      const blob = await response.blob();
+      this.$postImage.src = URL.createObjectURL(blob);
+      this.$postImage.classList.remove("hidden");
+    }
   }
 
   template() {
@@ -58,7 +71,7 @@ export default class PostDetail extends Component {
         <img
           src=""
           alt="이미지"
-          class="post-img ${this.post.image || "hidden"}" />
+          class="post-img hidden" />
         <p>${this.post.content}</p>
 
         <div class="post-stats">
