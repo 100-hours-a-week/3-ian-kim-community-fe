@@ -1,9 +1,11 @@
 import Component from "../../Component.js";
+import { Auth } from "../../store/auth-store.js";
 import Modal from "../modal/Modal.js";
 
 export default class CommentItem extends Component {
   beforeRendered() {
     this.comment = this.props.comment;
+    this.isAuthor = Auth.getAuth() === this.comment.userId;
   }
 
   render() {
@@ -11,15 +13,14 @@ export default class CommentItem extends Component {
   }
 
   afterRendered() {
-    this.$editBtn = document.querySelector(
-      `.comment-item-${this.comment.commentId} .btn-comment-edit`
+    this.$curr = document.querySelector(
+      `.comment-item-${this.comment.commentId}`
     );
 
-    this.$deleteBtn = document.querySelector(
-      `.comment-item-${this.comment.commentId} .btn-comment-delete`
-    );
-
-    this.$commentDeleteModal = this.target.querySelector(
+    this.$editBtn = this.$curr.querySelector(".btn-comment-edit");
+    this.$deleteBtn = this.$curr.querySelector(".btn-comment-delete");
+    this.$commentActions = this.$curr.querySelector(".comment-actions");
+    this.$commentDeleteModal = this.$curr.querySelector(
       `#modal-comment-delete-${this.comment.commentId}`
     );
 
@@ -28,6 +29,10 @@ export default class CommentItem extends Component {
       content: "삭제한 내용은 복구할 수 없습니다.",
       onAccept: () => this.props.onDelete(this.comment.commentId),
     });
+
+    if (!this.isAuthor) {
+      this.$commentActions.classList.add("visibility-hidden");
+    }
   }
 
   setEvents() {

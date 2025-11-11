@@ -1,9 +1,11 @@
 import Component from "../../Component.js";
+import { Auth } from "../../store/auth-store.js";
 import { formatCompactNumber } from "../../utils/fomat-utils.js";
 
 export default class PostDetail extends Component {
   beforeRendered() {
     this.post = this.props.post;
+    this.isAuthor = Auth.getAuth() === this.post.userId;
   }
 
   afterRendered() {
@@ -11,6 +13,11 @@ export default class PostDetail extends Component {
     this.$editBtn = document.querySelector(".btn-post-edit");
     this.$likeBtn = document.querySelector(".btn-post-like");
     this.$likeCnt = document.querySelector(".like-cnt");
+    this.$postActions = document.querySelector(".post-actions");
+
+    if (!this.isAuthor) {
+      this.$postActions.classList.add("visibility-hidden");
+    }
   }
 
   setEvents() {
