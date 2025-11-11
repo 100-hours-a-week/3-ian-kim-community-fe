@@ -59,6 +59,20 @@ export const deleteRequest = (path) => {
   });
 };
 
+export const requestMultipartForm = (path, method, request) => {
+  const formData = new FormData();
+  Object.entries(request).forEach(([name, value]) => {
+    formData.append(name, value);
+  });
+
+  return doFetch(getFullApiUrl(path), {
+    method,
+    headers: {},
+    body: formData,
+    credentials: "include",
+  });
+};
+
 export const API = {
   REGISTER: {
     path: "/users",

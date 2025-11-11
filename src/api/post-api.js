@@ -1,4 +1,11 @@
-import { API, deleteRequest, get, patchJson, postJson } from "./base-api.js";
+import {
+  API,
+  deleteRequest,
+  get,
+  patchJson,
+  postJson,
+  requestMultipartForm,
+} from "./base-api.js";
 
 export const getPostList = (page) => {
   const size = 10;
@@ -10,12 +17,24 @@ export const getPostDetail = (postId) => {
   return get(API.POST_DETAIL.path(postId));
 };
 
-export const createPost = ({ title, content }) => {
-  return postJson(API.CREATE_POST.path, { title, content });
+export const createPost = ({ title, content, image }) => {
+  return requestMultipartForm(API.CREATE_POST.path, API.CREATE_POST.method, {
+    title,
+    content,
+    image,
+  });
 };
 
-export const updatePost = (postId, { title, content }) => {
-  return patchJson(API.UPDATE_POST.path(postId), { title, content });
+export const updatePost = (postId, { title, content, image }) => {
+  return requestMultipartForm(
+    API.UPDATE_POST.path(postId),
+    API.UPDATE_POST.method,
+    {
+      title,
+      content,
+      image,
+    }
+  );
 };
 
 export const deletePost = (postId) => {

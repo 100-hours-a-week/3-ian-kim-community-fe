@@ -5,6 +5,7 @@ import {
 } from "../../utils/validation-utils.js";
 import {
   addValidationEvents,
+  checkAllInputValid,
   isButtonEnabled,
   parseInputValues,
   setInputElemets,
@@ -18,12 +19,14 @@ export default class PostForm extends Component {
     };
     this.$inputs = {};
     this.$helperTexts = {};
+    this.imageFile;
   }
 
   afterRendered() {
     setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);
 
     this.$postBtn = document.querySelector(".btn-post");
+    this.$inputImage = document.querySelector(".input-image");
   }
 
   setEvents() {
@@ -35,12 +38,27 @@ export default class PostForm extends Component {
       this.VALIDATORS
     );
 
+    this.$inputImage.addEventListener("change", (e) => {
+      this.imageFile = e.target.files[0];
+
+      if (!this.imageFile) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.$inputImage.src = reader.result;
+      };
+      reader.readAsDataURL(this.imageFile);
+
+      checkAllInputValid(this.$inputs, this.$helperTexts, this.$postBtn);
+    });
+
     this.$postBtn.addEventListener("click", () => {
       if (!isButtonEnabled(this.$postBtn)) {
         return;
       }
 
       const request = parseInputValues(this.$inputs);
+      request["image"] = this.imageFile;
       this.props.onSubmit(request);
     });
   }
