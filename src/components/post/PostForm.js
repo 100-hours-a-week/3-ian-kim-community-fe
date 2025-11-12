@@ -58,7 +58,9 @@ export default class PostForm extends Component {
       }
 
       const request = parseInputValues(this.$inputs);
-      request["image"] = this.imageFile;
+      if (this.imageFile) {
+        request["image"] = this.imageFile;
+      }
       this.props.onSubmit(request);
     });
   }

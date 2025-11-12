@@ -17,23 +17,19 @@ export const getPostDetail = (postId) => {
   return get(API.POST_DETAIL.path(postId));
 };
 
-export const createPost = ({ title, content, image }) => {
-  return requestMultipartForm(API.CREATE_POST.path, API.CREATE_POST.method, {
-    title,
-    content,
-    image,
-  });
+export const createPost = (request) => {
+  return requestMultipartForm(
+    API.CREATE_POST.path,
+    API.CREATE_POST.method,
+    request
+  );
 };
 
-export const updatePost = (postId, { title, content, image }) => {
+export const updatePost = (postId, request) => {
   return requestMultipartForm(
     API.UPDATE_POST.path(postId),
     API.UPDATE_POST.method,
-    {
-      title,
-      content,
-      image,
-    }
+    request
   );
 };
 
