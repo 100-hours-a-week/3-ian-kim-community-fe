@@ -11,6 +11,7 @@ import { navigateTo, ROUTES } from "../../../router/router.js";
 import {
   addValidationEvents,
   checkAllInputValid,
+  disableButton,
   isButtonEnabled,
   parseInputValues,
   setInputElemets,
@@ -79,6 +80,7 @@ export default class RegisterPage extends Component {
 
       if (isSuccess(response) && !data.available) {
         this.$helperTexts.email.textContent = MESSAGES.duplicatedEmail;
+        disableButton(this.$registerBtn);
       }
     });
 
@@ -94,6 +96,7 @@ export default class RegisterPage extends Component {
 
       if (isSuccess(response) && !data.available) {
         this.$helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
+        disableButton(this.$registerBtn);
       }
     });
 
@@ -105,15 +108,24 @@ export default class RegisterPage extends Component {
     this.$inputs.profile.addEventListener("change", (e) => {
       this.profileFile = e.target.files[0];
 
-      if (!this.profileFile) return;
+      this.$helperTexts.profile.textContent = profileValidator(
+        this.profileFile
+      );
+
+      if (!this.profileFile) {
+        this.$profileImage.src = "";
+        this.$profileImage.classList.add("hidden");
+        disableButton(this.$registerBtn);
+        return;
+      }
 
       const reader = new FileReader();
       reader.onload = () => {
         this.$profileImage.src = reader.result;
         this.$profileImage.classList.remove("hidden");
-        this.$helperTexts.profile.textContent = "";
         checkAllInputValid(this.$inputs, this.$helperTexts, this.$registerBtn);
       };
+
       reader.readAsDataURL(this.profileFile);
     });
 
