@@ -1,6 +1,6 @@
 import { isSuccess } from "../../api/base-api.js";
 import { logout } from "../../api/user-api.js";
-import Component from "../../Component.js";
+import Component from "../core/Component.js";
 import { navigateTo, ROUTES } from "../../router/router.js";
 import { Auth } from "../../store/auth-store.js";
 import ProfileIcon from "../profile/ProfileIcon.js";

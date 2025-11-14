@@ -1,4 +1,4 @@
-import Component from "../../../Component.js";
+import Component from "../../../components/core/Component.js";
 import { isSuccess, parseData } from "../../../api/base-api.js";
 import { getPostList } from "../../../api/post-api.js";
 import Header from "../../../components/header/Header.js";

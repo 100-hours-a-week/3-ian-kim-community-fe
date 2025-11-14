@@ -5,7 +5,7 @@ import {
   register,
 } from "../../../api/user-api.js";
 import { MESSAGES } from "../../../common/constants.js";
-import Component from "../../../Component.js";
+import Component from "../../../components/core/Component.js";
 import Header from "../../../components/header/Header.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 import {

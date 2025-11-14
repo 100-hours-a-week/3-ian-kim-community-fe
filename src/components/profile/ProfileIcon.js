@@ -1,4 +1,4 @@
-import Component from "../../Component.js";
+import Component from "../core/Component.js";
 import { getUserProfile } from "../../utils/image-utils.js";
 
 export default class ProfileIcon extends Component {

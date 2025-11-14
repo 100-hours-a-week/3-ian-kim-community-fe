@@ -1,6 +1,6 @@
 import { isSuccess, parseData } from "../../../api/base-api.js";
 import { getPostDetail, updatePost } from "../../../api/post-api.js";
-import Component from "../../../Component.js";
+import Component from "../../../components/core/Component.js";
 import Header from "../../../components/header/Header.js";
 import {
   getUrlSearchParam,

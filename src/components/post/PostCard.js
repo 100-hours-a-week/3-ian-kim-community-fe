@@ -1,4 +1,4 @@
-import Component from "../../Component.js";
+import Component from "../core/Component.js";
 import { navigateTo, ROUTES } from "../../router/router.js";
 import { formatCompactNumber } from "../../utils/fomat-utils.js";
 import ProfileIcon from "../profile/ProfileIcon.js";
