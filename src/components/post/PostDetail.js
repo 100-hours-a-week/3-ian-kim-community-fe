@@ -1,5 +1,5 @@
 import { getImage } from "../../api/image-api.js";
-import Component from "../../Component.js";
+import Component from "../core/Component.js";
 import { Auth } from "../../store/auth-store.js";
 import { formatCompactNumber } from "../../utils/fomat-utils.js";
 import ProfileIcon from "../profile/ProfileIcon.js";

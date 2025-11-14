@@ -6,7 +6,7 @@ import {
   myPage,
   nicknameValidation,
 } from "../../../api/user-api.js";
-import Component from "../../../Component.js";
+import Component from "../../../components/core/Component.js";
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
 import Toast from "../../../components/toast/Toast.js";

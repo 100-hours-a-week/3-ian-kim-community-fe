@@ -1,7 +1,7 @@
 import { isSuccess, parseData } from "../../../api/base-api.js";
 import { login } from "../../../api/user-api.js";
 import { MESSAGES } from "../../../common/constants.js";
-import Component from "../../../Component.js";
+import Component from "../../../components/core/Component.js";
 import Header from "../../../components/header/Header.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 import { Auth } from "../../../store/auth-store.js";

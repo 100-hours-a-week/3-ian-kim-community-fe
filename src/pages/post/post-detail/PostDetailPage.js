@@ -5,7 +5,7 @@ import {
   getPostDetail,
   toggleLike,
 } from "../../../api/post-api.js";
-import Component from "../../../Component.js";
+import Component from "../../../components/core/Component.js";
 import CommentSection from "../../../components/comment/CommentSection.js";
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";

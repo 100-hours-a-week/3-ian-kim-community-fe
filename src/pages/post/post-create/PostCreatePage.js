@@ -1,6 +1,6 @@
 import { isSuccess } from "../../../api/base-api.js";
 import { createPost } from "../../../api/post-api.js";
-import Component from "../../../Component.js";
+import Component from "../../../components/core/Component.js";
 import Header from "../../../components/header/Header.js";
 import PostForm from "../../../components/post/PostForm.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";

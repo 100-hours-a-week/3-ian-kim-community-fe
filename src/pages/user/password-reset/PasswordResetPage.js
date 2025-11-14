@@ -1,6 +1,6 @@
 import { isSuccess } from "../../../api/base-api.js";
 import { resetPassword } from "../../../api/user-api.js";
-import Component from "../../../Component.js";
+import Component from "../../../components/core/Component.js";
 import Header from "../../../components/header/Header.js";
 import Toast from "../../../components/toast/Toast.js";
 import { Auth } from "../../../store/auth-store.js";

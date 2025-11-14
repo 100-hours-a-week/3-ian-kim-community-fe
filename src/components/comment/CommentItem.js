@@ -1,4 +1,4 @@
-import Component from "../../Component.js";
+import Component from "../core/Component.js";
 import { Auth } from "../../store/auth-store.js";
 import Modal from "../modal/Modal.js";
 import ProfileIcon from "../profile/ProfileIcon.js";
