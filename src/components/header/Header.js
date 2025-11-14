@@ -83,7 +83,7 @@ export default class Header extends Component {
       <header class="header">
         <button class="header-btn-back hidden" type="button">&lt;</button>
 
-        <h1 class="header-title">아무 말 대잔치</h1>
+        <h1 class="header-title">Q&A Library</h1>
 
         <div class="header-profile hidden">
           <div id="profile-area-header"></div>
