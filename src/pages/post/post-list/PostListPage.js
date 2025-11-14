@@ -89,13 +89,7 @@ export default class PostListPage extends Component {
 
   template() {
     return /*html*/ `
-      <div class="greeting">
-        <p>안녕하세요,</p>
-        <p>아무 말 대잔치 <strong>게시판</strong>입니다.</p>
-      </div>
-
       <button class="btn-write bg-purple text-white">게시글 작성</button>
-
       <section class="post-list"></section>
     `;
   }
