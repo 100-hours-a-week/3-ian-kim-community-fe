@@ -103,17 +103,17 @@ export default class PostEditPage extends Component {
     const response = await updatePost(this.post.postId, request);
 
     if (isSuccess(response)) {
-      alert("게시글이 수정되었습니다.");
+      alert("질문이 수정되었습니다.");
       navigateTo(`${ROUTES.POST_DETAIL}?id=${this.post.postId}`);
       return;
     }
 
-    alert("게시글 수정에 실패했습니다.");
+    alert("질문 수정에 실패했습니다.");
   }
 
   template() {
     return /*html*/ `
-      <h1>게시글 수정</h1>
+      <h1>질문 수정</h1>
 
       <form class="post-form">
         <div class="input-group">

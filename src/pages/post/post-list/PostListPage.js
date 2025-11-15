@@ -69,7 +69,7 @@ export default class PostListPage extends Component {
     const response = await getPostList(this.page++);
 
     if (!isSuccess(response)) {
-      alert("게시글 목록 조회에 실패했습니다.");
+      alert("질문 목록 조회에 실패했습니다.");
       return;
     }
 
