@@ -35,6 +35,7 @@ export default class ProfileEditPage extends Component {
     this.$deleteAccountBtn = document.querySelector(".btn-account-delete");
     this.$modal = document.querySelector(".modal");
     this.$email = document.querySelector(".email");
+    this.$completeToast = document.querySelector(".toast-complete");
 
     new Header(document.querySelector(".header"));
 
@@ -44,7 +45,8 @@ export default class ProfileEditPage extends Component {
       onAccept: () => this.handleDeleteAccount(),
     });
 
-    this.$toast = new Toast();
+    this.completeToast = new Toast(this.$completeToast, { msg: "수정 완료" });
+
     this.user = await this.handleGetProfile();
 
     this.$inputs.nickname.value = this.user.nickname;
@@ -127,7 +129,7 @@ export default class ProfileEditPage extends Component {
 
       if (isSuccess(response)) {
         const user = await parseData(response);
-        this.$toast.show();
+        this.completeToast.show();
         if ("profile" in this.request) {
           Auth.updateProfile(user.profile);
         }
@@ -196,7 +198,7 @@ export default class ProfileEditPage extends Component {
         회원탈퇴
       </button>
 
-      <div class="toast-complete"></div>
+      <div class="toast-complete hidden"></div>
 
       <div
         id="modal-account-delete"
