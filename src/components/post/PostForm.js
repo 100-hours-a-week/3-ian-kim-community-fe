@@ -1,13 +1,9 @@
 import Component from "../core/Component.js";
-import {
-  postContentValidator,
-  postTitleValidator,
-} from "../../utils/validation-utils.js";
+import { postContentValidator, postTitleValidator } from "../../utils/validation-utils.js";
 import {
   addValidationEvents,
   checkAllInputValid,
   isButtonEnabled,
-  parseInputValues,
   setInputElemets,
 } from "../../utils/form-utils.js";
 
@@ -19,7 +15,7 @@ export default class PostForm extends Component {
     };
     this.$inputs = {};
     this.$helperTexts = {};
-    this.imageFile;
+    this.image;
   }
 
   afterRendered() {
@@ -31,23 +27,18 @@ export default class PostForm extends Component {
 
   setEvents() {
     // 입력값 검증
-    addValidationEvents(
-      this.$inputs,
-      this.$helperTexts,
-      this.$postBtn,
-      this.VALIDATORS
-    );
+    addValidationEvents(this.$inputs, this.$helperTexts, this.$postBtn, this.VALIDATORS);
 
     this.$inputImage.addEventListener("change", (e) => {
-      this.imageFile = e.target.files[0];
+      this.image = e.target.files[0];
 
-      if (!this.imageFile) return;
+      if (!this.image) return;
 
       const reader = new FileReader();
       reader.onload = () => {
         this.$inputImage.src = reader.result;
       };
-      reader.readAsDataURL(this.imageFile);
+      reader.readAsDataURL(this.image);
 
       checkAllInputValid(this.$inputs, this.$helperTexts, this.$postBtn);
     });
@@ -57,11 +48,7 @@ export default class PostForm extends Component {
         return;
       }
 
-      const request = parseInputValues(this.$inputs);
-      if (this.imageFile) {
-        request["image"] = this.imageFile;
-      }
-      this.props.onSubmit(request);
+      this.props.onSubmit(this.$inputs, this.image);
     });
   }
 

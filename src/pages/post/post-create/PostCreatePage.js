@@ -5,6 +5,7 @@ import Header from "../../../components/header/Header.js";
 import PostForm from "../../../components/post/PostForm.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 import { Auth } from "../../../store/auth-store.js";
+import { parseInputValues } from "../../../utils/form-utils.js";
 
 export default class PostCreatePage extends Component {
   beforeRendered() {
@@ -19,11 +20,12 @@ export default class PostCreatePage extends Component {
     new PostForm(document.querySelector(".container"), {
       title: "질문 작성",
       btnName: "완료",
-      onSubmit: (request) => this.handleSubmit(request),
+      onSubmit: ($inputs, image) => this.handleSubmit($inputs, image),
     });
   }
 
-  async handleSubmit(request) {
+  async handleSubmit($inputs, image) {
+    const request = image ? { ...parseInputValues($inputs), image } : parseInputValues($inputs);
     const response = await createPost(request);
 
     if (isSuccess(response)) {
@@ -35,12 +37,8 @@ export default class PostCreatePage extends Component {
     alert("질문 생성에 실패했습니다.");
   }
 
-  render() {
-    this.target.outerHTML = this.template();
-  }
-
   template() {
-    return /*html*/ ` <main class="container"></main> `;
+    return /*html*/ ``;
   }
 }
 
