@@ -80,15 +80,8 @@ export default class PostDetailPage extends Component {
     }
 
     const data = await parseData(response);
-
-    if (data.liked) {
-      postLikeCnt.textContent = formatCompactNumber(++this.post.likeCount);
-      postLikeBtn.classList.replace("not-liked", "liked");
-      return;
-    }
-
-    postLikeCnt.textContent = formatCompactNumber(--this.post.likeCount);
-    postLikeBtn.classList.replace("liked", "not-liked");
+    postLikeCnt.textContent = formatCompactNumber(data.likeCount);
+    data.liked ? postLikeBtn.classList.add("liked") : postLikeBtn.classList.remove("liked");
   }
 
   template() {

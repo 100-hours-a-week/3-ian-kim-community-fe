@@ -18,9 +18,7 @@ export default class PostDetail extends Component {
     this.$postActions = document.querySelector(".post-actions");
     this.$postImage = document.querySelector(".post-img");
 
-    this.$profileArea = document.querySelector(
-      `#profile-area-post-detail-${this.post.postId}`
-    );
+    this.$profileArea = document.querySelector(`#profile-area-post-detail-${this.post.postId}`);
 
     new ProfileIcon(this.$profileArea, {
       profilePath: this.post.authorProfile,
@@ -100,21 +98,17 @@ export default class PostDetail extends Component {
 
         <div class="post-stats">
           <button
-            class="like-box btn-post-like ${
-              this.post.liked ? "liked" : "not-liked"
-            }">
+            class="like-box btn-post-like ${this.post.liked && "liked"}">
             <span class="thumbs-emoji">👍</span>
             <span class="like-cnt"
               >${formatCompactNumber(this.post.likeCount)}</span
             >
           </button>
           <button
-            class="like-box btn-post-unlike ${
-              this.post.liked ? "not-liked" : "liked"
-            }">
+            class="like-box btn-post-unlike">
             <span class="thumbs-emoji">👎</span>
             <span class="like-cnt"
-              >${formatCompactNumber(this.post.likeCount)}</span
+              >0</span
             >
           </button>
         </div>
