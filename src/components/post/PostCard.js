@@ -34,27 +34,35 @@ export default class PostCard extends Component {
   template() {
     return /*html*/ `
       <article class="post-card post-card-${this.post.postId}">
-        <h3 class="post-title">${this.post.title.slice(0, 26)}</h3>
-        <div class="post-info">
+        <div class="post-card-body">
+          <div class="post-card-title">${this.post.title.slice(0, 26)}</div>
+          <div class="post-card-content">
+            ${
+              this.post.content.length >= 40
+                ? this.post.content.slice(0, 40) + "..."
+                : this.post.content
+            }
+          </div>
+        </div>
+
+        <div class="post-card-footer">
           <div class="post-stats">
             <span class="like-cnt"
               >좋아요 ${formatCompactNumber(this.post.likeCount)}</span
             >
             <span class="comment-cnt"
-              >댓글 ${formatCompactNumber(this.post.commentCount)}</span
+              >답변 ${formatCompactNumber(this.post.commentCount)}</span
             >
             <span class="view-cnt"
               >조회수 ${formatCompactNumber(this.post.viewCount)}</span
             >
           </div>
-          <span class="created-date">${this.post.createdDate}</span>
-        </div>
 
-        <hr class="divider" />
-
-        <div class="author-profile">
-          <div id="profile-area-post-card-${this.post.postId}"></div>
-          <span class="author-name">${this.post.authorNickname}</span>
+          <div class="author-profile post-card-author-profile">
+            <div id="profile-area-post-card-${this.post.postId}"></div>
+            <span class="author-name">${this.post.authorNickname}</span>
+            <span class="created-date">${this.post.createdDate}</span>
+          </div>
         </div>
       </article>
     `;

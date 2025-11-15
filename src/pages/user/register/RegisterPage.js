@@ -6,7 +6,7 @@ import {
 } from "../../../api/user-api.js";
 import { MESSAGES } from "../../../common/constants.js";
 import Component from "../../../components/core/Component.js";
-import Header from "../../../components/header/Header.js";
+import AuthHeader from "../../../components/header/AuthHeader.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 import {
   addValidationEvents,
@@ -40,9 +40,7 @@ export default class RegisterPage extends Component {
   }
 
   afterRendered() {
-    new Header(document.querySelector(".header"), {
-      hasBackBtn: true,
-    });
+    new AuthHeader(document.querySelector(".header"));
 
     setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);
     this.$profilePreview = document.querySelector(".profile-preview");
@@ -160,8 +158,8 @@ export default class RegisterPage extends Component {
     return /*html*/ `
       <h1>회원가입</h1>
 
-      <form class="user-form">
-        <div class="user-form-input-group register-form-input-group">
+      <form class="user-form register-form">
+        <div class="user-form-input-group">
           <label for="image" class="label">프로필 사진 *</label>
 
           <p class="helper-text helper-text-profile text-red">
@@ -180,7 +178,7 @@ export default class RegisterPage extends Component {
             autocomplete="off" />
         </div>
 
-        <div class="user-form-input-group register-form-input-group">
+        <div class="user-form-input-group">
           <label for="email" class="label">이메일 *</label>
           <input
             type="email"
@@ -192,7 +190,7 @@ export default class RegisterPage extends Component {
           <p class="helper-text helper-text-email text-red"></p>
         </div>
 
-        <div class="user-form-input-group register-form-input-group">
+        <div class="user-form-input-group">
           <label for="password" class="label">비밀번호 *</label>
           <input
             type="password"
@@ -204,8 +202,8 @@ export default class RegisterPage extends Component {
           <p class="helper-text helper-text-password text-red"></p>
         </div>
 
-        <div class="user-form-input-group register-form-input-group">
-          <label for="confirm" class="label">비밀번호 확인*</label>
+        <div class="user-form-input-group">
+          <label for="confirm" class="label">비밀번호 확인 *</label>
           <input
             type="password"
             id="confirm"
@@ -216,8 +214,8 @@ export default class RegisterPage extends Component {
           <p class="helper-text helper-text-confirm text-red"></p>
         </div>
 
-        <div class="user-form-input-group register-form-input-group">
-          <label for="nickname" class="label">닉네임*</label>
+        <div class="user-form-input-group">
+          <label for="nickname" class="label">닉네임 *</label>
           <input
             type="text"
             id="nickname"
@@ -235,11 +233,12 @@ export default class RegisterPage extends Component {
         </button>
       </form>
 
-      <a href="#" class="link-login user-form-link text-black"
-        >로그인하러 가기</a
-      >
+      <div class="user-form-footer">
+        <span>이미 계정이 있으신가요?</span>
+        <a href="#" class="link-login user-form-link text-blue">로그인하러 가기</a>
+      </div>
     `;
   }
 }
 
-new RegisterPage(document.querySelector(".container"));
+new RegisterPage(document.querySelector(".auth-container"));

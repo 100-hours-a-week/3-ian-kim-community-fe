@@ -14,12 +14,9 @@ export default class PostCreatePage extends Component {
   }
 
   afterRendered() {
-    new Header(document.querySelector(".header"), {
-      hasBackBtn: true,
-      hasProfileIcon: true,
-    });
+    new Header(document.querySelector(".header"));
 
-    new PostForm(document.querySelector(".container"), {
+    new PostForm(document.querySelector(".post-container"), {
       title: "게시글 생성",
       btnName: "완료",
       onSubmit: (request) => this.handleSubmit(request),
@@ -43,8 +40,8 @@ export default class PostCreatePage extends Component {
   }
 
   template() {
-    return /*html*/ ` <main class="container"></main> `;
+    return /*html*/ ` <main class="post-container"></main> `;
   }
 }
 
-new PostCreatePage(document.querySelector(".container"));
+new PostCreatePage(document.querySelector(".post-container"));

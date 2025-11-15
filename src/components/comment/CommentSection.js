@@ -36,16 +36,20 @@ export default class CommentSection extends Component {
     const response = await deleteComment(commentId);
 
     if (isSuccess(response)) {
-      alert("댓글이 삭제되었습니다.");
+      alert("답변이 삭제되었습니다.");
       window.location.reload();
       return;
     }
 
-    alert("댓글 삭제에 실패했습니다.");
+    alert("답변 삭제에 실패했습니다.");
   }
 
   template() {
     return /*html*/ `
+      <div class="comment-stat">
+        <span class="comment-stat-name">답변</span>
+        <span class="comment-cnt">${this.comments.length}</span>
+      </div>
       <div class="comment-create"></div>
       <ul class="comment-list">
         <li class="comment-item"></li>

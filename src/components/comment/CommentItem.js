@@ -28,7 +28,7 @@ export default class CommentItem extends Component {
     );
 
     new Modal(this.$commentDeleteModal, {
-      title: "댓글을 삭제하시겠습니까?",
+      title: "답변을 삭제하시겠습니까?",
       content: "삭제한 내용은 복구할 수 없습니다.",
       onAccept: () => this.props.onDelete(this.comment.commentId),
     });
@@ -60,9 +60,8 @@ export default class CommentItem extends Component {
           <div class="author-profile">
             <div id="profile-area-comment-item-${this.comment.commentId}"></div>
             <span class="author-name">${this.comment.authorNickname}</span>
+            <span class="comment-created-date">${this.comment.createdDate}</span>
           </div>
-
-          <p class="created-date">${this.comment.createdDate}</p>
 
           <div class="comment-actions">
             <button class="btn-comment-edit">수정</button>

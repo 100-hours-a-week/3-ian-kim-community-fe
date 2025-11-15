@@ -1,32 +1,54 @@
 .post-card {
+  border: 1px solid #d3d3d3;
   border-radius: 10px;
-  padding: 10px 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  height: 160px;
 }
 
-.post-title {
+.post-card:hover {
+  background-color: rgb(205 206 214 / 16%);
+  border-color: rgb(205, 206, 214);
+}
+
+.post-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   text-align: left;
-  font-size: 20px;
+  border-bottom: 1px solid #d3d3d3;
+  height: 80px;
+  padding: 16px 20px;
+}
+
+.post-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+  padding: 12px 20px 0 20px;
+}
+
+.post-card-title {
+  text-align: left;
+  font-size: 16px;
   font-weight: 600;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.post-info {
-  display: flex;
-  justify-content: space-between;
+.post-card-content {
+  font-size: 14px;
+  color: rgb(108, 110, 126);
 }
 
 .post-stats {
   display: flex;
+  justify-content: right;
   gap: 10px;
   font-size: 12px;
 }
 
-.divider {
-  border: none;
-  border-top: 1px solid #d3d3d3;
-  width: 100%;
-  margin: 10px 0;
+.post-card-author-profile .profile-icon {
+  width: 20px;
+  height: 20px;
 }

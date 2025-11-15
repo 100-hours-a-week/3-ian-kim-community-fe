@@ -18,12 +18,12 @@ export default class Modal extends Component {
 
   template() {
     return /*html*/ `
-      <div class="modal-content bg-white">
+      <div class="modal-content">
         <h3 class="modal-title">${this.props.title}</h3>
         <p class="modal-detail">${this.props.content}</p>
         <div class="modal-buttons">
-          <button class="btn-cancel bg-black text-white">취소</button>
-          <button class="btn-accept bg-purple">확인</button>
+          <button class="btn-cancel">취소</button>
+          <button class="btn-accept">확인</button>
         </div>
       </div>
     `;

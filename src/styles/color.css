@@ -1,18 +1,10 @@
 /* background */
-.bg-white {
-  background-color: white;
-}
-
-.bg-purple {
-  background-color: #aca0eb;
-}
-
 .bg-btn-disabled {
-  background-color: #aca0eb;
+  background-color: #7d8d9e;
 }
 
 .bg-btn-enabled {
-  background-color: #7f6aee;
+  background-color: #3678bf;
 }
 
 .bg-gray {
@@ -42,4 +34,8 @@
 
 .text-gray {
   color: #838486;
+}
+
+.text-blue {
+  color: #4791e0;
 }

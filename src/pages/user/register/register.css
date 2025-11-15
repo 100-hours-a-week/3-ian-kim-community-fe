@@ -1,8 +1,7 @@
-.register-form-input-group {
-  position: relative;
+.register-form {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  gap: 10px;
 }
 
 .plus-icon {
