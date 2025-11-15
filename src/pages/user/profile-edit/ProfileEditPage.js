@@ -1,25 +1,13 @@
 import { isSuccess, parseData } from "../../../api/base-api.js";
 import { MESSAGES } from "../../../common/constants.js";
-import {
-  deleteAccount,
-  editAccount,
-  myPage,
-  nicknameValidation,
-} from "../../../api/user-api.js";
+import { deleteAccount, editAccount, myPage, nicknameValidation } from "../../../api/user-api.js";
 import Component from "../../../components/core/Component.js";
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
 import Toast from "../../../components/toast/Toast.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
-import {
-  enableButton,
-  isButtonEnabled,
-  setInputElemets,
-} from "../../../utils/form-utils.js";
-import {
-  nicknameValidator,
-  profileValidator,
-} from "../../../utils/validation-utils.js";
+import { enableButton, isButtonEnabled, setInputElemets } from "../../../utils/form-utils.js";
+import { nicknameValidator, profileValidator } from "../../../utils/validation-utils.js";
 import { Auth } from "../../../store/auth-store.js";
 import { getUserProfile } from "../../../utils/image-utils.js";
 
@@ -110,9 +98,7 @@ export default class ProfileEditPage extends Component {
     });
 
     // 프로필 업로드
-    this.$profilePreview.addEventListener("click", () =>
-      this.$inputs.profile.click()
-    );
+    this.$profilePreview.addEventListener("click", () => this.$inputs.profile.click());
 
     this.$inputs.profile.addEventListener("change", (e) => {
       const profile = e.target.files[0];

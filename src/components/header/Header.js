@@ -6,10 +6,6 @@ import { Auth } from "../../store/auth-store.js";
 import ProfileIcon from "../profile/ProfileIcon.js";
 
 export default class Header extends Component {
-  render() {
-    this.target.outerHTML = this.template();
-  }
-
   async afterRendered() {
     this.$headerTitle = document.querySelector(".header-title");
 
@@ -85,11 +81,10 @@ export default class Header extends Component {
 
   template() {
     return /*html*/ `
-      <header class="header">
+      <div class="header-content">
         <h1 class="header-title">DevTalk</h1>
-        
         ${Auth.isLoggedIn() ? this.userTemplate() : this.guestTemplate()}
-      </header>
+      </div>
     `;
   }
 

@@ -9,10 +9,7 @@ import {
   isButtonEnabled,
   setInputElemets,
 } from "../../../utils/form-utils.js";
-import {
-  passwordConfirmValidator,
-  passwordValidator,
-} from "../../../utils/validation-utils.js";
+import { passwordConfirmValidator, passwordValidator } from "../../../utils/validation-utils.js";
 
 export default class PasswordResetPage extends Component {
   beforeRendered() {
@@ -22,8 +19,7 @@ export default class PasswordResetPage extends Component {
 
     this.VALIDATORS = {
       password: passwordValidator,
-      confirm: (value, inputs) =>
-        passwordConfirmValidator(inputs.password.value, value),
+      confirm: (value, inputs) => passwordConfirmValidator(inputs.password.value, value),
     };
   }
 
@@ -39,12 +35,7 @@ export default class PasswordResetPage extends Component {
 
   setEvents() {
     // 입력값 검증
-    addValidationEvents(
-      this.inputs,
-      this.helperTexts,
-      this.editBtn,
-      this.VALIDATORS
-    );
+    addValidationEvents(this.inputs, this.helperTexts, this.editBtn, this.VALIDATORS);
 
     // 비밀번호 수정 API 요청
     this.editBtn.addEventListener("click", async () => {
