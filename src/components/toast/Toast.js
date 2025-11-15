@@ -22,7 +22,7 @@ export default class Toast {
 
   #template() {
     return /*html*/ `
-      <div class="toast-complete bg-purple text-white hidden">수정완료</div>
+      <div class="toast-complete hidden">수정완료</div>
     `;
   }
 }

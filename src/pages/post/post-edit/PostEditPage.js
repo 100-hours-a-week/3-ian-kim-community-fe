@@ -46,10 +46,7 @@ export default class PostEditPage extends Component {
   }
 
   afterRendered() {
-    new Header(document.querySelector(".header"), {
-      hasBackBtn: true,
-      hasProfileIcon: true,
-    });
+    new Header(document.querySelector(".header"));
 
     setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);
 
@@ -172,4 +169,4 @@ ${this.post?.content || ""}</textarea
   }
 }
 
-new PostEditPage(document.querySelector(".container"));
+new PostEditPage(document.querySelector(".post-container"));

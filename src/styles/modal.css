@@ -14,6 +14,7 @@
   padding: 30px 50px;
   border-radius: 10px;
   text-align: center;
+  background-color: white;
 }
 
 .modal-buttons {
@@ -25,7 +26,18 @@
 
 .modal-buttons button {
   padding: 10px 35px;
-  border: none;
   border-radius: 10px;
-  cursor: pointer;
+  font-weight: 800;
+}
+
+.btn-accept {
+  background-color: #3678bf;
+  border: none;
+  color: white;
+}
+
+.btn-cancel {
+  background-color: white;
+  border: 2px solid rgba(255, 121, 121, 0.8);
+  color: rgba(255, 121, 121, 0.8);
 }

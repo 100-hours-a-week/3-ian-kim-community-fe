@@ -62,12 +62,31 @@ export default class PostDetail extends Component {
       <h3 class="post-title">${this.post.title}</h3>
 
       <div class="post-header">
-        <div class="author-profile">
-          <div id="profile-area-post-detail-${this.post.postId}"></div>
-          <span class="author-name">${this.post.authorNickname}</span>
-        </div>
+        <div class="post-detaul-header-info">
+          <div class="author-profile">
+            <div id="profile-area-post-detail-${this.post.postId}"></div>
+            <span class="author-name">${this.post.authorNickname}</span>
+          </div>
 
-        <span class="created-date">${this.post.createdDate}</span>
+          <div class="post-detail-info">
+            <div>
+              <span class="post-detail-header-name">작성일</span>
+              <span class="created-date">${this.post.createdDate}</span>
+            </div>
+
+            <div>
+              <span class="post-detail-header-name">수정일</span>
+              <span class="updated-date">${this.post.updatedDate}</span>
+            </div>
+
+            <div>
+              <span class="post-detail-header-name">조회수</span>
+              <span class="post-detail-view-count"
+                >${formatCompactNumber(this.post.viewCount)}</span
+              >
+            </div>
+          </div>
+        </div>
 
         <div class="post-actions">
           <button class="btn-post-edit">수정</button>
@@ -75,33 +94,29 @@ export default class PostDetail extends Component {
         </div>
       </div>
 
-      <hr class="divider" />
-
       <div class="post-content">
-        <img
-          src=""
-          alt="이미지"
-          class="post-img hidden" />
+        <img src="" alt="이미지" class="post-img hidden" />
         <p>${this.post.content}</p>
 
         <div class="post-stats">
           <button
-            class="stat-box btn-post-like ${
+            class="like-box btn-post-like ${
               this.post.liked ? "liked" : "not-liked"
             }">
+            <span class="thumbs-emoji">👍</span>
             <span class="like-cnt"
               >${formatCompactNumber(this.post.likeCount)}</span
             >
-            <span>좋아요</span>
           </button>
-          <div class="stat-box bg-gray">
-            <span>${formatCompactNumber(this.post.viewCount)}</span>
-            <span>조회수</span>
-          </div>
-          <div class="stat-box bg-gray">
-            <span>${formatCompactNumber(this.post.commentCount)}</span>
-            <span>댓글</span>
-          </div>
+          <button
+            class="like-box btn-post-unlike ${
+              this.post.liked ? "not-liked" : "liked"
+            }">
+            <span class="thumbs-emoji">👎</span>
+            <span class="like-cnt"
+              >${formatCompactNumber(this.post.likeCount)}</span
+            >
+          </button>
         </div>
       </div>
     `;

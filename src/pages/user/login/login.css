@@ -1,6 +1,7 @@
-.login-form-input-group {
+.user-form-inputs {
   display: flex;
   flex-direction: column;
+  gap: 18px;
   text-align: left;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }

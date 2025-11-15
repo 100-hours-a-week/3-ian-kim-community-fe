@@ -30,10 +30,7 @@ export default class PostDetailPage extends Component {
     this.post = await this.handleGetPostDetail(postId);
     this.comments = await this.handleGetCommentList(postId);
 
-    new Header(document.querySelector(".header"), {
-      hasBackBtn: true,
-      hasProfileIcon: true,
-    });
+    new Header(document.querySelector(".header"));
 
     this.$postDeleteModal = document.querySelector("#modal-post-delete");
     new Modal(this.$postDeleteModal, {
@@ -105,8 +102,10 @@ export default class PostDetailPage extends Component {
 
   template() {
     return /*html*/ `
-      <section class="post-detail"></section>
-      <section class="comment-section"></section>
+      <div class="post-detail-page">
+        <section class="post-detail"></section>
+        <section class="comment-section"></section>
+      </div>
 
       <div
         id="modal-post-delete"
@@ -115,4 +114,4 @@ export default class PostDetailPage extends Component {
   }
 }
 
-new PostDetailPage(document.querySelector(".post-detail-container"));
+new PostDetailPage(document.querySelector(".post-container"));

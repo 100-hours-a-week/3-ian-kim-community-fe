@@ -2,7 +2,7 @@ import { isSuccess, parseData } from "../../../api/base-api.js";
 import { login } from "../../../api/user-api.js";
 import { MESSAGES } from "../../../common/constants.js";
 import Component from "../../../components/core/Component.js";
-import Header from "../../../components/header/Header.js";
+import AuthHeader from "../../../components/header/AuthHeader.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
 import { Auth } from "../../../store/auth-store.js";
 import {
@@ -28,7 +28,7 @@ export default class LoginPage extends Component {
   }
 
   afterRendered() {
-    new Header(document.querySelector(".header"), {});
+    new AuthHeader(document.querySelector(".header"));
 
     setInputElemets(this.$inputs, this.$helperTexts, this.VALIDATORS);
     this.$loginBtn = document.querySelector(".btn-login");
@@ -79,23 +79,25 @@ export default class LoginPage extends Component {
       <h1>로그인</h1>
 
       <form class="user-form">
-        <div class="user-form-input-group login-form-input-group">
-          <label for="email" class="label">이메일</label>
-          <input
-            type="text"
-            id="email"
-            class="input-email"
-            placeholder="이메일을 입력하세요." />
-        </div>
+        <div class="user-form-inputs">
+          <div class="user-form-input-group">
+            <label for="email" class="label">이메일</label>
+            <input
+              type="text"
+              id="email"
+              class="input-email"
+              placeholder="이메일을 입력하세요." />
+          </div>
 
-        <div class="user-form-input-group login-form-input-group">
-          <label for="password" class="label">비밀번호</label>
-          <input
-            type="password"
-            id="password"
-            class="input-password"
-            autocomplete="off"
-            placeholder="비밀번호를 입력하세요." />
+          <div class="user-form-input-group">
+            <label for="password" class="label">비밀번호</label>
+            <input
+              type="password"
+              id="password"
+              class="input-password"
+              autocomplete="off"
+              placeholder="비밀번호를 입력하세요." />
+          </div>
         </div>
 
         <p
@@ -108,9 +110,14 @@ export default class LoginPage extends Component {
         </button>
       </form>
 
-      <a href="#" class="link-register user-form-link text-black">회원가입</a>
+      <div class="user-form-footer">
+        <span>아직 계정이 없으신가요?</span>
+        <a href="#" class="link-register user-form-link text-blue"
+          >회원가입하러 가기</a
+        >
+      </div>
     `;
   }
 }
 
-new LoginPage(document.querySelector(".container"));
+new LoginPage(document.querySelector(".auth-container"));

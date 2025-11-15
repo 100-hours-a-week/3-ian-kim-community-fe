@@ -4,25 +4,21 @@ import { getPostList } from "../../../api/post-api.js";
 import Header from "../../../components/header/Header.js";
 import PostCard from "../../../components/post/PostCard.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
-import { Auth } from "../../../store/auth-store.js";
 
 export default class PostListPage extends Component {
   beforeRendered() {
-    if (!Auth.validateAuth()) {
-      return;
-    }
-
     this.page = 0;
     this.hasNextPage = false;
     this.$lastPostCard;
     this.$postList;
     this.posts = [];
+    this.$activeCategoryBtn;
+    this.$activeFilterBtn;
+    this.$activeSortBtn;
   }
 
   async afterRendered() {
-    new Header(document.querySelector(".header"), {
-      hasProfileIcon: true,
-    });
+    new Header(document.querySelector(".header"));
 
     this.$postList = document.querySelector(".post-list");
     this.observer = new IntersectionObserver(
@@ -35,12 +31,32 @@ export default class PostListPage extends Component {
       }
     );
 
+    this.$filterBtns = document.querySelectorAll(".btn-filter");
+    this.$sortBtns = document.querySelectorAll(".btn-sort");
+    this.$categoryBtns = document.querySelectorAll(".btn-post-category");
+
     await this.handleGetPostList(this.$postList);
   }
 
   setEvents() {
     document.querySelector(".btn-write").addEventListener("click", () => {
       navigateTo(ROUTES.POST_CREATE);
+    });
+
+    this.setbtnClickActivelistener(this.$filterBtns, this.$activeFilterBtn);
+    this.setbtnClickActivelistener(this.$sortBtns, this.$activeSortBtn);
+    this.setbtnClickActivelistener(this.$categoryBtns, this.$activeCategoryBtn);
+  }
+
+  setbtnClickActivelistener($btns, $activeBtn) {
+    $btns.forEach(($btn) => {
+      $btn.addEventListener("click", () => {
+        if ($activeBtn) {
+          $activeBtn.classList.remove("active");
+        }
+        $activeBtn = $btn;
+        $activeBtn.classList.add("active");
+      });
     });
   }
 
@@ -89,10 +105,44 @@ export default class PostListPage extends Component {
 
   template() {
     return /*html*/ `
-      <button class="btn-write bg-purple text-white">게시글 작성</button>
+      <div class="post-list-header">
+        <div class="post-category-btns">
+          <button class="btn-post-category btn-category-all">전체</button>
+          <button class="btn-post-category btn-category-backend">백엔드</button>
+          <button class="btn-post-category btn-category-frontend">프론트엔드</button>
+          <button class="btn-post-category btn-category-ai">AI</button>
+          <button class="btn-post-category btn-category-cloud">클라우드</button>
+          <button class="btn-post-category btn-category-career">커리어</button>
+          <button class="btn-post-category btn-category-etc">기타</button>
+        </div>
+
+        <div class="search-write-group">
+          <input
+            type="text"
+            id="post-search"
+            class="post-search"
+            placeholder="질문을 검색해보세요." />
+
+          <button class="btn-write">질문 작성하기</button>
+        </div>
+
+        <div class="filter-sort-group">
+          <div class="filter-btns">
+            <button class="btn-all-post btn-filter">전체</button>
+            <button class="btn-my-question btn-filter">내가 작성한 질문</button>
+            <button class="btn-my-answer btn-filter">내가 작성한 답변</button>
+          </div>
+
+          <div class="sort-btns">
+            <button class="btn-sort-latest btn-sort">최신순</button>
+            <button class="btn-sort-like btn-sort">추천순</button>
+            <button class="btn-sort-view btn-sort">조회순</button>
+          </div>
+        </div>
+      </div>
       <section class="post-list"></section>
     `;
   }
 }
 
-new PostListPage(document.querySelector(".container"));
+new PostListPage(document.querySelector(".post-container"));

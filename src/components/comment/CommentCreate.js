@@ -26,12 +26,12 @@ export default class CommentCreate extends Component {
       });
 
       if (isSuccess(response)) {
-        alert("댓글이 생성되었습니다.");
+        alert("답변이 생성되었습니다.");
         window.location.reload();
         return;
       }
 
-      alert("댓글 생성에 실패했습니다.");
+      alert("답변 생성에 실패했습니다.");
     };
   }
 
@@ -49,7 +49,7 @@ export default class CommentCreate extends Component {
 
   changeToEditMode(comment) {
     this.$textArea.value = comment.content;
-    this.$createBtn.textContent = "댓글 수정";
+    this.$createBtn.textContent = "답변 수정";
 
     this.$createBtn.removeEventListener("click", this.commentCreateListener);
 
@@ -63,12 +63,12 @@ export default class CommentCreate extends Component {
       });
 
       if (isSuccess(response)) {
-        alert("댓글이 수정되었습니다.");
+        alert("답변이 수정되었습니다.");
         window.location.reload();
         return;
       }
 
-      alert("댓글 수정에 실패했습니다.");
+      alert("답변 수정에 실패했습니다.");
     });
   }
 
@@ -77,10 +77,10 @@ export default class CommentCreate extends Component {
       <textarea
         id="comment"
         class="input-comment"
-        placeholder="댓글을 남겨주세요!"></textarea>
+        placeholder="답변을 남겨주세요!"></textarea>
 
       <div class="btn-create-box">
-        <button class="btn-create bg-btn-disabled text-white">댓글 등록</button>
+        <button class="btn-create bg-btn-disabled text-white">답변 등록하기</button>
       </div>
     `;
   }

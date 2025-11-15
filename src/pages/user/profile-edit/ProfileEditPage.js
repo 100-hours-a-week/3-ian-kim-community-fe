@@ -48,14 +48,11 @@ export default class ProfileEditPage extends Component {
     this.$modal = document.querySelector(".modal");
     this.$email = document.querySelector(".email");
 
-    new Header(document.querySelector(".header"), {
-      hasBackBtn: true,
-      hasProfileIcon: true,
-    });
+    new Header(document.querySelector(".header"));
 
     new Modal(document.querySelector("#modal-account-delete"), {
       title: "회원탈퇴 하시겠습니까?",
-      content: "작성한 게시글과 댓글은 삭제됩니다.",
+      content: "작성한 게시글과 답변은 삭제됩니다.",
       onAccept: () => this.handleDeleteAccount(),
     });
 

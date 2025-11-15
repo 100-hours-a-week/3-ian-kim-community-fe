@@ -1,21 +1,14 @@
-.post-detail-container {
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-  flex: 1;
+.post-detail-page {
+  max-height: calc(100vh - 150px);
   overflow-y: auto;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 50px;
 }
 
-.post-detail-container::-webkit-scrollbar {
+.post-detail-page::-webkit-scrollbar {
   display: none;
 }
 
 .post-title {
-  font-size: 20px;
+  font-size: 26px;
   text-align: left;
 }
 
@@ -23,6 +16,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgb(206, 206, 206);
+}
+
+.post-detaul-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.post-detail-header-name {
+  color: #636b74;
+}
+
+.created-date,
+.updated-date {
+  color: black;
+}
+
+.post-detail-info {
+  display: flex;
+  gap: 20px;
   font-size: 13px;
 }
 
@@ -42,29 +57,39 @@
 .post-actions button,
 .comment-actions button {
   background: none;
-  border: 1px solid black;
-  border-radius: 6px;
-  padding: 4px 8px;
-  cursor: pointer;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 400;
+}
+
+.btn-post-delete,
+.btn-comment-delete {
+  color: #e7700d;
+  border-color: #e7700d;
 }
 
 .post-img {
-  width: 100%;
-  height: 300px;
+  width: 60%;
   object-fit: cover;
-  margin: 10px 0;
+  margin: 10px auto;
 }
 
 .post-content {
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 10px;
+  gap: 30px;
+  padding: 10px 0;
 }
 
 .post-content p {
   font-size: 14px;
   line-height: 1.6;
+}
+
+.post-detail-view-count {
+  font-size: 12px;
 }
 
 .post-stats {
@@ -75,26 +100,22 @@
   gap: 10px;
 }
 
-.stat-box {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.like-box {
   text-align: center;
-  align-items: center;
-  border: none;
-  border-radius: 9px;
-  padding: 10px 16px;
-  cursor: pointer;
+  border: 1.5px solid #c1c1c1;
+  background-color: white;
+  border-radius: 10px;
+  padding: 12px 14px;
   font-size: 14px;
-  width: 55px;
-  height: 40px;
+  font-weight: 600;
+  width: 50px;
   box-sizing: content-box;
 }
 
-.not-liked {
-  background-color: #d9d9d9;
+.thumbs-emoji {
+  font-size: 20px;
 }
 
 .liked {
-  background-color: #aca0eb;
+  border-color: #e7700d;
 }
