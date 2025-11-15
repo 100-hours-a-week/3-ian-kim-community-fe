@@ -40,6 +40,7 @@
 .comment-list {
   list-style: none;
   padding: 0;
+  min-height: 500px;
 }
 
 .comment-item {
@@ -67,4 +68,43 @@
 .comment-created-date {
   font-size: 13px;
   color: #636b74;
+}
+
+.comment-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.page-number-list {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-page-number.active {
+  background-color: #1b75d0;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-page {
+  border: none;
+  background: none;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+}
+
+.btn-page:hover {
+  background-color: rgb(205 206 214 / 50%);
+  border-color: rgb(205, 206, 214);
+}
+
+.active:hover {
+  border: none;
+  background-color: #1b75d0;
+  color: white;
 }
