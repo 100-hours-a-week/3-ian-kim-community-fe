@@ -21,15 +21,17 @@ export default class PasswordResetPage extends Component {
       password: passwordValidator,
       confirm: (value, inputs) => passwordConfirmValidator(inputs.password.value, value),
     };
+    this.inputs = {};
+    this.helperTexts = {};
   }
 
   afterRendered() {
-    this.inputs = {};
-    this.helperTexts = {};
     this.editBtn = document.querySelector(".btn-reset-password");
+    this.$completeToast = document.querySelector(".toast-complete");
 
     new Header(document.querySelector(".header"));
-    this.toast = new Toast();
+    this.completeToast = new Toast(this.$completeToast, { msg: "수정 완료" });
+
     setInputElemets(this.inputs, this.helperTexts, this.VALIDATORS);
   }
 
@@ -48,7 +50,7 @@ export default class PasswordResetPage extends Component {
       });
 
       if (isSuccess(response)) {
-        this.toast.show();
+        this.completeToast.show();
         return;
       }
 
@@ -92,7 +94,7 @@ export default class PasswordResetPage extends Component {
         </button>
       </form>
 
-      <div class="toast-complete"></div>
+      <div class="toast-complete hidden"></div>
     `;
   }
 }
