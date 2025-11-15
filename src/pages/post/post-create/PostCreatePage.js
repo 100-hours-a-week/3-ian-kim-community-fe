@@ -17,7 +17,7 @@ export default class PostCreatePage extends Component {
     new Header(document.querySelector(".header"));
 
     new PostForm(document.querySelector(".container"), {
-      title: "게시글 생성",
+      title: "질문 작성",
       btnName: "완료",
       onSubmit: (request) => this.handleSubmit(request),
     });
@@ -27,12 +27,12 @@ export default class PostCreatePage extends Component {
     const response = await createPost(request);
 
     if (isSuccess(response)) {
-      alert("게시글이 생성되었습니다.");
+      alert("질문이 생성되었습니다.");
       navigateTo(ROUTES.POST_LIST);
       return;
     }
 
-    alert("게시글 생성에 실패했습니다.");
+    alert("질문 생성에 실패했습니다.");
   }
 
   render() {

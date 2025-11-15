@@ -1,20 +1,12 @@
 import { isSuccess, parseData } from "../../../api/base-api.js";
 import { getCommentList } from "../../../api/comment-api.js";
-import {
-  deletePost,
-  getPostDetail,
-  toggleLike,
-} from "../../../api/post-api.js";
+import { deletePost, getPostDetail, toggleLike } from "../../../api/post-api.js";
 import Component from "../../../components/core/Component.js";
 import CommentSection from "../../../components/comment/CommentSection.js";
 import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
 import PostDetail from "../../../components/post/PostDetail.js";
-import {
-  getUrlSearchParam,
-  navigateTo,
-  ROUTES,
-} from "../../../router/router.js";
+import { getUrlSearchParam, navigateTo, ROUTES } from "../../../router/router.js";
 import { Auth } from "../../../store/auth-store.js";
 import { formatCompactNumber } from "../../../utils/fomat-utils.js";
 
@@ -34,7 +26,7 @@ export default class PostDetailPage extends Component {
 
     this.$postDeleteModal = document.querySelector("#modal-post-delete");
     new Modal(this.$postDeleteModal, {
-      title: "게시글을 삭제하시겠습니까?",
+      title: "질문을 삭제하시겠습니까?",
       content: "삭제한 내용은 복구할 수 없습니다.",
       onAccept: () => this.handlePostDelete(),
     });
@@ -47,8 +39,7 @@ export default class PostDetailPage extends Component {
       onClickEdit: () => {
         navigateTo(`${ROUTES.POST_EDIT}?id=${this.post.postId}`);
       },
-      onClickLike: (postLikeBtn, postLikeCnt) =>
-        this.handlePostLike(postLikeBtn, postLikeCnt),
+      onClickLike: (postLikeBtn, postLikeCnt) => this.handlePostLike(postLikeBtn, postLikeCnt),
     });
 
     new CommentSection(document.querySelector(".comment-section"), {
@@ -72,12 +63,12 @@ export default class PostDetailPage extends Component {
     const response = await deletePost(this.post.postId);
 
     if (isSuccess(response)) {
-      alert("게시글이 삭제되었습니다.");
+      alert("질문이 삭제되었습니다.");
       navigateTo(ROUTES.POST_LIST);
       return;
     }
 
-    alert("게시글 삭제에 실패했습니다.");
+    alert("질문 삭제에 실패했습니다.");
   }
 
   async handlePostLike(postLikeBtn, postLikeCnt) {

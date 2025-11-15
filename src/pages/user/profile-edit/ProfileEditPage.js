@@ -40,7 +40,7 @@ export default class ProfileEditPage extends Component {
 
     new Modal(document.querySelector("#modal-account-delete"), {
       title: "회원탈퇴 하시겠습니까?",
-      content: "작성한 게시글과 답변은 삭제됩니다.",
+      content: "작성한 질문과 답변은 삭제됩니다.",
       onAccept: () => this.handleDeleteAccount(),
     });
 
