@@ -1,23 +1,18 @@
 body {
-  display: flex;
-  justify-content: center;
   background-color: #ffffff;
   min-height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
 .auth-layout {
-  width: 100%;
   max-width: 800px;
+  height: 100%;
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
-}
-
-.layout {
-  width: 100%;
-  max-width: 1100px;
-  padding: 0 20px;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .auth-container {
@@ -32,17 +27,18 @@ body {
 .container {
   width: 90%;
   max-width: 500px;
+  min-height: calc(100vh - 150px);
   text-align: center;
   margin: auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .post-container {
-  width: 100%;
+  width: 70%;
   text-align: center;
   flex: 1;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   margin: 10px auto;

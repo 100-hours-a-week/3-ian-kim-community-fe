@@ -2,7 +2,7 @@
   display: inline-block;
   width: 600px;
   max-width: 100%;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .post-form .input-group {

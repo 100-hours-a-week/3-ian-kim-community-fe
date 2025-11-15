@@ -21,15 +21,12 @@ export default class PostListPage extends Component {
     new Header(document.querySelector(".header"));
 
     this.$postList = document.querySelector(".post-list");
-    this.observer = new IntersectionObserver(
-      (entries) => this.handleObserve(entries),
-      {
-        root: this.$postList,
-        rootMargin: "0px",
-        scrollMargin: "0px",
-        threshold: 0.5,
-      }
-    );
+    this.observer = new IntersectionObserver((entries) => this.handleObserve(entries), {
+      root: this.$postList,
+      rootMargin: "0px",
+      scrollMargin: "0px",
+      threshold: 0.5,
+    });
 
     this.$filterBtns = document.querySelectorAll(".btn-filter");
     this.$sortBtns = document.querySelectorAll(".btn-sort");
@@ -105,42 +102,44 @@ export default class PostListPage extends Component {
 
   template() {
     return /*html*/ `
-      <div class="post-list-header">
-        <div class="post-category-btns">
-          <button class="btn-post-category btn-category-all">전체</button>
-          <button class="btn-post-category btn-category-backend">백엔드</button>
-          <button class="btn-post-category btn-category-frontend">프론트엔드</button>
-          <button class="btn-post-category btn-category-ai">AI</button>
-          <button class="btn-post-category btn-category-cloud">클라우드</button>
-          <button class="btn-post-category btn-category-career">커리어</button>
-          <button class="btn-post-category btn-category-etc">기타</button>
-        </div>
-
-        <div class="search-write-group">
-          <input
-            type="text"
-            id="post-search"
-            class="post-search"
-            placeholder="질문을 검색해보세요." />
-
-          <button class="btn-write">질문 작성하기</button>
-        </div>
-
-        <div class="filter-sort-group">
-          <div class="filter-btns">
-            <button class="btn-all-post btn-filter">전체</button>
-            <button class="btn-my-question btn-filter">내가 작성한 질문</button>
-            <button class="btn-my-answer btn-filter">내가 작성한 답변</button>
+      <div class="post-list-page">
+        <div class="post-list-header">
+          <div class="post-category-btns">
+            <button class="btn-post-category btn-category-all">전체</button>
+            <button class="btn-post-category btn-category-backend">백엔드</button>
+            <button class="btn-post-category btn-category-frontend">프론트엔드</button>
+            <button class="btn-post-category btn-category-ai">AI</button>
+            <button class="btn-post-category btn-category-cloud">클라우드</button>
+            <button class="btn-post-category btn-category-career">커리어</button>
+            <button class="btn-post-category btn-category-etc">기타</button>
           </div>
 
-          <div class="sort-btns">
-            <button class="btn-sort-latest btn-sort">최신순</button>
-            <button class="btn-sort-like btn-sort">추천순</button>
-            <button class="btn-sort-view btn-sort">조회순</button>
+          <div class="search-write-group">
+            <input
+              type="text"
+              id="post-search"
+              class="post-search"
+              placeholder="질문을 검색해보세요." />
+
+            <button class="btn-write">질문 작성하기</button>
+          </div>
+
+          <div class="filter-sort-group">
+            <div class="filter-btns">
+              <button class="btn-all-post btn-filter">전체</button>
+              <button class="btn-my-question btn-filter">내가 작성한 질문</button>
+              <button class="btn-my-answer btn-filter">내가 작성한 답변</button>
+            </div>
+
+            <div class="sort-btns">
+              <button class="btn-sort-latest btn-sort">최신순</button>
+              <button class="btn-sort-like btn-sort">추천순</button>
+              <button class="btn-sort-view btn-sort">조회순</button>
+            </div>
           </div>
         </div>
+        <section class="post-list"></section>
       </div>
-      <section class="post-list"></section>
     `;
   }
 }

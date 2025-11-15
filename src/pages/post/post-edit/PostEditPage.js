@@ -2,11 +2,7 @@ import { isSuccess, parseData } from "../../../api/base-api.js";
 import { getPostDetail, updatePost } from "../../../api/post-api.js";
 import Component from "../../../components/core/Component.js";
 import Header from "../../../components/header/Header.js";
-import {
-  getUrlSearchParam,
-  navigateTo,
-  ROUTES,
-} from "../../../router/router.js";
+import { getUrlSearchParam, navigateTo, ROUTES } from "../../../router/router.js";
 import {
   addValidationEvents,
   checkAllInputValid,
@@ -14,10 +10,7 @@ import {
   setInputElemets,
 } from "../../../utils/form-utils.js";
 import { Auth } from "../../../store/auth-store.js";
-import {
-  postContentValidator,
-  postTitleValidator,
-} from "../../../utils/validation-utils.js";
+import { postContentValidator, postTitleValidator } from "../../../utils/validation-utils.js";
 
 export default class PostEditPage extends Component {
   async init() {
@@ -57,12 +50,7 @@ export default class PostEditPage extends Component {
   }
 
   setEvents() {
-    addValidationEvents(
-      this.$inputs,
-      this.$helperTexts,
-      this.$editBtn,
-      this.VALIDATORS
-    );
+    addValidationEvents(this.$inputs, this.$helperTexts, this.$editBtn, this.VALIDATORS);
 
     this.$inputTitle.addEventListener("blur", (e) => {
       const title = e.target.value;
@@ -169,4 +157,4 @@ ${this.post?.content || ""}</textarea
   }
 }
 
-new PostEditPage(document.querySelector(".post-container"));
+new PostEditPage(document.querySelector(".container"));

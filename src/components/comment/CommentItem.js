@@ -14,9 +14,7 @@ export default class CommentItem extends Component {
   }
 
   afterRendered() {
-    this.$curr = document.querySelector(
-      `.comment-item-${this.comment.commentId}`
-    );
+    this.$curr = document.querySelector(`.comment-item-${this.comment.commentId}`);
     this.$editBtn = this.$curr.querySelector(".btn-comment-edit");
     this.$deleteBtn = this.$curr.querySelector(".btn-comment-delete");
     this.$profileArea = document.querySelector(
@@ -68,6 +66,7 @@ export default class CommentItem extends Component {
             <button class="btn-comment-delete">삭제</button>
           </div>
         </div>
+        
         <p class="comment-content">${this.comment.content}</p>
 
         <div
