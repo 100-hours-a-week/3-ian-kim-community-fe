@@ -29,7 +29,7 @@ export default class PostCard extends Component {
 
   template() {
     return /*html*/ `
-      <article class="post-card post-card-${this.post.postId}">
+      <article class="post-card post-card-${this.post.postId}" data-post-id="${this.post.postId}">
         <div class="post-card-body">
           <div class="post-card-title">${this.post.title.slice(0, 26)}</div>
           <div class="post-card-content">

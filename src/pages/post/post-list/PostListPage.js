@@ -43,6 +43,11 @@ export default class PostListPage extends Component {
     this.setbtnClickActivelistener(this.$filterBtns, this.$activeFilterBtn);
     this.setbtnClickActivelistener(this.$sortBtns, this.$activeSortBtn);
     this.setbtnClickActivelistener(this.$categoryBtns, this.$activeCategoryBtn);
+
+    // this.$postList.addEventListener("click", (e) => {
+    //   const $postCard = e.target.closest(".post-card");
+    //   navigateTo(`${ROUTES.POST_DETAIL}?id=${$postCard.dataset.postId}`);
+    // });
   }
 
   setbtnClickActivelistener($btns, $activeBtn) {
