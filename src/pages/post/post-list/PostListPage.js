@@ -69,21 +69,23 @@ export default class PostListPage extends Component {
   }
 
   async handleGetPostList() {
-    const response = await getPostList(this.page++);
+    try {
+      const response = await getPostList(this.page++);
 
-    if (!isSuccess(response)) {
-      alert("질문 목록 조회에 실패했습니다.");
-      return;
-    }
+      if (!isSuccess(response)) {
+        alert("질문 목록 조회에 실패했습니다.");
+        return;
+      }
 
-    const data = await parseData(response);
-    if (!data?.content) {
-      return;
-    }
+      const data = await parseData(response);
+      if (!data?.content) {
+        return;
+      }
 
-    this.posts = data.content;
-    this.hasNextPage = data.page.number < data.page.totalPages;
-    this.addPostCards();
+      this.posts = data.content;
+      this.hasNextPage = data.page.number < data.page.totalPages;
+      this.addPostCards();
+    } catch (e) {}
   }
 
   addPostCards() {

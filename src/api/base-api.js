@@ -15,14 +15,20 @@ export const parseData = async (response) => {
   return json.data;
 };
 
-const doFetch = (url, options) => {
-  return fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      Authorization: Auth.getAuth(),
-    },
-  });
+const doFetch = async (url, options) => {
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: Auth.getAuth(),
+      },
+    });
+    return response;
+  } catch (e) {
+    alert("요청에 실패했습니다. 잠시 후 다시 시도해주세요.");
+    throw e;
+  }
 };
 
 export const get = (path, params) => {

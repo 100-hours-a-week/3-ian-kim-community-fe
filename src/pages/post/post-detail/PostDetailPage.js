@@ -49,39 +49,47 @@ export default class PostDetailPage extends Component {
   }
 
   async handleGetPostDetail(postId) {
-    const postResponse = await getPostDetail(postId);
-    return parseData(postResponse);
+    try {
+      const response = await getPostDetail(postId);
+      return parseData(response);
+    } catch (e) {}
   }
 
   async handleGetCommentList(postId) {
-    const commentResponse = await getCommentList(postId);
-    const data = await parseData(commentResponse);
-    return data.content;
+    try {
+      const response = await getCommentList(postId);
+      const data = await parseData(response);
+      return data.content;
+    } catch (e) {}
   }
 
   async handlePostDelete() {
-    const response = await deletePost(this.post.postId);
+    try {
+      const response = await deletePost(this.post.postId);
 
-    if (isSuccess(response)) {
-      alert("질문이 삭제되었습니다.");
-      navigateTo(ROUTES.POST_LIST);
-      return;
-    }
+      if (isSuccess(response)) {
+        alert("질문이 삭제되었습니다.");
+        navigateTo(ROUTES.POST_LIST);
+        return;
+      }
 
-    alert("질문 삭제에 실패했습니다.");
+      alert("질문 삭제에 실패했습니다.");
+    } catch (e) {}
   }
 
   async handlePostLike(postLikeBtn, postLikeCnt) {
-    const response = await toggleLike(this.post.postId);
+    try {
+      const response = await toggleLike(this.post.postId);
 
-    if (!isSuccess(response)) {
-      alert("좋아요 요청에 실패했습니다.");
-      return;
-    }
+      if (!isSuccess(response)) {
+        alert("좋아요 요청에 실패했습니다.");
+        return;
+      }
 
-    const data = await parseData(response);
-    postLikeCnt.textContent = formatCompactNumber(data.likeCount);
-    data.liked ? postLikeBtn.classList.add("liked") : postLikeBtn.classList.remove("liked");
+      const data = await parseData(response);
+      postLikeCnt.textContent = formatCompactNumber(data.likeCount);
+      data.liked ? postLikeBtn.classList.add("liked") : postLikeBtn.classList.remove("liked");
+    } catch (e) {}
   }
 
   template() {

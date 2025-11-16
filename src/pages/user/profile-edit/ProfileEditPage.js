@@ -6,7 +6,12 @@ import Header from "../../../components/header/Header.js";
 import Modal from "../../../components/modal/Modal.js";
 import Toast from "../../../components/toast/Toast.js";
 import { navigateTo, ROUTES } from "../../../router/router.js";
-import { enableButton, isButtonEnabled, setInputElemets } from "../../../utils/form-utils.js";
+import {
+  disableButton,
+  enableButton,
+  isButtonEnabled,
+  setInputElemets,
+} from "../../../utils/form-utils.js";
 import { nicknameValidator, profileValidator } from "../../../utils/validation-utils.js";
 import { Auth } from "../../../store/auth-store.js";
 import { getUserProfile } from "../../../utils/image-utils.js";
@@ -55,20 +60,24 @@ export default class ProfileEditPage extends Component {
   }
 
   async handleGetProfile() {
-    const response = await myPage();
-    return parseData(response);
+    try {
+      const response = await myPage();
+      return parseData(response);
+    } catch (e) {}
   }
 
   async handleDeleteAccount() {
-    const response = await deleteAccount();
+    try {
+      const response = await deleteAccount();
 
-    if (isSuccess(response)) {
-      alert("회원탈퇴가 완료되었습니다.");
-      navigateTo(ROUTES.LOGIN);
-      return;
-    }
+      if (isSuccess(response)) {
+        alert("회원탈퇴가 완료되었습니다.");
+        navigateTo(ROUTES.LOGIN);
+        return;
+      }
 
-    alert("회원탈퇴에 실패했습니다.");
+      alert("회원탈퇴에 실패했습니다.");
+    } catch (e) {}
   }
 
   setEvents() {
@@ -84,19 +93,23 @@ export default class ProfileEditPage extends Component {
         return;
       }
 
-      const response = await nicknameValidation({ nickname });
-      if (!isSuccess(response)) {
-        return;
-      }
+      try {
+        const response = await nicknameValidation({ nickname });
 
-      const data = await parseData(response);
-      if (!data.available) {
-        this.$helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
-        return;
-      }
+        if (!isSuccess(response)) {
+          return;
+        }
 
-      this.request = { ...this.request, nickname };
-      enableButton(this.$editBtn);
+        const data = await parseData(response);
+        if (!data.available) {
+          this.$helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
+          disableButton(this.$registerBtn);
+          return;
+        }
+
+        this.request = { ...this.request, nickname };
+        enableButton(this.$editBtn);
+      } catch (e) {}
     });
 
     // 프로필 업로드
@@ -125,18 +138,20 @@ export default class ProfileEditPage extends Component {
         return;
       }
 
-      const response = await editAccount(this.request);
+      try {
+        const response = await editAccount(this.request);
 
-      if (isSuccess(response)) {
-        const user = await parseData(response);
-        this.completeToast.show();
-        if ("profile" in this.request) {
-          Auth.updateProfile(user.profile);
+        if (isSuccess(response)) {
+          const data = await parseData(response);
+          this.completeToast.show();
+          if ("profile" in this.request) {
+            Auth.updateProfile(data.profile);
+          }
+          return;
         }
-        return;
-      }
 
-      alert("회원정보 수정에 실패했습니다.");
+        alert("회원정보 수정에 실패했습니다.");
+      } catch (e) {}
     });
 
     this.$deleteAccountBtn.addEventListener("click", () => {
