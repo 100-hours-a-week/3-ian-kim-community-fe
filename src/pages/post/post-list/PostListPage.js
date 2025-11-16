@@ -46,7 +46,9 @@ export default class PostListPage extends Component {
 
     this.$postList.addEventListener("click", (e) => {
       const $postCard = e.target.closest(".post-card");
-      navigateTo(`${ROUTES.POST_DETAIL}?id=${$postCard.dataset.postId}`);
+      if ($postCard) {
+        navigateTo(`${ROUTES.POST_DETAIL}?id=${$postCard.dataset.postId}`);
+      }
     });
   }
 
