@@ -26,10 +26,11 @@ export default class CommentPage extends Component {
       }
     });
 
-    this.$pageNumberList.childNodes.forEach(($pageNumber) => {
-      $pageNumber.addEventListener("click", () => {
-        this.changePage($pageNumber);
-      });
+    this.$pageNumberList.addEventListener("click", (e) => {
+      const $target = e.target.closest(".btn-page-number");
+      if ($target) {
+        this.changePage($target);
+      }
     });
   }
 

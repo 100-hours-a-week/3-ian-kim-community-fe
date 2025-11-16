@@ -15,6 +15,7 @@ export default class CommentItem extends Component {
 
   afterRendered() {
     this.$curr = document.querySelector(`.comment-item-${this.comment.commentId}`);
+    this.commentActions = this.$curr.querySelector(".comment-actions");
     this.$editBtn = this.$curr.querySelector(".btn-comment-edit");
     this.$deleteBtn = this.$curr.querySelector(".btn-comment-delete");
     this.$profileArea = document.querySelector(
@@ -41,16 +42,6 @@ export default class CommentItem extends Component {
     }
   }
 
-  setEvents() {
-    this.$deleteBtn.addEventListener("click", () => {
-      this.$commentDeleteModal.classList.toggle("hidden");
-    });
-
-    this.$editBtn.addEventListener("click", () => {
-      this.props.onClickEdit(this.comment);
-    });
-  }
-
   template() {
     return /*html*/ `
       <li class="comment-item-${this.comment.commentId}">
@@ -61,7 +52,7 @@ export default class CommentItem extends Component {
             <span class="comment-created-date">${this.comment.createdDate}</span>
           </div>
 
-          <div class="comment-actions">
+          <div class="comment-actions" data-comment-id=${this.comment.commentId}>
             <button class="btn-comment-edit">수정</button>
             <button class="btn-comment-delete">삭제</button>
           </div>
@@ -71,7 +62,7 @@ export default class CommentItem extends Component {
 
         <div
           id="modal-comment-delete-${this.comment.commentId}"
-          class="modal bg-black-alpha-half hidden"></div>
+          class="modal modal-comment-delete bg-black-alpha-half hidden"></div>
       </li>
     `;
   }
