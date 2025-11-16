@@ -12,9 +12,6 @@ export default class PostListPage extends Component {
     this.$lastPostCard;
     this.$postList;
     this.posts = [];
-    this.$activeCategoryBtn;
-    this.$activeFilterBtn;
-    this.$activeSortBtn;
   }
 
   async afterRendered() {
@@ -31,6 +28,9 @@ export default class PostListPage extends Component {
     this.$filterBtns = document.querySelectorAll(".btn-filter");
     this.$sortBtns = document.querySelectorAll(".btn-sort");
     this.$categoryBtns = document.querySelectorAll(".btn-post-category");
+    this.$activeCategoryBtn = document.querySelector(".btn-category-all");
+    this.$activeFilterBtn = document.querySelector(".btn-all-post");
+    this.$activeSortBtn = document.querySelector(".btn-sort-latest");
 
     await this.handleGetPostList(this.$postList);
   }
@@ -48,9 +48,7 @@ export default class PostListPage extends Component {
   setbtnClickActivelistener($btns, $activeBtn) {
     $btns.forEach(($btn) => {
       $btn.addEventListener("click", () => {
-        if ($activeBtn) {
-          $activeBtn.classList.remove("active");
-        }
+        $activeBtn.classList.remove("active");
         $activeBtn = $btn;
         $activeBtn.classList.add("active");
       });
@@ -105,7 +103,7 @@ export default class PostListPage extends Component {
       <div class="post-list-page">
         <div class="post-list-header">
           <div class="post-category-btns">
-            <button class="btn-post-category btn-category-all">전체</button>
+            <button class="btn-post-category btn-category-all active">전체</button>
             <button class="btn-post-category btn-category-backend">백엔드</button>
             <button class="btn-post-category btn-category-frontend">프론트엔드</button>
             <button class="btn-post-category btn-category-ai">AI</button>
@@ -126,13 +124,13 @@ export default class PostListPage extends Component {
 
           <div class="filter-sort-group">
             <div class="filter-btns">
-              <button class="btn-all-post btn-filter">전체</button>
+              <button class="btn-all-post btn-filter active">전체</button>
               <button class="btn-my-question btn-filter">내가 작성한 질문</button>
               <button class="btn-my-answer btn-filter">내가 작성한 답변</button>
             </div>
 
             <div class="sort-btns">
-              <button class="btn-sort-latest btn-sort">최신순</button>
+              <button class="btn-sort-latest btn-sort active">최신순</button>
               <button class="btn-sort-like btn-sort">추천순</button>
               <button class="btn-sort-view btn-sort">조회순</button>
             </div>
