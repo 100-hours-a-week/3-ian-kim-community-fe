@@ -11,10 +11,7 @@ import {
   parseInputValues,
   setInputElemets,
 } from "../../../utils/form-utils.js";
-import {
-  emailValidator,
-  passwordValidator,
-} from "../../../utils/validation-utils.js";
+import { emailValidator, passwordValidator } from "../../../utils/validation-utils.js";
 
 export default class LoginPage extends Component {
   beforeRendered() {
@@ -37,12 +34,7 @@ export default class LoginPage extends Component {
 
   setEvents() {
     // 입력값 검증
-    addValidationEvents(
-      this.$inputs,
-      this.$helperTexts,
-      this.$loginBtn,
-      this.VALIDATORS
-    );
+    addValidationEvents(this.$inputs, this.$helperTexts, this.$loginBtn, this.VALIDATORS);
 
     // 로그인 API 요청
     this.$loginBtn.addEventListener("click", async () => {
@@ -50,22 +42,23 @@ export default class LoginPage extends Component {
         return;
       }
 
-      const response = await login(parseInputValues(this.$inputs));
-      const user = await parseData(response);
+      try {
+        const response = await login(parseInputValues(this.$inputs));
+        const json = await response.json();
+        const data = json.data;
 
-      if (isSuccess(response)) {
-        alert("로그인에 성공했습니다.");
-        Auth.login(user.userId, user.profile);
-        navigateTo(ROUTES.POST_LIST);
-        return;
-      }
+        if (isSuccess(response)) {
+          alert("로그인에 성공했습니다.");
+          Auth.login(data.userId, data.profile);
+          navigateTo(ROUTES.POST_LIST);
+          return;
+        }
 
-      if (response.status === 401) {
-        this.$helperTexts.email.textContent = MESSAGES.wrongEmailOrPassword;
-        return;
-      }
-
-      alert("로그인에 실패했습니다.");
+        if (json.code === "4011") {
+          this.$helperTexts.email.textContent = MESSAGES.wrongEmailOrPassword;
+          alert("로그인에 실패했습니다.");
+        }
+      } catch (e) {}
     });
 
     // 페이지 이동

@@ -1,11 +1,7 @@
 import { isSuccess } from "../../api/base-api.js";
 import { createComment, updateComment } from "../../api/comment-api.js";
 import Component from "../core/Component.js";
-import {
-  disableButton,
-  enableButton,
-  isButtonEnabled,
-} from "../../utils/form-utils.js";
+import { disableButton, enableButton, isButtonEnabled } from "../../utils/form-utils.js";
 
 export default class CommentCreate extends Component {
   beforeRendered() {
@@ -21,17 +17,19 @@ export default class CommentCreate extends Component {
         return;
       }
 
-      const response = await createComment(this.postId, {
-        content: this.$textArea.value,
-      });
+      try {
+        const response = await createComment(this.postId, {
+          content: this.$textArea.value,
+        });
 
-      if (isSuccess(response)) {
-        alert("답변이 생성되었습니다.");
-        window.location.reload();
-        return;
-      }
+        if (isSuccess(response)) {
+          alert("답변이 생성되었습니다.");
+          window.location.reload();
+          return;
+        }
 
-      alert("답변 생성에 실패했습니다.");
+        alert("답변 생성에 실패했습니다.");
+      } catch (e) {}
     };
   }
 
@@ -58,17 +56,19 @@ export default class CommentCreate extends Component {
         return;
       }
 
-      const response = await updateComment(comment.commentId, {
-        content: this.$textArea.value,
-      });
+      try {
+        const response = await updateComment(comment.commentId, {
+          content: this.$textArea.value,
+        });
 
-      if (isSuccess(response)) {
-        alert("답변이 수정되었습니다.");
-        window.location.reload();
-        return;
-      }
+        if (isSuccess(response)) {
+          alert("답변이 수정되었습니다.");
+          window.location.reload();
+          return;
+        }
 
-      alert("답변 수정에 실패했습니다.");
+        alert("답변 수정에 실패했습니다.");
+      } catch (e) {}
     });
   }
 

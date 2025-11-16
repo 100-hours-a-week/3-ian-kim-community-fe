@@ -1,9 +1,5 @@
 import { isSuccess, parseData } from "../../../api/base-api.js";
-import {
-  emailValidation,
-  nicknameValidation,
-  register,
-} from "../../../api/user-api.js";
+import { emailValidation, nicknameValidation, register } from "../../../api/user-api.js";
 import { MESSAGES } from "../../../common/constants.js";
 import Component from "../../../components/core/Component.js";
 import AuthHeader from "../../../components/header/AuthHeader.js";
@@ -29,8 +25,7 @@ export default class RegisterPage extends Component {
     this.VALIDATORS = {
       email: emailValidator,
       password: passwordValidator,
-      confirm: (value, $inputs) =>
-        passwordConfirmValidator($inputs.password.value, value),
+      confirm: (value, $inputs) => passwordConfirmValidator($inputs.password.value, value),
       nickname: nicknameValidator,
       profile: profileValidator,
     };
@@ -51,12 +46,7 @@ export default class RegisterPage extends Component {
 
   setEvents() {
     // 입력값 검증
-    addValidationEvents(
-      this.$inputs,
-      this.$helperTexts,
-      this.$registerBtn,
-      this.VALIDATORS
-    );
+    addValidationEvents(this.$inputs, this.$helperTexts, this.$registerBtn, this.VALIDATORS);
 
     this.$inputs.password.addEventListener("blur", (e) => {
       this.$helperTexts.confirm.textContent = this.VALIDATORS.confirm(
@@ -73,13 +63,19 @@ export default class RegisterPage extends Component {
         return;
       }
 
-      const response = await emailValidation({ email });
-      const data = await parseData(response);
+      try {
+        const response = await emailValidation({ email });
 
-      if (isSuccess(response) && !data.available) {
-        this.$helperTexts.email.textContent = MESSAGES.duplicatedEmail;
-        disableButton(this.$registerBtn);
-      }
+        if (!isSuccess(response)) {
+          return;
+        }
+
+        const data = await parseData(response);
+        if (!data.available) {
+          this.$helperTexts.email.textContent = MESSAGES.duplicatedEmail;
+          disableButton(this.$registerBtn);
+        }
+      } catch (e) {}
     });
 
     this.$inputs.nickname.addEventListener("blur", async (e) => {
@@ -89,26 +85,28 @@ export default class RegisterPage extends Component {
         return;
       }
 
-      const response = await nicknameValidation({ nickname });
-      const data = await parseData(response);
+      try {
+        const response = await nicknameValidation({ nickname });
 
-      if (isSuccess(response) && !data.available) {
-        this.$helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
-        disableButton(this.$registerBtn);
-      }
+        if (!isSuccess(response)) {
+          return;
+        }
+
+        const data = await parseData(response);
+        if (!data.available) {
+          this.$helperTexts.nickname.textContent = MESSAGES.duplicatedNickname;
+          disableButton(this.$registerBtn);
+        }
+      } catch (e) {}
     });
 
     // 프로필 업로드
-    this.$profilePreview.addEventListener("click", () =>
-      this.$inputs.profile.click()
-    );
+    this.$profilePreview.addEventListener("click", () => this.$inputs.profile.click());
 
     this.$inputs.profile.addEventListener("change", (e) => {
       this.profileFile = e.target.files[0];
 
-      this.$helperTexts.profile.textContent = profileValidator(
-        this.profileFile
-      );
+      this.$helperTexts.profile.textContent = profileValidator(this.profileFile);
 
       if (!this.profileFile) {
         this.$profileImage.src = "";
@@ -137,15 +135,18 @@ export default class RegisterPage extends Component {
         ...parseInputValues(this.$inputs),
         profile: this.profileFile,
       };
-      const response = await register(request);
 
-      if (isSuccess(response)) {
-        alert("회원가입에 성공했습니다.");
-        navigateTo(ROUTES.LOGIN);
-        return;
-      }
+      try {
+        const response = await register(request);
 
-      alert("회원가입에 실패했습니다.");
+        if (isSuccess(response)) {
+          alert("회원가입에 성공했습니다.");
+          navigateTo(ROUTES.LOGIN);
+          return;
+        }
+
+        alert("회원가입에 실패했습니다.");
+      } catch (e) {}
     });
 
     // 페이지 이동

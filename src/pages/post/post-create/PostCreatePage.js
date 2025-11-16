@@ -26,15 +26,18 @@ export default class PostCreatePage extends Component {
 
   async handleSubmit($inputs, image) {
     const request = image ? { ...parseInputValues($inputs), image } : parseInputValues($inputs);
-    const response = await createPost(request);
 
-    if (isSuccess(response)) {
-      alert("질문이 생성되었습니다.");
-      navigateTo(ROUTES.POST_LIST);
-      return;
-    }
+    try {
+      const response = await createPost(request);
 
-    alert("질문 생성에 실패했습니다.");
+      if (isSuccess(response)) {
+        alert("질문이 생성되었습니다.");
+        navigateTo(ROUTES.POST_LIST);
+        return;
+      }
+
+      alert("질문 생성에 실패했습니다.");
+    } catch (e) {}
   }
 
   template() {

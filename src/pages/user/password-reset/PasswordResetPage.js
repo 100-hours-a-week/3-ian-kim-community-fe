@@ -45,16 +45,18 @@ export default class PasswordResetPage extends Component {
         return;
       }
 
-      const response = await resetPassword({
-        password: this.inputs.password.value,
-      });
+      try {
+        const response = await resetPassword({
+          password: this.inputs.password.value,
+        });
 
-      if (isSuccess(response)) {
-        this.completeToast.show();
-        return;
-      }
+        if (isSuccess(response)) {
+          this.completeToast.show();
+          return;
+        }
 
-      alert("비밀번호 수정에 실패했습니다.");
+        alert("비밀번호 수정에 실패했습니다.");
+      } catch (e) {}
     });
   }
 

@@ -48,10 +48,12 @@ export default class PostDetail extends Component {
 
   async getPostImage() {
     if (this.post.imagePath) {
-      const response = await getImage(this.post.imagePath);
-      const blob = await response.blob();
-      this.$postImage.src = URL.createObjectURL(blob);
-      this.$postImage.classList.remove("hidden");
+      try {
+        const response = await getImage(this.post.imagePath);
+        const blob = await response.blob();
+        this.$postImage.src = URL.createObjectURL(blob);
+        this.$postImage.classList.remove("hidden");
+      } catch (e) {}
     }
   }
 

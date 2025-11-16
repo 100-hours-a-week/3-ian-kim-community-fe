@@ -23,7 +23,9 @@ export default class PostEditPage extends Component {
     this.request = {};
     this.post;
 
-    await this.requestPostDetail(getUrlSearchParam("id"));
+    try {
+      await this.requestPostDetail(getUrlSearchParam("id"));
+    } catch (e) {}
   }
 
   afterRendered() {
@@ -64,8 +66,10 @@ export default class PostEditPage extends Component {
   }
 
   async requestPostDetail(postId) {
-    const response = await getPostDetail(postId);
-    this.post = await parseData(response);
+    try {
+      const response = await getPostDetail(postId);
+      this.post = await parseData(response);
+    } catch (e) {}
   }
 
   async handleSubmit($inputs, image) {
@@ -73,15 +77,17 @@ export default class PostEditPage extends Component {
       this.request = { ...this.request, image };
     }
 
-    const response = await updatePost(this.post.postId, this.request);
+    try {
+      const response = await updatePost(this.post.postId, this.request);
 
-    if (isSuccess(response)) {
-      alert("질문이 수정되었습니다.");
-      navigateTo(`${ROUTES.POST_DETAIL}?id=${this.post.postId}`);
-      return;
-    }
+      if (isSuccess(response)) {
+        alert("질문이 수정되었습니다.");
+        navigateTo(`${ROUTES.POST_DETAIL}?id=${this.post.postId}`);
+        return;
+      }
 
-    alert("질문 수정에 실패했습니다.");
+      alert("질문 수정에 실패했습니다.");
+    } catch (e) {}
   }
 
   template() {

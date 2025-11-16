@@ -49,15 +49,17 @@ export default class CommentSection extends Component {
   }
 
   async handleCommentDelete(commentId) {
-    const response = await deleteComment(commentId);
+    try {
+      const response = await deleteComment(commentId);
 
-    if (isSuccess(response)) {
-      alert("답변이 삭제되었습니다.");
-      window.location.reload();
-      return;
-    }
+      if (isSuccess(response)) {
+        alert("답변이 삭제되었습니다.");
+        window.location.reload();
+        return;
+      }
 
-    alert("답변 삭제에 실패했습니다.");
+      alert("답변 삭제에 실패했습니다.");
+    } catch (e) {}
   }
 
   template() {
