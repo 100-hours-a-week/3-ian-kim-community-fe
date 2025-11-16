@@ -13,9 +13,7 @@ export default class PostCard extends Component {
   }
 
   afterRendered() {
-    this.$profileArea = document.querySelector(
-      `#profile-area-post-card-${this.post.postId}`
-    );
+    this.$profileArea = document.querySelector(`#profile-area-post-card-${this.post.postId}`);
 
     new ProfileIcon(this.$profileArea, {
       profilePath: this.post.authorProfile,
@@ -24,11 +22,9 @@ export default class PostCard extends Component {
   }
 
   setEvents() {
-    document
-      .querySelector(`.post-card-${this.post.postId}`)
-      .addEventListener("click", () => {
-        navigateTo(`${ROUTES.POST_DETAIL}?id=${this.post.postId}`);
-      });
+    document.querySelector(`.post-card-${this.post.postId}`).addEventListener("click", () => {
+      navigateTo(`${ROUTES.POST_DETAIL}?id=${this.post.postId}`);
+    });
   }
 
   template() {
@@ -48,7 +44,7 @@ export default class PostCard extends Component {
         <div class="post-card-footer">
           <div class="post-stats">
             <span class="like-cnt"
-              >좋아요 ${formatCompactNumber(this.post.likeCount)}</span
+              >추천 ${formatCompactNumber(this.post.likeCount)}</span
             >
             <span class="comment-cnt"
               >답변 ${formatCompactNumber(this.post.commentCount)}</span
