@@ -21,12 +21,6 @@ export default class PostCard extends Component {
     });
   }
 
-  setEvents() {
-    document.querySelector(`.post-card-${this.post.postId}`).addEventListener("click", () => {
-      navigateTo(`${ROUTES.POST_DETAIL}?id=${this.post.postId}`);
-    });
-  }
-
   template() {
     return /*html*/ `
       <article class="post-card post-card-${this.post.postId}" data-post-id="${this.post.postId}">
