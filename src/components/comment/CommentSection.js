@@ -29,6 +29,28 @@ export default class CommentSection extends Component {
     });
   }
 
+  setEvents() {
+    this.$commentList.addEventListener("click", (e) => {
+      const $commentActions = e.target.closest(".comment-actions");
+      if (!$commentActions) {
+        return;
+      }
+
+      const commentId = Number($commentActions.dataset.commentId);
+
+      const $deleteBtn = e.target.closest(".btn-comment-delete");
+      if ($deleteBtn) {
+        const $commentDeleteModal = document.querySelector(`#modal-comment-delete-${commentId}`);
+        $commentDeleteModal.classList.toggle("hidden");
+      }
+
+      const $editBtn = e.target.closest(".btn-comment-edit");
+      if ($editBtn) {
+        this.handleCommentEdit(commentId);
+      }
+    });
+  }
+
   loadCommentsOnPage(page) {
     this.currentPage = page;
     this.$commentList.innerHTML = "";
@@ -38,13 +60,13 @@ export default class CommentSection extends Component {
     this.comments.slice(start, end).forEach((comment) => {
       new CommentItem(this.$commentList, {
         comment,
-        onClickEdit: (comment) => this.handleCommentEdit(comment),
         onDelete: (commentId) => this.handleCommentDelete(commentId),
       });
     });
   }
 
-  handleCommentEdit(comment) {
+  handleCommentEdit(commentId) {
+    const comment = this.comments.filter((comment) => comment.commentId === commentId)[0];
     this.commentCreate.changeToEditMode(comment);
   }
 
