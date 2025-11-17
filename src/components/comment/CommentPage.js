@@ -36,11 +36,26 @@ export default class CommentPage extends Component {
 
   setPageButtons() {
     for (let i = 1; i <= this.props.totalPageCnt; i++) {
-      const element = `<button class="btn-page-number btn-page">${i}</button>`;
-      this.$pageNumberList.insertAdjacentHTML("beforeend", element);
+      this.$pageNumberList.insertAdjacentHTML("beforeend", this.createPageButton(i));
     }
 
     this.changePage(document.querySelector(".btn-page-number"));
+  }
+
+  addPageButton(newPageNumber) {
+    this.$pageNumberList.insertAdjacentHTML("beforeend", this.createPageButton(newPageNumber));
+    this.changePage(document.querySelector(".btn-page-number"));
+  }
+
+  removeLastPageButton(totalPageCnt) {
+    this.$pageNumberList.removeChild(this.$pageNumberList.lastChild);
+    if (this.currentPage > totalPageCnt) {
+      this.changePage(this.$pageNumberList.lastChild);
+    }
+  }
+
+  createPageButton(pageNumber) {
+    return `<button class="btn-page-number btn-page">${pageNumber}</button>`;
   }
 
   changePage($pageNumber) {
@@ -52,6 +67,10 @@ export default class CommentPage extends Component {
     this.$activeBtn.classList.add("active");
     this.currentPage = $pageNumber.textContent;
     this.props.onPageChange(this.currentPage);
+  }
+
+  setProps(props) {
+    this.props = { ...this.props, ...props };
   }
 
   template() {

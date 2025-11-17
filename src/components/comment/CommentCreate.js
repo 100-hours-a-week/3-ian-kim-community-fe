@@ -12,24 +12,48 @@ export default class CommentCreate extends Component {
     this.$createBtn = document.querySelector(".btn-create");
     this.$textArea = document.querySelector(".input-comment");
 
-    this.commentCreateListener = async () => {
+    this.commentWriteListener = async (requestFn, successHandler, successMsg, failMsg) => {
       if (!isButtonEnabled(this.$createBtn)) {
         return;
       }
 
       try {
-        const response = await createComment(this.postId, {
-          content: this.$textArea.value,
-        });
+        const response = await requestFn();
 
         if (isSuccess(response)) {
-          alert("답변이 생성되었습니다.");
-          window.location.reload();
+          alert(successMsg);
+          successHandler();
           return;
         }
 
-        alert("답변 생성에 실패했습니다.");
+        alert(failMsg);
       } catch (e) {}
+    };
+
+    this.commentCreateListener = () =>
+      this.commentWriteListener(
+        () => createComment(this.postId, { content: this.$textArea.value }),
+        () => {
+          this.props.onCreate();
+          this.$textArea.value = "";
+        },
+        "답변이 생성되었습니다.",
+        "답변 생성에 실패했습니다."
+      );
+
+    this.commentUpdateListener = (comment, content) =>
+      this.commentWriteListener(
+        () => updateComment(comment.commentId, { content }),
+        () => this.props.onUpdate(comment.commentId, content),
+        "답변이 수정되었습니다.",
+        "답변 수정에 실패했습니다."
+      );
+
+    this.onClickUpdateBtn = () => {
+      if (!this.targetComment) {
+        return;
+      }
+      this.commentUpdateListener(this.targetComment, this.$textArea.value);
     };
   }
 
@@ -45,31 +69,19 @@ export default class CommentCreate extends Component {
     this.$createBtn.addEventListener("click", this.commentCreateListener);
   }
 
+  changeToCreateMode() {
+    this.$textArea.value = "";
+    this.$createBtn.textContent = "답변 등록하기";
+    this.$createBtn.removeEventListener("click", this.onClickUpdateBtn);
+    this.$createBtn.addEventListener("click", this.commentCreateListener);
+  }
+
   changeToEditMode(comment) {
+    this.targetComment = comment;
     this.$textArea.value = comment.content;
-    this.$createBtn.textContent = "답변 수정";
-
+    this.$createBtn.textContent = "답변 수정하기";
     this.$createBtn.removeEventListener("click", this.commentCreateListener);
-
-    this.$createBtn.addEventListener("click", async () => {
-      if (!isButtonEnabled(this.$createBtn)) {
-        return;
-      }
-
-      try {
-        const response = await updateComment(comment.commentId, {
-          content: this.$textArea.value,
-        });
-
-        if (isSuccess(response)) {
-          alert("답변이 수정되었습니다.");
-          window.location.reload();
-          return;
-        }
-
-        alert("답변 수정에 실패했습니다.");
-      } catch (e) {}
-    });
+    this.$createBtn.addEventListener("click", this.onClickUpdateBtn);
   }
 
   template() {
