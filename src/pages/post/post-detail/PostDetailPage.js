@@ -45,6 +45,7 @@ export default class PostDetailPage extends Component {
     new CommentSection(document.querySelector(".comment-section"), {
       postId: this.post.postId,
       comments: this.comments,
+      onLoad: () => this.handleGetCommentList(postId),
     });
   }
 
