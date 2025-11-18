@@ -1,6 +1,6 @@
 import { Auth } from "../store/auth-store.js";
 
-const LOCAL_SERVER_URL = "http://localhost:8080";
+const LOCAL_SERVER_URL = "https://localhost:8443";
 
 const getFullApiUrl = (path) => {
   return LOCAL_SERVER_URL + path;
