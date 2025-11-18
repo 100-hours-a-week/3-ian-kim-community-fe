@@ -9,6 +9,7 @@ export default class PostListPage extends Component {
   beforeRendered() {
     this.page = 0;
     this.hasNextPage = false;
+    this.isLoading = false;
     this.$lastPostCard;
     this.$postList;
     this.posts = [];
@@ -17,12 +18,13 @@ export default class PostListPage extends Component {
   async afterRendered() {
     new Header(document.querySelector(".header"));
 
+    this.$postListPage = document.querySelector(".post-list-page");
     this.$postList = document.querySelector(".post-list");
     this.observer = new IntersectionObserver((entries) => this.handleObserve(entries), {
-      root: this.$postList,
+      root: this.$postListPage,
       rootMargin: "0px",
       scrollMargin: "0px",
-      threshold: 0.5,
+      threshold: 1.0,
     });
 
     this.$filterBtns = document.querySelectorAll(".btn-filter");
@@ -64,13 +66,16 @@ export default class PostListPage extends Component {
 
   handleObserve(entries) {
     entries.forEach((entry) => {
-      if (entry.isIntersecting && this.hasNextPage) {
+      if (entry.isIntersecting && this.hasNextPage && !this.isLoading) {
+        this.isLoading = true;
         this.handleGetPostList();
+        this.isLoading = false;
       }
     });
   }
 
   async handleGetPostList() {
+    console.log("get post");
     try {
       const response = await getPostList(this.page++);
 
