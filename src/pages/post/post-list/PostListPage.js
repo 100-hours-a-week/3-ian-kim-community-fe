@@ -75,7 +75,6 @@ export default class PostListPage extends Component {
   }
 
   async handleGetPostList() {
-    console.log("get post");
     try {
       const response = await getPostList(this.page++);
 
