@@ -1,4 +1,6 @@
+import { COOKIE_NAME, HEADER_NAME } from "../common/constants.js";
 import { Auth } from "../store/auth-store.js";
+import { getCookie } from "../utils/cookie-utils.js";
 
 const LOCAL_SERVER_URL = "https://localhost:8443";
 
@@ -22,6 +24,7 @@ const doFetch = async (url, options) => {
       headers: {
         ...options.headers,
         Authorization: Auth.getAuth(),
+        [HEADER_NAME.CSRF]: getCookie(COOKIE_NAME.CSRF),
       },
     });
     return response;
@@ -41,6 +44,7 @@ export const get = (path, params) => {
 };
 
 export const postJson = (path, request) => {
+  getCookie(HEADER_NAME.CSRF);
   return doFetch(getFullApiUrl(path), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
