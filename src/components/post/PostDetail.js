@@ -21,7 +21,7 @@ export default class PostDetail extends Component {
     this.$profileArea = document.querySelector(`#profile-area-post-detail-${this.post.postId}`);
 
     new ProfileIcon(this.$profileArea, {
-      profilePath: this.post.authorProfile,
+      profilePath: this.post.authorProfileImageName,
       id: `profile-icon-post-detail-${this.post.postId}`,
     });
 

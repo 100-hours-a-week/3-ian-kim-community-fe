@@ -33,7 +33,7 @@ export default class CommentItem extends Component {
     });
 
     new ProfileIcon(this.$profileArea, {
-      profilePath: this.comment.authorProfile,
+      profilePath: this.comment.authorProfileImageName,
       id: `profile-icon-comment-item-${this.comment.commentId}`,
     });
 

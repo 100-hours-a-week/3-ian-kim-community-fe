@@ -49,7 +49,7 @@ export default class LoginPage extends Component {
 
         if (isSuccess(response)) {
           alert("로그인에 성공했습니다.");
-          Auth.login(data.userId, data.profile);
+          Auth.login(data.userId, data.profileImageName);
           navigateTo(ROUTES.POST_LIST);
           return;
         }

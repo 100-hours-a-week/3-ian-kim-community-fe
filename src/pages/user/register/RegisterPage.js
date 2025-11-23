@@ -133,7 +133,7 @@ export default class RegisterPage extends Component {
 
       const request = {
         ...parseInputValues(this.$inputs),
-        profile: this.profileFile,
+        profileImage: this.profileFile,
       };
 
       try {

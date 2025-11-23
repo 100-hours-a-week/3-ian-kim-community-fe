@@ -56,7 +56,7 @@ export default class ProfileEditPage extends Component {
 
     this.$inputs.nickname.value = this.user.nickname;
     this.$email.textContent = this.user.email;
-    this.$profileImage.src = await getUserProfile(this.user.profile);
+    this.$profileImage.src = await getUserProfile(this.user.profileImageName);
   }
 
   async handleGetProfile() {
@@ -116,9 +116,9 @@ export default class ProfileEditPage extends Component {
     this.$profilePreview.addEventListener("click", () => this.$inputs.profile.click());
 
     this.$inputs.profile.addEventListener("change", (e) => {
-      const profile = e.target.files[0];
+      const profileImage = e.target.files[0];
 
-      if (!profile) return;
+      if (!profileImage) return;
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -126,9 +126,9 @@ export default class ProfileEditPage extends Component {
         this.$profileImage.classList.remove("hidden");
         this.$helperTexts.profile.textContent = "";
       };
-      reader.readAsDataURL(profile);
+      reader.readAsDataURL(profileImage);
 
-      this.request = { ...this.request, profile };
+      this.request = { ...this.request, profileImage };
       enableButton(this.$editBtn);
     });
 
@@ -144,8 +144,8 @@ export default class ProfileEditPage extends Component {
         if (isSuccess(response)) {
           const data = await parseData(response);
           this.completeToast.show();
-          if ("profile" in this.request) {
-            Auth.updateProfile(data.profile);
+          if ("profileImage" in this.request) {
+            Auth.updateProfile(data.profileImageName);
           }
           return;
         }
