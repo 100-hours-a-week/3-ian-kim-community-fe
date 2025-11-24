@@ -115,6 +115,7 @@ export default class PostListPage extends Component {
     return /*html*/ `
       <div class="post-list-page">
         <div class="post-list-header">
+          <!--
           <div class="post-category-btns">
             <button class="btn-post-category btn-category-all active">전체</button>
             <button class="btn-post-category btn-category-backend">백엔드</button>
@@ -124,17 +125,20 @@ export default class PostListPage extends Component {
             <button class="btn-post-category btn-category-career">커리어</button>
             <button class="btn-post-category btn-category-etc">기타</button>
           </div>
-
+          -->
           <div class="search-write-group">
+            <!--
             <input
               type="text"
               id="post-search"
               class="post-search"
               placeholder="질문을 검색해보세요." />
+            -->
 
             <button class="btn-write">질문 작성하기</button>
           </div>
 
+          <!--
           <div class="filter-sort-group">
             <div class="filter-btns">
               <button class="btn-all-post btn-filter active">전체</button>
@@ -148,6 +152,7 @@ export default class PostListPage extends Component {
               <button class="btn-sort-view btn-sort">조회순</button>
             </div>
           </div>
+          -->
         </div>
         <section class="post-list"></section>
       </div>

@@ -106,6 +106,7 @@ export default class PostDetail extends Component {
               >${formatCompactNumber(this.post.likeCount)}</span
             >
           </button>
+          <!--
           <button
             class="like-box btn-post-unlike">
             <span class="thumbs-emoji">👎</span>
@@ -113,6 +114,7 @@ export default class PostDetail extends Component {
               >0</span
             >
           </button>
+          -->
         </div>
       </div>
     `;

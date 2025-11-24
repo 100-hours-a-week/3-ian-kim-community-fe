@@ -56,10 +56,14 @@ button {
   color: white;
 }
 
-.filter-sort-group,
-.search-write-group {
+.filter-sort-group {
   display: flex;
   justify-content: space-between;
+}
+
+.search-write-group {
+  display: flex;
+  justify-content: right;
 }
 
 .post-search {
