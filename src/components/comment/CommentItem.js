@@ -6,7 +6,7 @@ import ProfileIcon from "../profile/ProfileIcon.js";
 export default class CommentItem extends Component {
   beforeRendered() {
     this.comment = this.props.comment;
-    this.isAuthor = Auth.getAuth() === this.comment.userId;
+    this.isAuthor = Auth.getAuth() === this.comment.authorId;
   }
 
   render() {

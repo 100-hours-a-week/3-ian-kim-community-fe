@@ -7,7 +7,7 @@ import ProfileIcon from "../profile/ProfileIcon.js";
 export default class PostDetail extends Component {
   beforeRendered() {
     this.post = this.props.post;
-    this.isAuthor = Auth.getAuth() === this.post.userId;
+    this.isAuthor = Auth.getAuth() === this.post.authorId;
   }
 
   afterRendered() {
