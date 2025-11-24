@@ -21,7 +21,7 @@ export default class Header extends Component {
       this.$editProfileBtn = document.querySelector(".btn-to-profile-edit");
       this.$resetPasswordBtn = document.querySelector(".btn-to-password-reset");
       this.$logoutBtn = document.querySelector(".btn-logout");
-      new ProfileIcon(this.$profileArea, {
+      this.profileIcon = new ProfileIcon(this.$profileArea, {
         profilePath: Auth.getProfile(),
         id: "profile-icon-header",
       });
@@ -79,6 +79,10 @@ export default class Header extends Component {
         } catch (e) {}
       });
     }
+  }
+
+  changeProfileImage(newProfileImageName) {
+    this.profileIcon.loadProfileImage(newProfileImageName);
   }
 
   template() {

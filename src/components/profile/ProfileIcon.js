@@ -9,11 +9,13 @@ export default class ProfileIcon extends Component {
 
   async afterRendered() {
     this.$profileIcon = document.querySelector(`#${this.id}`);
-    if (this.profilePath) {
-      try {
-        this.$profileIcon.src = await getUserProfile(this.profilePath);
-      } catch (e) {}
-    }
+    this.profilePath && (await this.loadProfileImage(this.profilePath));
+  }
+
+  async loadProfileImage(profileImageName) {
+    try {
+      this.$profileIcon.src = await getUserProfile(profileImageName);
+    } catch (e) {}
   }
 
   template() {

@@ -42,7 +42,7 @@ export default class ProfileEditPage extends Component {
     this.$email = document.querySelector(".email");
     this.$completeToast = document.querySelector(".toast-complete");
 
-    new Header(document.querySelector(".header"));
+    this.header = new Header(document.querySelector(".header"));
 
     new Modal(document.querySelector("#modal-account-delete"), {
       title: "회원탈퇴 하시겠습니까?",
@@ -146,6 +146,7 @@ export default class ProfileEditPage extends Component {
           this.completeToast.show();
           if ("profileImage" in this.request) {
             Auth.updateProfile(data.profileImageName);
+            this.header.changeProfileImage(data.profileImageName);
           }
           return;
         }
