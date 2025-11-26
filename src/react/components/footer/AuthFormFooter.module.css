@@ -1,0 +1,19 @@
+.form-footer {
+  display: flex;
+  justify-content: center;
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.form-link {
+  align-self: center;
+  display: inline-block;
+  width: auto;
+  padding: 0;
+  text-decoration: none;
+  font-weight: 600;
+  color: #4791e0;
+  cursor: pointer;
+}
