@@ -1,0 +1,16 @@
+.form-button {
+  width: 100%;
+  border: none;
+  padding: 0.625rem;
+  font-size: 0.875rem;
+  border-radius: 0.625rem;
+  margin-top: 0.625rem;
+  color: white;
+  background-color: #3678bf;
+}
+
+.form-button:disabled {
+  background-color: #7d8d9e;
+  cursor: auto;
+  pointer-events: none;
+}

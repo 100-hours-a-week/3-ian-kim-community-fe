@@ -1,0 +1,14 @@
+.user-form {
+  display: inline-block;
+  margin: 0.9375rem auto;
+  width: 25rem;
+  max-width: 90%;
+}
+
+.user-form-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+  text-align: left;
+  margin-bottom: 0.625rem;
+}
