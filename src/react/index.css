@@ -1,0 +1,11 @@
+.hidden {
+  display: none !important;
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}
+
+button {
+  cursor: pointer;
+}
