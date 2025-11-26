@@ -3,6 +3,7 @@ import basicProfile from '@/assets/images/basicProfile.png'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
+import Button from '@/components/button/Button.jsx'
 
 function HeaderProfile() {
   const profileImage = null
@@ -42,17 +43,9 @@ function HeaderProfile() {
       <img src={profileImage || basicProfile} alt='프로필' className={styles['profile-icon']} onClick={handleIconClick} />
 
       <div className={`${styles['profile-dropdown']} ${isDropdownOpen || 'hidden'}`}>
-        <button className={styles['profile-dropdown-btn']} onClick={handleAccountEditBtnClick}>
-          회원정보수정
-        </button>
-
-        <button className={styles['profile-dropdown-btn']} onClick={handlePasswordEditBtnClick}>
-          비밀번호수정
-        </button>
-
-        <button className={styles['profile-dropdown-btn']} onClick={handleLogoutBtnClick}>
-          로그아웃
-        </button>
+        <Button text={'회원정보수정'} className={styles['profile-dropdown-btn']} onButtonClick={handleAccountEditBtnClick} />
+        <Button text={'비밀번호수정'} className={styles['profile-dropdown-btn']} onButtonClick={handlePasswordEditBtnClick} />
+        <Button text={'로그아웃'} className={styles['profile-dropdown-btn']} onButtonClick={handleLogoutBtnClick} />
       </div>
     </div>
   )
