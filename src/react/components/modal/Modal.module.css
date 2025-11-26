@@ -1,0 +1,44 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  padding: 1.875rem 3.125rem;
+  border-radius: 0.625rem;
+  text-align: center;
+  background-color: white;
+}
+
+.modal-btns {
+  margin-top: 0.625rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+.modal-btn {
+  padding: 0.625rem 2.1875rem;
+  border-radius: 0.625rem;
+  font-weight: 800;
+}
+
+.accept-btn {
+  background-color: #3678bf;
+  border: none;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: white;
+  border: 0.125rem solid rgba(255, 121, 121, 0.8);
+  color: rgba(255, 121, 121, 0.8);
+}
