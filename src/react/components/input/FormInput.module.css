@@ -1,15 +1,3 @@
-.form-input-group {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.form-input-label {
-  font-size: 0.875rem;
-  margin-bottom: 0.3125rem;
-  font-weight: 600;
-}
-
 .form-input {
   padding: 0.625rem;
   font-size: 0.875rem;

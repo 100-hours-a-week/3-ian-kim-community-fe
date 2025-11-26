@@ -1,6 +1,7 @@
 import FormButton from '@/components/button/FormButton.jsx'
 import AuthFormFooter from '@/components/footer/AuthFormFooter.jsx'
 import FormInput from '@/components/input/FormInput.jsx'
+import FormInputGroup from '@/components/input/FormInputGroup.jsx'
 import HelperText from '@/components/text/HelperText.jsx'
 import useInput from '@/hooks/useInput.jsx'
 import styles from '@/pages/LoginPage/LoginPage.module.css'
@@ -30,8 +31,13 @@ function LoginPage() {
 
       <form className={styles['user-form']}>
         <div className={styles['user-form-inputs']}>
-          <FormInput labelText={'이메일'} type={'text'} id={'email'} placeholder={'이메일을 입력하세요.'} value={email.value} onChangeInput={email.onChange} />
-          <FormInput labelText={'비밀번호'} type={'password'} id={'password'} placeholder={'비밀번호를 입력하세요.'} value={password.value} onChangeInput={password.onChange} />
+          <FormInputGroup labelText={'이메일'} id={'email'}>
+            <FormInput type={'text'} id={'email'} placeholder={'이메일을 입력하세요.'} value={email.value} onChangeInput={email.onChange} />
+          </FormInputGroup>
+
+          <FormInputGroup labelText={'비밀번호'} id={'password'}>
+            <FormInput type={'password'} id={'password'} placeholder={'비밀번호를 입력하세요.'} value={password.value} onChangeInput={password.onChange} />
+          </FormInputGroup>
         </div>
 
         <HelperText text={email.error || password.error} />
