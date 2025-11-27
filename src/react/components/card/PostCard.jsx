@@ -1,6 +1,7 @@
 import styles from '@/components/card/PostCard.module.css'
 import { formatToCompactNumber } from '@/utils/format.js'
 import basicProfile from '@/assets/images/basicProfile.png'
+import InfoTextPair from '@/components/text/InfoTextPair.jsx'
 
 function PostCard({ post, onCardClick }) {
   return (
@@ -13,9 +14,9 @@ function PostCard({ post, onCardClick }) {
 
         <div className={styles['card-footer']}>
           <div className={styles['post-stats']}>
-            <span className={styles['info-text']}>추천 {formatToCompactNumber(post.likeCount)}</span>
-            <span className={styles['info-text']}>답변 {formatToCompactNumber(post.commentCount)}</span>
-            <span className={styles['info-text']}>조회수 {formatToCompactNumber(post.viewCount)}</span>
+            <InfoTextPair name={'추천'} value={formatToCompactNumber(post.likeCount)} />
+            <InfoTextPair name={'답변'} value={formatToCompactNumber(post.commentCount)} />
+            <InfoTextPair name={'조회수'} value={formatToCompactNumber(post.viewCount)} />
           </div>
 
           <div className={styles['post-info']}>
