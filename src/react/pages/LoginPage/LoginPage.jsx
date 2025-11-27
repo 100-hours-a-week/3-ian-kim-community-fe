@@ -1,7 +1,7 @@
 import FormButton from '@/components/button/FormButton.jsx'
 import AuthFormFooter from '@/components/footer/AuthFormFooter.jsx'
 import UserForm from '@/components/form/UserForm.jsx'
-import UserFormInputs from '@/components/form/UserFormInputs.jsx'
+import FormInputs from '@/components/form/FormInputs.jsx'
 import FormInput from '@/components/input/FormInput.jsx'
 import FormInputGroup from '@/components/input/FormInputGroup.jsx'
 import HelperText from '@/components/text/HelperText.jsx'
@@ -31,7 +31,7 @@ function LoginPage() {
       <h1>로그인</h1>
 
       <UserForm>
-        <UserFormInputs>
+        <FormInputs>
           <FormInputGroup labelText={'이메일'} id={'email'}>
             <FormInput type={'text'} id={'email'} placeholder={'이메일을 입력하세요.'} value={email.value} onChangeInput={email.onChange} />
           </FormInputGroup>
@@ -39,7 +39,7 @@ function LoginPage() {
           <FormInputGroup labelText={'비밀번호'} id={'password'}>
             <FormInput type={'password'} id={'password'} placeholder={'비밀번호를 입력하세요.'} value={password.value} onChangeInput={password.onChange} />
           </FormInputGroup>
-        </UserFormInputs>
+        </FormInputs>
 
         <HelperText text={email.error || password.error} />
 
