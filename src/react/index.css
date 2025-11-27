@@ -19,6 +19,9 @@ button {
 
 * {
   border-radius: 0.625rem;
-  border-color: #aaa;
   box-sizing: border-box;
+}
+
+.border {
+  border: 0.0625rem solid #aaa;
 }

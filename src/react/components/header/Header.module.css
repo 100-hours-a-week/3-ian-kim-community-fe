@@ -24,13 +24,12 @@
   padding: 0.625rem 0.875rem;
   font-size: 0.875rem;
   font-weight: 500;
-  border-radius: 0.625rem;
   box-sizing: border-box;
 }
 
 .login-btn {
   background: none;
-  border: 1px solid rgb(27, 117, 208);
+  border: 0.0625rem solid rgb(27, 117, 208);
   color: rgb(27, 117, 208);
 }
 

@@ -4,7 +4,7 @@ import HeaderProfile from '@/components/header/HeaderProfile.jsx'
 import Button from '@/components/button/Button.jsx'
 
 function Header() {
-  const isLoggedIn = true
+  const isLoggedIn = false
 
   return (
     <>
