@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 
 function Header() {
-  const isLoggedIn = false
+  const isLoggedIn = true
 
   return (
     <>
