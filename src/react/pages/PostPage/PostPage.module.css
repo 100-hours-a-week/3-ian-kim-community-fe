@@ -1,0 +1,22 @@
+.post-detail-page {
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+.post-detail-page::-webkit-scrollbar {
+  display: none;
+}
+
+.post-author {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.post-img {
+  width: 60%;
+  object-fit: cover;
+  margin: 10px auto;
+}
