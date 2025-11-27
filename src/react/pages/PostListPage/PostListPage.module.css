@@ -1,0 +1,36 @@
+.post-list-page {
+  max-height: calc(100vh - 9.375rem);
+  overflow-y: auto;
+}
+
+.post-list-page::-webkit-scrollbar {
+  display: none;
+}
+
+.list-header {
+  display: flex;
+  justify-content: right;
+  gap: 1.875rem;
+  margin-bottom: 1.875rem;
+}
+
+.write-btn {
+  height: 2.5rem;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.625rem;
+  border: none;
+  background-color: #1b75d0;
+  color: white;
+}
+
+.write-btn:hover {
+  background-color: #155ca2;
+}
+
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}

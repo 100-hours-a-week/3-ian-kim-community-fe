@@ -11,6 +11,7 @@ import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage.jsx'
 import FormLayout from '@/layout/FormLayout/FormLayout.jsx'
 import AuthLayout from '@/layout/AuthLayout/AuthLayout.jsx'
 import MainLayout from '@/layout/MainLayout/MainLayout.jsx'
+import PostLayout from '@/layout/PostLayout/PostLayout.jsx'
 
 function App() {
   return (
@@ -32,8 +33,10 @@ function App() {
           </Route>
 
           <Route path='post'>
-            <Route index element={<PostListPage />} />
-            <Route path=':postId' element={<PostPage />} />
+            <Route element={<PostLayout />}>
+              <Route index element={<PostListPage />} />
+              <Route path=':postId' element={<PostPage />} />
+            </Route>
 
             <Route element={<FormLayout />}>
               <Route path='create' element={<PostCreatePage />} />
