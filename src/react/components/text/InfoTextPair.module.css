@@ -1,7 +1,6 @@
 .info-text-pair {
   display: flex;
   gap: 0.25rem;
-  font-size: 0.8125rem;
 }
 
 .name {
