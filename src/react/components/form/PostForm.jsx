@@ -1,14 +1,11 @@
 import FormInput from '@/components/input/FormInput.jsx'
 import FormInputGroup from '@/components/input/FormInputGroup.jsx'
 import Textarea from '@/components/textarea/Textarea.jsx'
-import { checkInputsValid } from '@/utils/validation.js'
 import FormImagePreview from '@/components/image/FormImagePreview.jsx'
 import Form from '@/components/form/Form.jsx'
 
-function PostForm({ inputs, headerText, buttonText, onButtonClick }) {
+function PostForm({ inputs, headerText, buttonText, onButtonClick, inputsValid }) {
   const [titleInput, contentInput, imageInput] = inputs
-
-  const inputsValid = checkInputsValid([titleInput, contentInput])
 
   return (
     <>

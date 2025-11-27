@@ -19,7 +19,7 @@ const useInput = (initValue, validator, arg) => {
     setError('')
   }
 
-  return { value, error, onChange, reset }
+  return { value, setValue, error, onChange, reset }
 }
 
 export default useInput
