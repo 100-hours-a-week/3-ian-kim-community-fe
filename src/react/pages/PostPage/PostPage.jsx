@@ -14,12 +14,15 @@ function PostPage() {
 
   const { postId } = useParams()
 
-  const post = dummyPosts.find((post) => post.postId === Number(postId))
-  const [comments, setComments] = useState(dummyComments)
+  const [post, setPost] = useState(null)
+  const [comments, setComments] = useState(null)
 
   useEffect(() => {
     // TODO: 게시글 조회 API 연결
+    setPost(dummyPosts.find((post) => post.postId === Number(postId)))
+
     // TODO: 댓글 목록 조회 API 연결
+    setComments(dummyComments)
   }, [])
 
   const handleDeleteComment = (comment) => {
@@ -49,9 +52,9 @@ function PostPage() {
   return (
     <>
       <div className={styles['post-detail-page']}>
-        <PostSection post={post} modal={modal} />
+        {post && <PostSection post={post} modal={modal} />}
 
-        <CommentSection comments={comments} onDeleteComment={handleDeleteComment} onCreateComment={handleCreateComment} onEditComment={handleEditComment} />
+        {comments && <CommentSection comments={comments} onDeleteComment={handleDeleteComment} onCreateComment={handleCreateComment} onEditComment={handleEditComment} />}
 
         <Modal title={'질문을 삭제하시겠습니까?'} content={'삭제한 내용은 복구할 수 없습니다.'} modal={modal} />
       </div>
