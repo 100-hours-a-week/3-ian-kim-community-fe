@@ -10,8 +10,8 @@ function Modal({ title, content, modal }) {
           <p>{content}</p>
 
           <div className={styles['modal-btns']}>
-            <Button text={'취소'} className={`${styles['accept-btn']} ${styles['modal-btn']}`} onButtonClick={modal.onCancel} />
-            <Button text={'확인'} className={`${styles['cancel-btn']} ${styles['modal-btn']}`} onButtonClick={modal.onAccept} />
+            <Button text={'취소'} className={`${styles['cancel-btn']} ${styles['modal-btn']}`} onButtonClick={modal.onCancel} />
+            <Button text={'확인'} className={`${styles['accept-btn']} ${styles['modal-btn']}`} onButtonClick={modal.onAccept} />
           </div>
         </div>
       </div>
