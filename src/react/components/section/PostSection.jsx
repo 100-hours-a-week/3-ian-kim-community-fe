@@ -40,7 +40,7 @@ function PostSection({ post, modal, onLikeClick }) {
           <p>{post.content}</p>
 
           <div className={styles['post-stats']}>
-            <button className={`${styles['post-like-btn']} border ${post.liked ? styles['liked'] : ''}`} onClick={onLikeClick}>
+            <button className={`${styles['post-like-btn']} border border-bold ${post.liked ? styles['liked'] : ''}`} onClick={onLikeClick}>
               <span className={styles['thumbs-emoji']}>👍</span>
               <span className={styles['like-cnt']}>{formatToCompactNumber(post.likeCount)}</span>
             </button>

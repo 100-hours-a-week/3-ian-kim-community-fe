@@ -37,6 +37,6 @@
 
 .cancel-btn {
   background-color: white;
-  border: 0.0625rem solid rgba(255, 121, 121, 0.8);
+  border-color: rgba(255, 121, 121, 0.8);
   color: rgba(255, 121, 121, 0.8);
 }
