@@ -1,0 +1,6 @@
+.textarea {
+  width: 100%;
+  padding: 0.9375rem;
+  resize: none;
+  line-height: 1.6;
+}

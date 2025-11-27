@@ -1,4 +1,4 @@
-export const ROUTES = {
+export const ROUTES = Object.freeze({
   HOME: '/',
 
   LOGIN: '/login',
@@ -11,4 +11,4 @@ export const ROUTES = {
   POST: (id) => `/post/${id}`,
   POST_CREATE: '/post/create',
   POST_EDIT: '/post/edit',
-}
+})

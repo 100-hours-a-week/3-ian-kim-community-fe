@@ -2,13 +2,12 @@ import FormButton from '@/components/button/FormButton.jsx'
 import AuthFormFooter from '@/components/footer/AuthFormFooter.jsx'
 import UserForm from '@/components/form/UserForm.jsx'
 import FormInputs from '@/components/form/FormInputs.jsx'
-import FormProfileImage from '@/components/image/FormProfileImage.jsx'
+import FormImagePreview from '@/components/image/FormImagePreview.jsx'
 import FormInput from '@/components/input/FormInput.jsx'
 import FormInputGroup from '@/components/input/FormInputGroup.jsx'
 import HelperText from '@/components/text/HelperText.jsx'
 import useImageUpload from '@/hooks/useImageUpload.jsx'
 import useInput from '@/hooks/useInput.jsx'
-import styles from '@/pages/RegisterPage/RegisterPage.module.css'
 import { ROUTES } from '@/routes/routes.js'
 import { checkInputsValid, Validators } from '@/utils/validation.js'
 import { useNavigate } from 'react-router'
@@ -42,10 +41,7 @@ function RegisterPage() {
       <UserForm>
         <FormInputs>
           <FormInputGroup labelText={'프로필 이미지'} id={'profile-image'}>
-            <FormProfileImage imgSrc={imgUpload.imgSrc} onImageClick={imgUpload.handleImageClick}>
-              <span className={styles['plus-icon']}>+</span>
-            </FormProfileImage>
-
+            <FormImagePreview imgSrc={imgUpload.imgSrc} onImageClick={imgUpload.handleImageClick} imgName={imgUpload.imgName} />
             <FormInput ref={imgUpload.inputRef} type={'file'} id={'profile-image'} accept='image/*' className={'hidden'} onChangeInput={imgUpload.handleImageChange} />
           </FormInputGroup>
 
