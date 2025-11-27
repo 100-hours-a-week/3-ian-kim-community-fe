@@ -35,7 +35,7 @@ function App() {
             <Route index element={<PostListPage />} />
             <Route path=':postId' element={<PostPage />} />
 
-            <Route path='edit' element={<FormLayout />}>
+            <Route element={<FormLayout />}>
               <Route path='create' element={<PostCreatePage />} />
               <Route path='edit' element={<PostEditPage />} />
             </Route>

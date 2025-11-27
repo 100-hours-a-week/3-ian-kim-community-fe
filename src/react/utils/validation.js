@@ -20,6 +20,14 @@ export const Validators = {
   nickname: (nickname) => {
     return isNotMatch(NICKNAME_PATTERN, nickname) ? '*닉네임은 10자 이하이며, 특수문자를 포함할 수 없습니다.' : ''
   },
+
+  postTitle: (title) => {
+    return !title ? '*제목을 입력해주세요.' : ''
+  },
+
+  postContent: (content) => {
+    return !content ? '*내용을 입력해주세요.' : ''
+  },
 }
 
 export const checkInputsValid = (...inputs) => {

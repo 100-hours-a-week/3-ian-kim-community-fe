@@ -1,6 +1,6 @@
 import FormButton from '@/components/button/FormButton.jsx'
 import UserForm from '@/components/form/UserForm.jsx'
-import UserFormInputs from '@/components/form/UserFormInputs.jsx'
+import FormInputs from '@/components/form/FormInputs.jsx'
 import FormInput from '@/components/input/FormInput.jsx'
 import FormInputGroup from '@/components/input/FormInputGroup.jsx'
 import HelperText from '@/components/text/HelperText.jsx'
@@ -22,7 +22,7 @@ function PasswordEditPage() {
       <h1>비밀번호수정</h1>
 
       <UserForm>
-        <UserFormInputs>
+        <FormInputs>
           <FormInputGroup labelText={'비밀번호 *'} id={'password'}>
             <FormInput type={'password'} id={'password'} placeholder={'비밀번호를 입력하세요.'} value={password.value} onChangeInput={password.onChange} />
           </FormInputGroup>
@@ -30,7 +30,7 @@ function PasswordEditPage() {
           <FormInputGroup labelText={'비밀번호 확인 *'} id={'password-confirm'}>
             <FormInput type={'password'} id={'password-confirm'} placeholder={'비밀번호를 한번 더 입력하세요.'} value={passwordConfirm.value} onChangeInput={passwordConfirm.onChange} />
           </FormInputGroup>
-        </UserFormInputs>
+        </FormInputs>
 
         <HelperText text={password.error || passwordConfirm.error} />
 
