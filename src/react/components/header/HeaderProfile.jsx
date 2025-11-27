@@ -1,9 +1,9 @@
 import styles from '@/components/header/HeaderProfile.module.css'
-import basicProfile from '@/assets/images/basicProfile.png'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 import Button from '@/components/button/Button.jsx'
+import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
 
 function HeaderProfile() {
   const profileImage = null
@@ -40,7 +40,7 @@ function HeaderProfile() {
 
   return (
     <div className={styles['header-profile']}>
-      <img src={profileImage || basicProfile} alt='프로필' className={styles['profile-icon']} onClick={handleIconClick} />
+      <ProfileIcon image={profileImage} size={'2rem'} cursor={'pointer'} onIconClick={handleIconClick} />
 
       <div className={`${styles['profile-dropdown']} ${isDropdownOpen || 'hidden'}`}>
         <Button text={'회원정보수정'} className={styles['profile-dropdown-btn']} onButtonClick={handleAccountEditBtnClick} />

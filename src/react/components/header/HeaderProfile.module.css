@@ -2,14 +2,6 @@
   position: relative;
 }
 
-.profile-icon {
-  width: 1.875rem;
-  height: 1.875rem;
-  border-radius: 20%;
-  cursor: pointer;
-  object-fit: cover;
-}
-
 .profile-dropdown {
   position: absolute;
   top: 3.125rem;
