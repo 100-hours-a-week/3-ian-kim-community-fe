@@ -1,10 +1,6 @@
-import FormButton from '@/components/button/FormButton.jsx'
-import UserForm from '@/components/form/UserForm.jsx'
-import FormInputs from '@/components/form/FormInputs.jsx'
-import FormProfileImage from '@/components/image/FormProfileImage.jsx'
+import FormImagePreview from '@/components/image/FormImagePreview.jsx'
 import FormInput from '@/components/input/FormInput.jsx'
 import FormInputGroup from '@/components/input/FormInputGroup.jsx'
-import HelperText from '@/components/text/HelperText.jsx'
 import useImageUpload from '@/hooks/useImageUpload.jsx'
 import useInput from '@/hooks/useInput.jsx'
 import styles from '@/pages/AccountEditPage/AccountEditPage.module.css'
@@ -14,6 +10,7 @@ import basicProfile from '@/assets/images/basicProfile.png'
 import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import Button from '@/components/button/Button.jsx'
+import Form from '@/components/form/Form.jsx'
 
 function AccountEditPage() {
   const user = {
@@ -29,7 +26,7 @@ function AccountEditPage() {
   const modal = useModal(handleAcceptClick)
 
   const inputsValid = (() => {
-    return checkInputsValid(nickname) && nickname.value !== user.nickname
+    return checkInputsValid([nickname]) && nickname.value !== user.nickname
   })()
 
   useEffect(() => {
@@ -50,31 +47,20 @@ function AccountEditPage() {
 
   return (
     <>
-      <h1>회원정보수정</h1>
+      <Form headerText={'회원정보수정'} buttonText={'수정하기'} onButtonClick={handleEditClick} inputs={[nickname]} inputsValid={inputsValid}>
+        <FormInputGroup labelText={'프로필 이미지'} id={'profile-image'}>
+          <FormImagePreview imgSrc={imgUpload.imgSrc} onImageClick={imgUpload.handleImageClick} imgName={imgUpload.imgName} />
+          <FormInput ref={imgUpload.inputRef} type={'file'} id={'profile-image'} accept='image/*' className={'hidden'} onChangeInput={imgUpload.handleImageChange} />
+        </FormInputGroup>
 
-      <UserForm>
-        <FormInputs>
-          <FormInputGroup labelText={'프로필 이미지'} id={'profile-image'}>
-            <FormProfileImage imgSrc={imgUpload.imgSrc} onImageClick={imgUpload.handleImageClick}>
-              <span className={styles['edit-text']}>변경</span>
-            </FormProfileImage>
+        <FormInputGroup labelText={'이메일'} id={'email'}>
+          <p className={styles.email}>{user.email}</p>
+        </FormInputGroup>
 
-            <FormInput ref={imgUpload.inputRef} type={'file'} id={'profile-image'} accept='image/*' className={'hidden'} onChangeInput={imgUpload.handleImageChange} />
-          </FormInputGroup>
-
-          <FormInputGroup labelText={'이메일'} id={'email'}>
-            <p className={styles.email}>{user.email}</p>
-          </FormInputGroup>
-
-          <FormInputGroup labelText={'닉네임 *'} id={'nickname'}>
-            <FormInput type={'text'} id={'nickname'} placeholder={'닉네임을 입력하세요.'} value={nickname.value} onChangeInput={nickname.onChange} />
-          </FormInputGroup>
-        </FormInputs>
-
-        <HelperText text={nickname.error} />
-
-        <FormButton text={'수정하기'} onButtonClick={handleEditClick} isActive={inputsValid} />
-      </UserForm>
+        <FormInputGroup labelText={'닉네임 *'} id={'nickname'}>
+          <FormInput type={'text'} id={'nickname'} placeholder={'닉네임을 입력하세요.'} value={nickname.value} onChangeInput={nickname.onChange} />
+        </FormInputGroup>
+      </Form>
 
       <Button text={'회원탈퇴'} className={styles['delete-btn']} onButtonClick={handleDeleteClick} />
 

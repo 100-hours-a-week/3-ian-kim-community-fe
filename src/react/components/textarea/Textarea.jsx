@@ -1,9 +1,9 @@
-function Textarea({ id, className, text, placeholder, onChangeInput }) {
+import styles from '@/components/textarea/Textarea.module.css'
+
+function Textarea({ id, height, value, placeholder, onChangeInput }) {
   return (
     <>
-      <textarea id={id} className={className} placeholder={placeholder} onChange={onChangeInput}>
-        {text}
-      </textarea>
+      <textarea id={id} value={value} className={styles.textarea} placeholder={placeholder} onChange={onChangeInput} style={{ height }} />
     </>
   )
 }

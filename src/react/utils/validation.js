@@ -30,6 +30,10 @@ export const Validators = {
   },
 }
 
-export const checkInputsValid = (...inputs) => {
+export const checkInputsValid = (inputs) => {
   return inputs.every((input) => input.value && !input.error)
+}
+
+export const getValidationErrorMessage = (inputs) => {
+  return inputs.find((input) => input.error)?.error || ''
 }
