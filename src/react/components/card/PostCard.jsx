@@ -1,8 +1,7 @@
 import styles from '@/components/card/PostCard.module.css'
 import { formatToCompactNumber } from '@/utils/format.js'
-import basicProfile from '@/assets/images/basicProfile.png'
 import InfoTextPair from '@/components/text/InfoTextPair.jsx'
-import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
+import ProfilePair from '@/components/profile/ProfilePair.jsx'
 
 function PostCard({ post, onCardClick }) {
   return (
@@ -21,9 +20,8 @@ function PostCard({ post, onCardClick }) {
           </div>
 
           <div className={styles['post-info']}>
-            <ProfileIcon size={'1.25rem'} />
-            <span className={styles['info-text']}>{post.authorNickname}</span>
-            <span className={styles['info-text']}>{post.createdDate}</span>
+            <ProfilePair nickname={post.authorNickname} iconSize={'1.25rem'} />
+            <span>{post.createdDate}</span>
           </div>
         </div>
       </article>
