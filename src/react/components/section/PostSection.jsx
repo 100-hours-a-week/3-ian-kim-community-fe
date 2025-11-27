@@ -6,7 +6,7 @@ import ActionButtons from '@/components/button/ActionButtons.jsx'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 
-function PostSection({ post, modal }) {
+function PostSection({ post, modal, onLikeClick }) {
   const navigate = useNavigate()
 
   const handleEditClick = () => {
@@ -40,7 +40,7 @@ function PostSection({ post, modal }) {
           <p>{post.content}</p>
 
           <div className={styles['post-stats']}>
-            <button className={`${styles['like-box']} ${styles['btn-post-like']} ${post.liked ? styles['liked'] : ''}`}>
+            <button className={`${styles['post-like-btn']} border ${post.liked ? styles['liked'] : ''}`} onClick={onLikeClick}>
               <span className={styles['thumbs-emoji']}>👍</span>
               <span className={styles['like-cnt']}>{formatToCompactNumber(post.likeCount)}</span>
             </button>

@@ -47,10 +47,6 @@
   white-space: pre-wrap;
 }
 
-.post-detail-view-count {
-  font-size: 0.75rem;
-}
-
 .post-stats {
   display: flex;
   justify-content: center;
@@ -59,16 +55,16 @@
   gap: 0.625rem;
 }
 
-.like-box {
+.post-like-btn {
   text-align: center;
-  border: 0.09375rem solid #c1c1c1;
   background-color: white;
-  border-radius: 0.625rem;
   padding: 0.75rem 0.875rem;
-  font-size: 0.875rem;
-  font-weight: 600;
   width: 3.125rem;
   box-sizing: content-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .thumbs-emoji {
@@ -77,4 +73,9 @@
 
 .liked {
   border-color: #e7700d;
+}
+
+.like-cnt {
+  font-size: 0.875rem;
+  font-weight: 400;
 }

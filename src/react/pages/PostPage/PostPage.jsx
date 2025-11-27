@@ -1,5 +1,5 @@
 import { dummyComments } from '@/assets/dummy/comment.js'
-import { dummyPosts } from '@/assets/dummy/post.js'
+import { dummyPostDetails } from '@/assets/dummy/post.js'
 import Modal from '@/components/modal/Modal.jsx'
 import CommentSection from '@/components/section/CommentSection.jsx'
 import PostSection from '@/components/section/PostSection.jsx'
@@ -14,12 +14,12 @@ function PostPage() {
 
   const { postId } = useParams()
 
-  const [post, setPost] = useState(null)
-  const [comments, setComments] = useState(null)
+  const [post, setPost] = useState({})
+  const [comments, setComments] = useState([])
 
   useEffect(() => {
     // TODO: 게시글 조회 API 연결
-    setPost(dummyPosts.find((post) => post.postId === Number(postId)))
+    setPost(dummyPostDetails[Number(postId)])
 
     // TODO: 댓글 목록 조회 API 연결
     setComments(dummyComments)
@@ -47,12 +47,21 @@ function PostPage() {
     })
   }
 
+  const handleLikeClick = () => {
+    // TODO: 게시글 좋아요 API 연결
+    setPost((prev) => {
+      const liked = !prev.liked
+      const likeCount = liked ? prev.likeCount + 1 : prev.likeCount - 1
+      return { ...prev, liked, likeCount }
+    })
+  }
+
   const modal = useModal(handleDeletePost)
 
   return (
     <>
       <div className={styles['post-detail-page']}>
-        {post && <PostSection post={post} modal={modal} />}
+        {post && <PostSection post={post} modal={modal} onLikeClick={handleLikeClick} />}
 
         {comments && <CommentSection comments={comments} onDeleteComment={handleDeleteComment} onCreateComment={handleCreateComment} onEditComment={handleEditComment} />}
 
