@@ -25,3 +25,7 @@ button {
 .border {
   border: 0.0625rem solid #aaa;
 }
+
+.border-bold {
+  border: 0.1rem solid;
+}

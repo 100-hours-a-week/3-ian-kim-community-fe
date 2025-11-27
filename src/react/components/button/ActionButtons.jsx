@@ -5,8 +5,8 @@ function ActionButtons({ onEditClick, onDeleteClick, padding }) {
   return (
     <>
       <div className={styles['action-buttons']}>
-        <Button text={'수정'} className={`${styles['edit-btn']} border`} onButtonClick={onEditClick} style={{ padding }} />
-        <Button text={'삭제'} className={`${styles['delete-btn']} border`} onButtonClick={onDeleteClick} style={{ padding }} />
+        <Button text={'수정'} className={`border border-bold`} onButtonClick={onEditClick} style={{ padding }} />
+        <Button text={'삭제'} className={`${styles['delete-btn']} border border-bold`} onButtonClick={onDeleteClick} style={{ padding }} />
       </div>
     </>
   )
