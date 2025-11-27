@@ -2,6 +2,8 @@ import HeaderLogo from '@/components/header/HeaderLogo.jsx'
 import styles from '@/components/header/Header.module.css'
 import HeaderProfile from '@/components/header/HeaderProfile.jsx'
 import Button from '@/components/button/Button.jsx'
+import { useNavigate } from 'react-router'
+import { ROUTES } from '@/routes/routes.js'
 
 function Header() {
   const isLoggedIn = false
@@ -20,10 +22,20 @@ function Header() {
 }
 
 function Guest() {
+  const navigate = useNavigate()
+
+  const handleLoginClick = () => {
+    navigate(ROUTES.LOGIN)
+  }
+
+  const handleRegisterClick = () => {
+    navigate(ROUTES.REGISTER)
+  }
+
   return (
     <div className={styles['header-guest']}>
-      <Button text={'로그인'} className={`${styles['header-guest-btn']} ${styles['login-btn']}`} />
-      <Button text={'회원가입'} className={`${styles['header-guest-btn']} ${styles['register-btn']}`} />
+      <Button text={'로그인'} className={`${styles['header-guest-btn']} ${styles['login-btn']}`} onButtonClick={handleLoginClick} />
+      <Button text={'회원가입'} className={`${styles['header-guest-btn']} ${styles['register-btn']}`} onButtonClick={handleRegisterClick} />
     </div>
   )
 }
