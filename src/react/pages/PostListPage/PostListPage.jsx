@@ -1,4 +1,5 @@
 import { dummyPosts } from '@/assets/dummy/post.js'
+import Button from '@/components/button/Button.jsx'
 import PostCard from '@/components/card/PostCard.jsx'
 import styles from '@/pages/PostListPage/PostListPage.module.css'
 import { ROUTES } from '@/routes/routes.js'
@@ -13,11 +14,15 @@ function PostListPage() {
     navigate(ROUTES.POST(post.postId))
   }
 
+  const handleCreateClick = () => {
+    navigate(ROUTES.POST_CREATE)
+  }
+
   return (
     <>
       <div className={styles['post-list-page']}>
         <div className={styles['list-header']}>
-          <button className={styles['write-btn']}>질문 작성하기</button>
+          <Button text={'질문 작성하기'} className={styles['write-btn']} onButtonClick={handleCreateClick} />
         </div>
 
         <section className={styles['post-list']}>
