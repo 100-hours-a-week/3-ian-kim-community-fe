@@ -1,5 +1,6 @@
 export const ERROR_MESSAGE = Object.freeze({
   // 401 Unauthorized
+  4007: '이전과 동일한 비밀번호로 변경할 수 없습니다.',
   4011: '아이디 또는 비밀번호가 틀렸습니다.',
   4012: '로그인이 필요합니다.',
 

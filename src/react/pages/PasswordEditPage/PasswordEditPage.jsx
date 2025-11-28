@@ -1,28 +1,41 @@
+import PasswordUpdateRequest from '@/api/dto/request/PasswordUpdateRequest.js'
+import { ERROR_MESSAGE } from '@/api/error.js'
+import { resetPassword } from '@/api/user.js'
 import Form from '@/components/form/Form.jsx'
 import FormInput from '@/components/input/FormInput.jsx'
 import FormInputGroup from '@/components/input/FormInputGroup.jsx'
 import useInput from '@/hooks/useInput.jsx'
+import { ROUTES } from '@/routes/routes.js'
 import { checkInputsValid, Validators } from '@/utils/validation.js'
+import { useNavigate } from 'react-router'
 
 function PasswordEditPage() {
-  const password = useInput('', Validators.password)
-  const passwordConfirm = useInput('', Validators.passwordConfirm, password.value)
+  const navigate = useNavigate()
 
-  const inputsValid = checkInputsValid([password, passwordConfirm])
+  const passwordInput = useInput('', Validators.password)
+  const passwordConfirmInput = useInput('', Validators.passwordConfirm, passwordInput.value)
 
-  const handleEditClick = () => {
-    // TODO: 비밀번호수정 API 연결
+  const inputsValid = checkInputsValid([passwordInput, passwordConfirmInput])
+
+  const handleEditClick = async () => {
+    try {
+      await resetPassword(new PasswordUpdateRequest({ password: passwordInput.value }))
+      alert('비밀번호가 수정되었습니다.')
+      navigate(ROUTES.HOME)
+    } catch ({ code }) {
+      alert(ERROR_MESSAGE[code])
+    }
   }
 
   return (
     <>
-      <Form headerText={'비밀번호수정'} buttonText={'수정하기'} onButtonClick={handleEditClick} inputs={[password, passwordConfirm]} inputsValid={inputsValid}>
+      <Form headerText={'비밀번호수정'} buttonText={'수정하기'} onButtonClick={handleEditClick} inputs={[passwordInput, passwordConfirmInput]} inputsValid={inputsValid}>
         <FormInputGroup labelText={'비밀번호 *'} id={'password'}>
-          <FormInput type={'password'} id={'password'} placeholder={'비밀번호를 입력하세요.'} value={password.value} onChangeInput={password.onChange} />
+          <FormInput type={'password'} id={'password'} placeholder={'비밀번호를 입력하세요.'} value={passwordInput.value} onChangeInput={passwordInput.onChange} />
         </FormInputGroup>
 
         <FormInputGroup labelText={'비밀번호 확인 *'} id={'password-confirm'}>
-          <FormInput type={'password'} id={'password-confirm'} placeholder={'비밀번호를 한번 더 입력하세요.'} value={passwordConfirm.value} onChangeInput={passwordConfirm.onChange} />
+          <FormInput type={'password'} id={'password-confirm'} placeholder={'비밀번호를 한번 더 입력하세요.'} value={passwordConfirmInput.value} onChangeInput={passwordConfirmInput.onChange} />
         </FormInputGroup>
       </Form>
     </>
