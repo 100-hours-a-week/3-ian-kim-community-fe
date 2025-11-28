@@ -1,19 +1,17 @@
 import { useEffect, useRef } from 'react'
 
-const useInfiniteScroll = (callback) => {
-  const pageNoRef = useRef(1)
-  const hasNextPage = useRef(false)
-  const targetRef = useRef(null)
+const useInfiniteScroll = ({ onIntersect, hasNextPage }) => {
+  const target = useRef(null)
 
   useEffect(() => {
-    if (!targetRef.current) {
+    if (!hasNextPage || !target.current) {
       return
     }
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && hasNextPage.current) {
-          callback()
+      async ([entry], observerInstance) => {
+        if (entry.isIntersecting) {
+          await onIntersect(entry, observerInstance)
         }
       },
       {
@@ -21,16 +19,12 @@ const useInfiniteScroll = (callback) => {
       },
     )
 
-    observer.observe(targetRef.current)
+    observer.observe(target.current)
 
     return () => observer.disconnect()
-  }, [targetRef.current])
+  }, [hasNextPage, onIntersect])
 
-  const updateHasNextPage = (page) => {
-    hasNextPage.current = page.number < page.totalPages
-  }
-
-  return { targetRef, pageNoRef, updateHasNextPage }
+  return { target }
 }
 
 export default useInfiniteScroll
