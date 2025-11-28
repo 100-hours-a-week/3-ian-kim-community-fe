@@ -1,38 +1,47 @@
+import { toAccountResponse } from '@/api/dto/response/AccountResponse.js'
+import { toAccountUpdateResponse } from '@/api/dto/response/AccountUpdateResponse.js'
+import { toLoginResponse } from '@/api/dto/response/LoginResponse.js'
+import { toUserValidationResponse } from '@/api/dto/response/UserValidationResponse.js'
 import { ENDPOINTS } from '@/api/endpoint.js'
 import { apiDelete, apiFormData, apiGet, apiPatch, apiPost, HTTP_METHOD } from '@/api/http.js'
 
-export const validateEmail = (email) => {
-  return apiGet(ENDPOINTS.EMAIL_VALIDATION, { email })
+export const validateEmail = async (email) => {
+  const response = await apiGet(ENDPOINTS.EMAIL_VALIDATION, { email })
+  return toUserValidationResponse(response)
 }
 
-export const validateNickname = (nickname) => {
-  return apiGet(ENDPOINTS.NICKNAME_VALIDATION, { nickname })
+export const validateNickname = async (nickname) => {
+  const response = await apiGet(ENDPOINTS.NICKNAME_VALIDATION, { nickname })
+  return toUserValidationResponse(response)
 }
 
-export const registerUser = (request) => {
-  return apiFormData(ENDPOINTS.REGISTER, HTTP_METHOD.POST, request)
+export const registerUser = async (request) => {
+  await apiFormData(ENDPOINTS.REGISTER, HTTP_METHOD.POST, request)
 }
 
-export const loginUser = (request) => {
-  return apiPost(ENDPOINTS.LOGIN, request)
+export const loginUser = async (request) => {
+  const response = await apiPost(ENDPOINTS.LOGIN, request)
+  return toLoginResponse(response)
 }
 
-export const updateAccount = (request) => {
-  return apiFormData(ENDPOINTS.EDIT_ACCOUNT, HTTP_METHOD.PATCH, request)
+export const updateAccount = async (request) => {
+  const response = await apiFormData(ENDPOINTS.EDIT_ACCOUNT, HTTP_METHOD.PATCH, request)
+  return toAccountUpdateResponse(response)
 }
 
-export const getMyAccount = () => {
-  return apiGet(ENDPOINTS.MY_ACCOUNT)
+export const getMyAccount = async () => {
+  const response = await apiGet(ENDPOINTS.MY_ACCOUNT)
+  return toAccountResponse(response)
 }
 
-export const resetPassword = (request) => {
-  return apiPatch(ENDPOINTS.RESET_PASSWORD, request)
+export const resetPassword = async (request) => {
+  await apiPatch(ENDPOINTS.RESET_PASSWORD, request)
 }
 
-export const deleteAccount = () => {
-  return apiDelete(ENDPOINTS.DELETE_ACCOUNT)
+export const deleteAccount = async () => {
+  await apiDelete(ENDPOINTS.DELETE_ACCOUNT)
 }
 
-export const logoutUser = () => {
-  return apiPost(ENDPOINTS.LOGOUT)
+export const logoutUser = async () => {
+  await apiPost(ENDPOINTS.LOGOUT)
 }
