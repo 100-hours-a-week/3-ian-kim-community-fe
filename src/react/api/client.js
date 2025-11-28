@@ -1,4 +1,5 @@
 import { toApiErrorResponse } from '@/api/dto/response/ApiErrorResponse.js'
+import { getErrorMessage } from '@/api/error.js'
 import { COOKIE_NAME, HEADER_NAME } from '@/common/constants/name.js'
 import { getCookie } from '@/utils/cookie.js'
 import axios from 'axios'
@@ -33,6 +34,12 @@ apiClient.interceptors.response.use(
     return response.data.data
   },
   (error) => {
-    throw toApiErrorResponse(error.response.data)
+    const { code } = toApiErrorResponse(error.response.data)
+
+    if (String(code).startsWith('500')) {
+      alert(getErrorMessage(code))
+    }
+
+    throw error
   },
 )

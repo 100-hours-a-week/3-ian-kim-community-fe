@@ -9,7 +9,6 @@ import Form from '@/components/form/Form.jsx'
 import { loginUser } from '@/api/user.js'
 import LoginRequest from '@/api/dto/request/LoginRequest.js'
 import { useAuthStore } from '@/stores/authStore.js'
-import { ERROR_MESSAGE } from '@/api/error.js'
 import { getImage } from '@/api/image.js'
 
 function LoginPage() {
@@ -37,9 +36,7 @@ function LoginPage() {
 
       alert('로그인에 성공했습니다.')
       navigate(ROUTES.HOME)
-    } catch ({ code }) {
-      alert(ERROR_MESSAGE[code])
-    }
+    } catch (err) {}
   }
 
   return (

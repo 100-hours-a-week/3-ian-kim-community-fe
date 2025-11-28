@@ -1,5 +1,4 @@
 import PasswordUpdateRequest from '@/api/dto/request/PasswordUpdateRequest.js'
-import { ERROR_MESSAGE } from '@/api/error.js'
 import { resetPassword } from '@/api/user.js'
 import Form from '@/components/form/Form.jsx'
 import FormInput from '@/components/input/FormInput.jsx'
@@ -22,9 +21,7 @@ function PasswordEditPage() {
       await resetPassword(new PasswordUpdateRequest({ password: passwordInput.value }))
       alert('비밀번호가 수정되었습니다.')
       navigate(ROUTES.HOME)
-    } catch ({ code }) {
-      alert(ERROR_MESSAGE[code])
-    }
+    } catch (err) {}
   }
 
   return (
