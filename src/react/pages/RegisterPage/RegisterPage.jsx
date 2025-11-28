@@ -1,3 +1,5 @@
+import RegisterRequest from '@/api/dto/request/RegisterRequest.js'
+import { registerUser } from '@/api/user.js'
 import AuthFormFooter from '@/components/footer/AuthFormFooter.jsx'
 import Form from '@/components/form/Form.jsx'
 import FormImagePreview from '@/components/image/FormImagePreview.jsx'
@@ -12,45 +14,56 @@ import { useNavigate } from 'react-router'
 function RegisterPage() {
   const navigate = useNavigate()
 
-  const email = useInput('', Validators.email)
-  const password = useInput('', Validators.password)
-  const passwordConfirm = useInput('', Validators.passwordConfirm, password.value)
-  const nickname = useInput('', Validators.nickname)
+  const emailInput = useInput('', Validators.email)
+  const passwordInput = useInput('', Validators.password)
+  const passwordConfirmInput = useInput('', Validators.passwordConfirm, passwordInput.value)
+  const nicknameInput = useInput('', Validators.nickname)
+  const imageInput = useImageUpload(null)
 
-  const imgUpload = useImageUpload(null)
-
-  const inputsValid = checkInputsValid([email, password, passwordConfirm, nickname])
+  const inputsValid = checkInputsValid([emailInput, passwordInput, passwordConfirmInput, nicknameInput])
 
   const handleLinkClick = () => {
     navigate(ROUTES.LOGIN)
   }
 
-  const handleButtonClick = () => {
-    // TODO: 회원가입 API 연결
+  const handleRegisterClick = async () => {
+    try {
+      const response = await registerUser(
+        new RegisterRequest({
+          email: emailInput.value,
+          password: passwordInput.value,
+          nickname: nicknameInput.value,
+          profileImage: imageInput.image,
+        }),
+      )
+
+      alert('회원가입에 성공했습니다.')
+      navigate(ROUTES.LOGIN)
+    } catch (e) {}
   }
 
   return (
     <>
-      <Form headerText={'회원가입'} buttonText={'회원가입'} onButtonClick={handleButtonClick} inputs={[email, password, passwordConfirm, nickname]} inputsValid={inputsValid}>
+      <Form headerText={'회원가입'} buttonText={'회원가입'} onButtonClick={handleRegisterClick} inputs={[emailInput, passwordInput, passwordConfirmInput, nicknameInput]} inputsValid={inputsValid}>
         <FormInputGroup labelText={'프로필 이미지'} id={'profile-image'}>
-          <FormImagePreview imgSrc={imgUpload.imgSrc} onImageClick={imgUpload.handleImageClick} imgName={imgUpload.imgName} />
-          <FormInput ref={imgUpload.inputRef} type={'file'} id={'profile-image'} accept='image/*' className={'hidden'} onChangeInput={imgUpload.handleImageChange} />
+          <FormImagePreview imgSrc={imageInput.imgSrc} onImageClick={imageInput.handleImageClick} imgName={imageInput.imgName} />
+          <FormInput ref={imageInput.inputRef} type={'file'} id={'profile-image'} accept='image/*' className={'hidden'} onChangeInput={imageInput.handleImageChange} />
         </FormInputGroup>
 
         <FormInputGroup labelText={'이메일 *'} id={'email'}>
-          <FormInput type={'text'} id={'email'} placeholder={'이메일을 입력하세요.'} value={email.value} onChangeInput={email.onChange} />
+          <FormInput type={'text'} id={'email'} placeholder={'이메일을 입력하세요.'} value={emailInput.value} onChangeInput={emailInput.onChange} />
         </FormInputGroup>
 
         <FormInputGroup labelText={'비밀번호 *'} id={'password'}>
-          <FormInput type={'password'} id={'password'} placeholder={'비밀번호를 입력하세요.'} value={password.value} onChangeInput={password.onChange} />
+          <FormInput type={'password'} id={'password'} placeholder={'비밀번호를 입력하세요.'} value={passwordInput.value} onChangeInput={passwordInput.onChange} />
         </FormInputGroup>
 
         <FormInputGroup labelText={'비밀번호 확인 *'} id={'password-confirm'}>
-          <FormInput type={'password'} id={'password-confirm'} placeholder={'비밀번호를 한번 더 입력하세요.'} value={passwordConfirm.value} onChangeInput={passwordConfirm.onChange} />
+          <FormInput type={'password'} id={'password-confirm'} placeholder={'비밀번호를 한번 더 입력하세요.'} value={passwordConfirmInput.value} onChangeInput={passwordConfirmInput.onChange} />
         </FormInputGroup>
 
         <FormInputGroup labelText={'닉네임 *'} id={'nickname'}>
-          <FormInput type={'text'} id={'nickname'} placeholder={'닉네임을 입력하세요.'} value={nickname.value} onChangeInput={nickname.onChange} />
+          <FormInput type={'text'} id={'nickname'} placeholder={'닉네임을 입력하세요.'} value={nicknameInput.value} onChangeInput={nicknameInput.onChange} />
         </FormInputGroup>
       </Form>
 

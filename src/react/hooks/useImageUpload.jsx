@@ -2,7 +2,8 @@ import { useRef, useState } from 'react'
 
 const useImageUpload = (initImage) => {
   const inputRef = useRef(null)
-  const [imgSrc, setimgSrc] = useState(initImage)
+  const [image, setImage] = useState(initImage)
+  const [imgSrc, setimgSrc] = useState(null)
   const [imgName, setImgName] = useState('')
 
   const handleImageClick = () => {
@@ -10,10 +11,11 @@ const useImageUpload = (initImage) => {
   }
 
   const handleImageChange = (e) => {
-    const image = e.target.files[0]
+    const uploadedImage = e.target.files[0]
 
-    if (!image) {
-      setimgSrc(initImage)
+    if (!uploadedImage) {
+      setImage(initImage)
+      setimgSrc(null)
       setImgName('')
       return
     }
@@ -21,14 +23,15 @@ const useImageUpload = (initImage) => {
     const reader = new FileReader()
 
     reader.onload = () => {
+      setImage(uploadedImage)
       setimgSrc(reader.result)
-      setImgName(image.name)
+      setImgName(uploadedImage.name)
     }
 
-    reader.readAsDataURL(image)
+    reader.readAsDataURL(uploadedImage)
   }
 
-  return { inputRef, imgSrc, imgName, handleImageClick, handleImageChange }
+  return { inputRef, image, imgSrc, imgName, handleImageClick, handleImageChange }
 }
 
 export default useImageUpload
