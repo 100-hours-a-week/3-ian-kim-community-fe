@@ -12,8 +12,24 @@ import FormLayout from '@/layout/FormLayout/FormLayout.jsx'
 import AuthLayout from '@/layout/AuthLayout/AuthLayout.jsx'
 import MainLayout from '@/layout/MainLayout/MainLayout.jsx'
 import PostLayout from '@/layout/PostLayout/PostLayout.jsx'
+import { useEffect } from 'react'
+import { useAuthStore } from '@/stores/authStore.js'
+import { getMyAccount } from '@/api/user.js'
 
 function App() {
+  const setUser = useAuthStore((store) => store.setUser)
+
+  useEffect(() => {
+    const getLoginUser = async () => {
+      try {
+        const response = await getMyAccount()
+        setUser(response)
+      } catch ({ code }) {}
+    }
+
+    getLoginUser()
+  }, [])
+
   return (
     <>
       <Routes>

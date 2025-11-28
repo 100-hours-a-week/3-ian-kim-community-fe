@@ -4,17 +4,27 @@ import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 import Button from '@/components/button/Button.jsx'
 import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
+import { getImage } from '@/api/image.js'
 
-function HeaderProfile() {
-  const profileImage = null
+function HeaderProfile({ profileImageName }) {
   const navigate = useNavigate()
 
+  const [profileImage, setProfileImage] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   useEffect(() => {
+    const getProfileImage = async () => {
+      try {
+        const response = await getImage(profileImageName)
+        setProfileImage(response.imageSrc)
+      } catch ({ code }) {}
+    }
+
     const handleOutsideClick = () => {
       setIsDropdownOpen(false)
     }
+
+    getProfileImage()
 
     window.addEventListener('click', handleOutsideClick)
 
