@@ -1,19 +1,18 @@
+import { getPosts } from '@/api/post.js'
 import Button from '@/components/button/Button.jsx'
 import PostCard from '@/components/card/PostCard.jsx'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll.jsx'
 import styles from '@/pages/PostListPage/PostListPage.module.css'
 import { ROUTES } from '@/routes/routes.js'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 function PostListPage() {
   const navigate = useNavigate()
 
+  const [pageNo, setPageNo] = useState(0)
+  const [hasNextPage, setHasNextPage] = useState(true)
   const [posts, setPosts] = useState([])
-
-  useEffect(() => {
-    handleGetNextPosts()
-  }, [])
 
   const handleCardClick = (post) => {
     navigate(ROUTES.POST(post.postId))
@@ -23,11 +22,16 @@ function PostListPage() {
     navigate(ROUTES.POST_CREATE)
   }
 
-  const handleGetNextPosts = () => {
-    // TODO: 게시글 목록 다음 페이지 조회 API 연결
+  const handleGetNextPosts = async () => {
+    try {
+      const { content, page } = await getPosts(pageNo)
+      setPageNo((prev) => prev + 1)
+      setHasNextPage(page.number < page.totalPages)
+      setPosts((prev) => [...prev, ...content])
+    } catch (err) {}
   }
 
-  const { targetRef, pageNoRef, updateHasNextPage } = useInfiniteScroll(handleGetNextPosts)
+  const { target } = useInfiniteScroll({ hasNextPage, onIntersect: handleGetNextPosts })
 
   const EmptyPage = () => {
     return <h1>아직 작성된 게시글이 없습니다.</h1>
@@ -40,7 +44,7 @@ function PostListPage() {
           <PostCard post={post} key={post.postId} onCardClick={() => handleCardClick(post)} />
         ))}
 
-        <div ref={targetRef} />
+        <div ref={target} style={{ height: '1rem' }} />
       </section>
     )
   }
@@ -54,6 +58,8 @@ function PostListPage() {
 
         {posts.length === 0 && EmptyPage()}
         {posts.length > 0 && ListPage()}
+
+        <div ref={target} style={{ height: '1rem' }} />
       </div>
     </>
   )
