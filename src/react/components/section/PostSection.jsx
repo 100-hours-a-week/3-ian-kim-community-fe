@@ -5,9 +5,34 @@ import ProfilePair from '@/components/profile/ProfilePair.jsx'
 import ActionButtons from '@/components/button/ActionButtons.jsx'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
+import Modal from '@/components/modal/Modal.jsx'
+import useModal from '@/hooks/useModal.jsx'
+import { useEffect, useState } from 'react'
+import { dummyPostDetails } from '@/assets/dummy/post.js'
 
-function PostSection({ post, modal, onLikeClick }) {
+function PostSection({ postId }) {
   const navigate = useNavigate()
+
+  const [post, setPost] = useState({})
+
+  useEffect(() => {
+    // TODO: 게시글 조회 API 연결
+    setPost(dummyPostDetails[Number(postId)])
+  }, [])
+
+  const handleDeletePost = () => {
+    // TODO: 게시글 삭제 API 연결
+    navigate(ROUTES.POST_LIST)
+  }
+
+  const handleLikeClick = () => {
+    // TODO: 게시글 좋아요 API 연결
+    setPost((prev) => {
+      const liked = !prev.liked
+      const likeCount = liked ? prev.likeCount + 1 : prev.likeCount - 1
+      return { ...prev, liked, likeCount }
+    })
+  }
 
   const handleEditClick = () => {
     navigate(ROUTES.POST_EDIT, { state: { post } })
@@ -15,6 +40,12 @@ function PostSection({ post, modal, onLikeClick }) {
 
   const handleDeleteClick = () => {
     modal.openModal()
+  }
+
+  const modal = useModal(handleDeletePost)
+
+  if (!post) {
+    return
   }
 
   return (
@@ -40,13 +71,15 @@ function PostSection({ post, modal, onLikeClick }) {
           <p>{post.content}</p>
 
           <div className={styles['post-stats']}>
-            <button className={`${styles['post-like-btn']} border border-bold ${post.liked ? styles['liked'] : ''}`} onClick={onLikeClick}>
+            <button className={`${styles['post-like-btn']} border border-bold ${post.liked ? styles['liked'] : ''}`} onClick={handleLikeClick}>
               <span className={styles['thumbs-emoji']}>👍</span>
               <span className={styles['like-cnt']}>{formatToCompactNumber(post.likeCount)}</span>
             </button>
           </div>
         </div>
       </section>
+
+      <Modal title={'질문을 삭제하시겠습니까?'} content={'삭제한 내용은 복구할 수 없습니다.'} modal={modal} />
     </>
   )
 }
