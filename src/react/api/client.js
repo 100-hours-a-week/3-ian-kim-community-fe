@@ -22,7 +22,17 @@ apiClient.interceptors.request.use(
 )
 
 apiClient.interceptors.response.use(
-  (response) => response.data.data,
+  (response) => {
+    const contentType = response.headers['content-type']
+
+    // file
+    if (contentType && contentType.startsWith('image/')) {
+      return response
+    }
+
+    // json
+    return response.data.data
+  },
   (error) => {
     const { code } = toApiErrorResponse(error.response.data)
     alert(ERROR_MESSAGE[code])
