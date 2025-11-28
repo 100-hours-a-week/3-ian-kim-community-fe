@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 const useInfiniteScroll = (callback) => {
+  const pageNoRef = useRef(1)
   const hasNextPage = useRef(false)
   const targetRef = useRef(null)
 
@@ -29,7 +30,7 @@ const useInfiniteScroll = (callback) => {
     hasNextPage.current = page.number < page.totalPages
   }
 
-  return { targetRef, updateHasNextPage }
+  return { targetRef, pageNoRef, updateHasNextPage }
 }
 
 export default useInfiniteScroll
