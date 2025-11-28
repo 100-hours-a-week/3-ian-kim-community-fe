@@ -10,12 +10,10 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll.jsx'
 
 function CommentSection() {
   useEffect(() => {
-    // TODO: 댓글 목록 조회 API 연결
     handleGetNextComments()
   }, [])
 
   const [mode, setMode] = useState(COMMENT_MODE.CREATE)
-  const [pageNo, setPageNo] = useState(1)
   const [comments, setComments] = useState([])
 
   const targetComment = useRef(null)
@@ -27,7 +25,7 @@ function CommentSection() {
     // TODO: 댓글 목록 다음 페이지 조회 API 연결
   }
 
-  const { targetRef, updateHasNextPage } = useInfiniteScroll(handleGetNextComments)
+  const { targetRef, pageNoRef, updateHasNextPage } = useInfiniteScroll(handleGetNextComments)
 
   const handleEditClick = (comment) => {
     targetComment.current = comment
