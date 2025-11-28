@@ -4,32 +4,22 @@ import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 import Button from '@/components/button/Button.jsx'
 import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
-import { getImage } from '@/api/image.js'
 import { logoutUser } from '@/api/user.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { ERROR_MESSAGE } from '@/api/error.js'
 
-function HeaderProfile({ profileImageName }) {
+function HeaderProfile() {
   const navigate = useNavigate()
 
-  const [profileImage, setProfileImage] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-  const resetUser = useAuthStore((store) => store.resetUser)
+  const resetUser = useAuthStore((state) => state.resetUser)
+  const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
 
   useEffect(() => {
-    const getProfileImage = async () => {
-      try {
-        const response = await getImage(profileImageName)
-        setProfileImage(response.imageSrc)
-      } catch ({ code }) {}
-    }
-
     const handleOutsideClick = () => {
       setIsDropdownOpen(false)
     }
-
-    getProfileImage()
 
     window.addEventListener('click', handleOutsideClick)
 
@@ -62,7 +52,7 @@ function HeaderProfile({ profileImageName }) {
 
   return (
     <div className={styles['header-profile']}>
-      <ProfileIcon image={profileImage} size={'2rem'} cursor={'pointer'} onIconClick={handleIconClick} />
+      <ProfileIcon image={profileImageSrc} size={'2rem'} cursor={'pointer'} onIconClick={handleIconClick} />
 
       <div className={`${styles['profile-dropdown']} ${isDropdownOpen || 'hidden'}`}>
         <Button text={'회원정보수정'} className={styles['profile-dropdown-btn']} onButtonClick={handleAccountEditClick} />

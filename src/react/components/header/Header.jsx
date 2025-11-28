@@ -15,7 +15,7 @@ function Header() {
         <div className={styles['header-content']}>
           <HeaderLogo size='1.5rem' />
 
-          {user ? <HeaderProfile profileImageName={user.profileImageName} /> : <Guest />}
+          {user ? <HeaderProfile /> : <Guest />}
         </div>
       </header>
     </>
