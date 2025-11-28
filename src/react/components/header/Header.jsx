@@ -4,9 +4,10 @@ import HeaderProfile from '@/components/header/HeaderProfile.jsx'
 import Button from '@/components/button/Button.jsx'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
+import { useAuthStore } from '@/stores/authStore.js'
 
 function Header() {
-  const isLoggedIn = true
+  const user = useAuthStore((store) => store.user)
 
   return (
     <>
@@ -14,7 +15,7 @@ function Header() {
         <div className={styles['header-content']}>
           <HeaderLogo size='1.5rem' />
 
-          {isLoggedIn ? <HeaderProfile /> : <Guest />}
+          {user ? <HeaderProfile profileImageName={user.profileImageName} /> : <Guest />}
         </div>
       </header>
     </>

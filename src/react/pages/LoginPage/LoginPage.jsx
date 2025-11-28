@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router'
 import Form from '@/components/form/Form.jsx'
 import { loginUser } from '@/api/user.js'
 import LoginRequest from '@/api/dto/request/LoginRequest.js'
+import { useAuthStore } from '@/stores/authStore.js'
+import { ERROR_MESSAGE } from '@/api/error.js'
 
 function LoginPage() {
   const navigate = useNavigate()
@@ -17,6 +19,8 @@ function LoginPage() {
 
   const inputsValid = checkInputsValid([emailInput, passwordInput])
 
+  const setUser = useAuthStore((store) => store.setUser)
+
   const handleLinkClick = () => {
     navigate(ROUTES.REGISTER)
   }
@@ -24,11 +28,13 @@ function LoginPage() {
   const handleButtonClick = async () => {
     try {
       const response = await loginUser(new LoginRequest({ email: emailInput.value, password: passwordInput.value }))
-      // TODO: 로그인 상태 관리
+      setUser(response)
 
       alert('로그인에 성공했습니다.')
       navigate(ROUTES.HOME)
-    } catch (e) {}
+    } catch ({ code }) {
+      alert(ERROR_MESSAGE[code])
+    }
   }
 
   return (

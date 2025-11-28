@@ -1,5 +1,4 @@
 import { toApiErrorResponse } from '@/api/dto/response/ApiErrorResponse.js'
-import { ERROR_MESSAGE } from '@/api/error.js'
 import { COOKIE_NAME, HEADER_NAME } from '@/common/constants/name.js'
 import { getCookie } from '@/utils/cookie.js'
 import axios from 'axios'
@@ -34,8 +33,6 @@ apiClient.interceptors.response.use(
     return response.data.data
   },
   (error) => {
-    const { code } = toApiErrorResponse(error.response.data)
-    alert(ERROR_MESSAGE[code])
-    throw error
+    throw toApiErrorResponse(error.response.data)
   },
 )
