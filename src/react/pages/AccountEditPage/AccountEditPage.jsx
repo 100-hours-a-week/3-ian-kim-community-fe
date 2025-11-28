@@ -5,33 +5,39 @@ import useImageUpload from '@/hooks/useImageUpload.jsx'
 import useInput from '@/hooks/useInput.jsx'
 import styles from '@/pages/AccountEditPage/AccountEditPage.module.css'
 import { checkInputsValid, Validators } from '@/utils/validation.js'
-import { useEffect } from 'react'
-import basicProfile from '@/assets/images/basicProfile.png'
 import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import Button from '@/components/button/Button.jsx'
 import Form from '@/components/form/Form.jsx'
+import { getMyAccount } from '@/api/user.js'
+import { useEffect, useState } from 'react'
+import { useAuthStore } from '@/stores/authStore.js'
 
 function AccountEditPage() {
-  const user = {
-    email: 'email@example.com',
-    profileImage: basicProfile,
-    nickname: 'testName',
-  }
-
-  const nickname = useInput(user.nickname, Validators.nickname)
-
-  const imgUpload = useImageUpload(user.profileImage)
-
-  const modal = useModal(handleAcceptClick)
-
-  const inputsValid = (() => {
-    return checkInputsValid([nickname]) && nickname.value !== user.nickname
-  })()
+  const [user, setUser] = useState(null)
+  const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
 
   useEffect(() => {
-    // TODO: 회원정보조회 API 연결
+    const getAccount = async () => {
+      const response = await getMyAccount()
+      setUser({ ...response })
+    }
+
+    getAccount()
   }, [])
+
+  const nicknameInput = useInput(user?.nickname || '', Validators.nickname)
+  const imageInput = useImageUpload(profileImageSrc)
+
+  useEffect(() => {
+    if (user) {
+      nicknameInput.setValue(user.nickname)
+    }
+  }, [user])
+
+  const inputsValid = (() => {
+    return checkInputsValid([nicknameInput]) && nicknameInput.value !== user.nickname
+  })()
 
   const handleEditClick = () => {
     // TODO: 회원정보수정 API 연결
@@ -41,16 +47,22 @@ function AccountEditPage() {
     modal.openModal()
   }
 
-  function handleAcceptClick() {
+  const handleAcceptClick = () => {
     // TODO: 회원탈퇴 API 연결
+  }
+
+  const modal = useModal(handleAcceptClick)
+
+  if (!user) {
+    return null
   }
 
   return (
     <>
-      <Form headerText={'회원정보수정'} buttonText={'수정하기'} onButtonClick={handleEditClick} inputs={[nickname]} inputsValid={inputsValid}>
+      <Form headerText={'회원정보수정'} buttonText={'수정하기'} onButtonClick={handleEditClick} inputs={[nicknameInput]} inputsValid={inputsValid}>
         <FormInputGroup labelText={'프로필 이미지'} id={'profile-image'}>
-          <FormImagePreview imgSrc={imgUpload.imgSrc} onImageClick={imgUpload.handleImageClick} imgName={imgUpload.imgName} />
-          <FormInput ref={imgUpload.inputRef} type={'file'} id={'profile-image'} accept='image/*' className={'hidden'} onChangeInput={imgUpload.handleImageChange} />
+          <FormImagePreview imgSrc={imageInput.imgSrc} onImageClick={imageInput.handleImageClick} imgName={imageInput.imgName} />
+          <FormInput ref={imageInput.inputRef} type={'file'} id={'profile-image'} accept='image/*' className={'hidden'} onChangeInput={imageInput.handleImageChange} />
         </FormInputGroup>
 
         <FormInputGroup labelText={'이메일'} id={'email'}>
@@ -58,7 +70,7 @@ function AccountEditPage() {
         </FormInputGroup>
 
         <FormInputGroup labelText={'닉네임 *'} id={'nickname'}>
-          <FormInput type={'text'} id={'nickname'} placeholder={'닉네임을 입력하세요.'} value={nickname.value} onChangeInput={nickname.onChange} />
+          <FormInput type={'text'} id={'nickname'} placeholder={'닉네임을 입력하세요.'} value={nicknameInput.value} onChangeInput={nicknameInput.onChange} />
         </FormInputGroup>
       </Form>
 
