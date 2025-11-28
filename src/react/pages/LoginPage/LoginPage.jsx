@@ -10,6 +10,7 @@ import { loginUser } from '@/api/user.js'
 import LoginRequest from '@/api/dto/request/LoginRequest.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { ERROR_MESSAGE } from '@/api/error.js'
+import { getImage } from '@/api/image.js'
 
 function LoginPage() {
   const navigate = useNavigate()
@@ -19,16 +20,20 @@ function LoginPage() {
 
   const inputsValid = checkInputsValid([emailInput, passwordInput])
 
-  const setUser = useAuthStore((store) => store.setUser)
+  const setUser = useAuthStore((state) => state.setUser)
+  const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
 
   const handleLinkClick = () => {
     navigate(ROUTES.REGISTER)
   }
 
-  const handleButtonClick = async () => {
+  const handleLoginClick = async () => {
     try {
-      const response = await loginUser(new LoginRequest({ email: emailInput.value, password: passwordInput.value }))
-      setUser(response)
+      const loginResponse = await loginUser(new LoginRequest({ email: emailInput.value, password: passwordInput.value }))
+      setUser(loginResponse)
+
+      const profileImageResponse = await getImage(loginResponse.profileImageName)
+      setProfileImageSrc(profileImageResponse.imageSrc)
 
       alert('로그인에 성공했습니다.')
       navigate(ROUTES.HOME)
@@ -39,7 +44,7 @@ function LoginPage() {
 
   return (
     <>
-      <Form headerText={'로그인'} buttonText={'로그인'} onButtonClick={handleButtonClick} inputs={[emailInput, passwordInput]} inputsValid={inputsValid}>
+      <Form headerText={'로그인'} buttonText={'로그인'} onButtonClick={handleLoginClick} inputs={[emailInput, passwordInput]} inputsValid={inputsValid}>
         <FormInputGroup labelText={'이메일'} id={'email'}>
           <FormInput type={'text'} id={'email'} placeholder={'이메일을 입력하세요.'} value={emailInput.value} onChangeInput={emailInput.onChange} />
         </FormInputGroup>
