@@ -1,7 +1,7 @@
 import { apiClient } from '@/api/client.js'
 
-export const apiGet = (path, params) => {
-  return apiClient.get(path, params)
+export const apiGet = (path, config) => {
+  return apiClient.get(path, config)
 }
 
 export const apiPost = (path, request) => {

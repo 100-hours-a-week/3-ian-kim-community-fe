@@ -6,7 +6,7 @@ import { apiDelete, apiGet, apiPatch, apiPost } from '@/api/http.js'
 export const getComments = async (postId, page) => {
   const size = 5
   const sort = 'createdAt,desc'
-  const response = await apiGet(ENDPOINTS.COMMENT_LIST(postId), { page, size, sort })
+  const response = await apiGet(ENDPOINTS.COMMENT_LIST(postId), { params: { page, size, sort } })
   return toPageResponse(response, (data) => toCommentResponse(data))
 }
 

@@ -8,7 +8,7 @@ import { apiDelete, apiFormData, apiGet, apiPatch, HTTP_METHOD } from '@/api/htt
 export const getPosts = async (page) => {
   const size = 10
   const sort = 'createdAt,desc'
-  const response = await apiGet(ENDPOINTS.POST_LIST, { page, size, sort })
+  const response = await apiGet(ENDPOINTS.POST_LIST, { params: { page, size, sort } })
   return toPageResponse(response, (data) => toPostResponse(data))
 }
 

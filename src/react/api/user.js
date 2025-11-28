@@ -6,12 +6,12 @@ import { ENDPOINTS } from '@/api/endpoint.js'
 import { apiDelete, apiFormData, apiGet, apiPatch, apiPost, HTTP_METHOD } from '@/api/http.js'
 
 export const validateEmail = async (email) => {
-  const response = await apiGet(ENDPOINTS.EMAIL_VALIDATION, { email })
+  const response = await apiGet(ENDPOINTS.EMAIL_VALIDATION, { params: { email } })
   return toUserValidationResponse(response)
 }
 
 export const validateNickname = async (nickname) => {
-  const response = await apiGet(ENDPOINTS.NICKNAME_VALIDATION, { nickname })
+  const response = await apiGet(ENDPOINTS.NICKNAME_VALIDATION, { params: { nickname } })
   return toUserValidationResponse(response)
 }
 
