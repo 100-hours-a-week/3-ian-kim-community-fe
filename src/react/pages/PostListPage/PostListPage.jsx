@@ -29,13 +29,19 @@ function PostListPage() {
 
   const { targetRef, pageNoRef, updateHasNextPage } = useInfiniteScroll(handleGetNextPosts)
 
-  if (posts.length === 0) {
+  const EmptyPage = () => {
+    return <h1>아직 작성된 게시글이 없습니다.</h1>
+  }
+
+  const ListPage = () => {
     return (
-      <>
-        <div className={styles['post-list-page']}>
-          <h1>게시글이 없습니다.</h1>
-        </div>
-      </>
+      <section className={styles['post-list']}>
+        {posts.map((post) => (
+          <PostCard post={post} key={post.postId} onCardClick={() => handleCardClick(post)} />
+        ))}
+
+        <div ref={targetRef} />
+      </section>
     )
   }
 
@@ -46,13 +52,8 @@ function PostListPage() {
           <Button text={'질문 작성하기'} className={styles['write-btn']} onButtonClick={handleCreateClick} />
         </div>
 
-        <section className={styles['post-list']}>
-          {posts.map((post) => (
-            <PostCard post={post} key={post.postId} onCardClick={() => handleCardClick(post)} />
-          ))}
-
-          <div ref={targetRef} />
-        </section>
+        {posts.length === 0 && EmptyPage()}
+        {posts.length > 0 && ListPage()}
       </div>
     </>
   )
