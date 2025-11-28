@@ -1,4 +1,4 @@
-export const ERROR_MESSAGE = Object.freeze({
+const ERROR_MESSAGE = Object.freeze({
   // 401 Unauthorized
   4007: '이전과 동일한 비밀번호로 변경할 수 없습니다.',
   4011: '아이디 또는 비밀번호가 틀렸습니다.',
@@ -20,3 +20,7 @@ export const ERROR_MESSAGE = Object.freeze({
   5001: '서버에 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
   5002: '이미지 업로드에 실패했습니다',
 })
+
+export const getErrorMessage = (code) => {
+  return ERROR_MESSAGE[code] || '서버에 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+}

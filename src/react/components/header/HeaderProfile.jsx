@@ -6,7 +6,6 @@ import Button from '@/components/button/Button.jsx'
 import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
 import { logoutUser } from '@/api/user.js'
 import { useAuthStore } from '@/stores/authStore.js'
-import { ERROR_MESSAGE } from '@/api/error.js'
 
 function HeaderProfile() {
   const navigate = useNavigate()
@@ -45,9 +44,7 @@ function HeaderProfile() {
       alert('로그아웃에 성공했습니다.')
       resetUser(null)
       navigate(ROUTES.LOGIN)
-    } catch ({ code }) {
-      alert(ERROR_MESSAGE[code])
-    }
+    } catch (err) {}
   }
 
   return (
