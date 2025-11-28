@@ -9,18 +9,23 @@ import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import Button from '@/components/button/Button.jsx'
 import Form from '@/components/form/Form.jsx'
-import { getMyAccount } from '@/api/user.js'
+import { getMyAccount, updateAccount } from '@/api/user.js'
 import { useEffect, useState } from 'react'
 import { useAuthStore } from '@/stores/authStore.js'
+import AccountUpdateRequest from '@/api/dto/request/AccountUpdateRequest.js'
+import { getImage } from '@/api/image.js'
 
 function AccountEditPage() {
   const [user, setUser] = useState(null)
   const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
+  const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
 
   useEffect(() => {
     const getAccount = async () => {
-      const response = await getMyAccount()
-      setUser({ ...response })
+      try {
+        const response = await getMyAccount()
+        setUser({ ...response })
+      } catch (err) {}
     }
 
     getAccount()
@@ -35,12 +40,26 @@ function AccountEditPage() {
     }
   }, [user])
 
+  const isNicknameChanged = () => nicknameInput.value !== user.nickname
+  const isProfileImageChanged = () => imageInput.imgSrc !== profileImageSrc
+
   const inputsValid = (() => {
-    return checkInputsValid([nicknameInput]) && nicknameInput.value !== user.nickname
+    return isProfileImageChanged || (checkInputsValid([nicknameInput]) && isNicknameChanged())
   })()
 
-  const handleEditClick = () => {
-    // TODO: 회원정보수정 API 연결
+  const handleEditClick = async () => {
+    const request = {
+      ...(isNicknameChanged() && { nickname: nicknameInput.value }),
+      ...(isProfileImageChanged() && { profileImage: imageInput.image }),
+    }
+
+    try {
+      const response = await updateAccount(new AccountUpdateRequest(request))
+      alert('회원정보가 수정되었습니다.')
+
+      const profileImageResponse = await getImage(response.profileImageName)
+      setProfileImageSrc(profileImageResponse.imageSrc)
+    } catch (err) {}
   }
 
   const handleDeleteClick = () => {

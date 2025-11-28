@@ -24,7 +24,9 @@ export const apiFormData = (path, method, request) => {
   const formData = new FormData()
 
   Object.entries(request).forEach(([key, value]) => {
-    formData.append(key, value)
+    if (value) {
+      formData.append(key, value)
+    }
   })
 
   return apiClient({
