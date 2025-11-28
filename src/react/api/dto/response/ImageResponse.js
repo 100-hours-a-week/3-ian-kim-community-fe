@@ -1,3 +1,3 @@
-export const toImageResponse = (image) => {
-  return { image }
+export const toImageResponse = (imageSrc) => {
+  return { imageSrc }
 }
