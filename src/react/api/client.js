@@ -1,3 +1,5 @@
+import { toApiErrorResponse } from '@/api/dto/response/ApiErrorResponse.js'
+import { ERROR_MESSAGE } from '@/api/error.js'
 import { COOKIE_NAME, HEADER_NAME } from '@/common/constants/name.js'
 import { getCookie } from '@/utils/cookie.js'
 import axios from 'axios'
@@ -20,9 +22,10 @@ apiClient.interceptors.request.use(
 )
 
 apiClient.interceptors.response.use(
-  (response) => response.data,
+  (response) => response.data.data,
   (error) => {
-    alert('요청에 실패했습니다. 잠시 후 다시 시도해주세요.')
-    return Promise.reject(error)
+    const { code } = toApiErrorResponse(error.response.data)
+    alert(ERROR_MESSAGE[code])
+    throw error
   },
 )
