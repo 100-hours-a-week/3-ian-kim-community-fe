@@ -9,13 +9,17 @@ import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import Button from '@/components/button/Button.jsx'
 import Form from '@/components/form/Form.jsx'
-import { getMyAccount, updateAccount } from '@/api/user.js'
+import { deleteAccount, getMyAccount, updateAccount } from '@/api/user.js'
 import { useEffect, useState } from 'react'
 import { useAuthStore } from '@/stores/authStore.js'
 import AccountUpdateRequest from '@/api/dto/request/AccountUpdateRequest.js'
 import { getImage } from '@/api/image.js'
+import { useNavigate } from 'react-router'
+import { ROUTES } from '@/routes/routes.js'
 
 function AccountEditPage() {
+  const navigate = useNavigate()
+
   const [user, setUser] = useState(null)
   const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
   const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
@@ -66,8 +70,12 @@ function AccountEditPage() {
     modal.openModal()
   }
 
-  const handleAcceptClick = () => {
-    // TODO: 회원탈퇴 API 연결
+  const handleAcceptClick = async () => {
+    try {
+      await deleteAccount()
+      alert('회원탈퇴가 완료되었습니다.')
+      navigate(ROUTES.LOGIN)
+    } catch (err) {}
   }
 
   const modal = useModal(handleAcceptClick)
