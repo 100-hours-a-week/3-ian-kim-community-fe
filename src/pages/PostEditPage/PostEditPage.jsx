@@ -14,7 +14,7 @@ function PostEditPage() {
 
   useEffect(() => {
     if (!state) {
-      alert('게시글 정보가 없습니다. 다시 시도해주세요.')
+      alert('질문 정보가 없습니다. 다시 시도해주세요.')
       navigate(ROUTES.HOME)
       return
     }

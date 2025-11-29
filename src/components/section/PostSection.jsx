@@ -31,7 +31,7 @@ function PostSection({ postId }) {
   const handleDeletePost = async () => {
     try {
       await deletePost(post.postId)
-      alert('게시글이 삭제되었습니다.')
+      alert('질문이 삭제되었습니다.')
       navigate(ROUTES.POST_LIST)
     } catch (err) {}
   }
