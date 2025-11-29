@@ -4,7 +4,7 @@ import PostCard from '@/components/card/PostCard.jsx'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll.jsx'
 import styles from '@/pages/PostListPage/PostListPage.module.css'
 import { ROUTES } from '@/routes/routes.js'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 function PostListPage() {
@@ -22,14 +22,14 @@ function PostListPage() {
     navigate(ROUTES.POST_CREATE)
   }
 
-  const handleGetNextPosts = async () => {
+  const handleGetNextPosts = useCallback(async () => {
     try {
       const { content, page } = await getPosts(pageNo)
       setPageNo((prev) => prev + 1)
       setHasNextPage(page.number < page.totalPages)
       setPosts((prev) => [...prev, ...content])
     } catch (err) {}
-  }
+  }, [pageNo])
 
   const { target } = useInfiniteScroll({ hasNextPage, onIntersect: handleGetNextPosts })
 
