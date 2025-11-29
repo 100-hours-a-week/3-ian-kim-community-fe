@@ -6,6 +6,11 @@
 .post-header {
   display: flex;
   justify-content: space-between;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0.625rem 0;
   border-bottom: 0.0625rem solid rgb(206, 206, 206);
