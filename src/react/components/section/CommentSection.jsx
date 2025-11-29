@@ -7,7 +7,7 @@ import useInput from '@/hooks/useInput.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import { useRef, useState } from 'react'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll.jsx'
-import { createComment, getComments, updateComment } from '@/api/comment.js'
+import { createComment, deleteComment, getComments, updateComment } from '@/api/comment.js'
 import CommentCreateRequest from '@/api/dto/request/CommentCreateRequest.js'
 import CommentUpdateRequest from '@/api/dto/request/CommentUpdateRequest.js'
 
@@ -79,10 +79,17 @@ function CommentSection({ postId }) {
     } catch (err) {}
   }
 
-  const handleDeleteComment = () => {
-    // TODO: 댓글 삭제 API 연결
-    setComments((prev) => prev.filter((c) => c.commentId !== targetComment.current.commentId))
-    modal.onCancel()
+  const handleDeleteComment = async () => {
+    if (!targetComment.current) {
+      alert('답변을 삭제할 수 없습니다.')
+    }
+
+    try {
+      await deleteComment(targetComment.current.commentId)
+      alert('답변이 삭제되었습니다.')
+      setComments((prev) => prev.filter((c) => c.commentId !== targetComment.current.commentId))
+      modal.onCancel()
+    } catch (err) {}
   }
 
   const modal = useModal(handleDeleteComment)
