@@ -1,0 +1,8 @@
+.post-layout {
+  width: 70%;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 1.875rem auto;
+}

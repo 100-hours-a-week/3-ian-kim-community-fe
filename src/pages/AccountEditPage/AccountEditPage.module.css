@@ -1,0 +1,15 @@
+.email {
+  margin: 0.3125rem 0 1.25rem 0;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  align-self: center;
+  display: inline-block;
+  width: auto;
+  padding: 0;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: black;
+}

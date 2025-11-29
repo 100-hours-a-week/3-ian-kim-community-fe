@@ -1,0 +1,10 @@
+.form-container {
+  width: 90%;
+  max-width: 31.25rem;
+  min-height: calc(100vh - 9.375rem);
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
