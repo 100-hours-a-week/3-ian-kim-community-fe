@@ -9,8 +9,7 @@ import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import Button from '@/components/button/Button.jsx'
 import Form from '@/components/form/Form.jsx'
-import { deleteAccount, getMyAccount, updateAccount } from '@/api/user.js'
-import { useEffect, useState } from 'react'
+import { deleteAccount, updateAccount } from '@/api/user.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import AccountUpdateRequest from '@/api/dto/request/AccountUpdateRequest.js'
 import { getImage } from '@/api/image.js'
@@ -20,31 +19,14 @@ import { ROUTES } from '@/routes/routes.js'
 function AccountEditPage() {
   const navigate = useNavigate()
 
-  const [user, setUser] = useState(null)
+  const user = useAuthStore((state) => state.user)
   const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
   const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
   const resetUser = useAuthStore((state) => state.resetUser)
   const setLoading = useAuthStore((state) => state.setLoading)
 
-  useEffect(() => {
-    const getAccount = async () => {
-      try {
-        const response = await getMyAccount()
-        setUser(response)
-      } catch (err) {}
-    }
-
-    getAccount()
-  }, [])
-
   const nicknameInput = useInput(user?.nickname || '', Validators.nickname)
   const imageInput = useImageUpload(profileImageSrc)
-
-  useEffect(() => {
-    if (user) {
-      nicknameInput.setValue(user.nickname)
-    }
-  }, [user])
 
   const isNicknameChanged = () => nicknameInput.value !== user.nickname
   const isProfileImageChanged = () => imageInput.imgSrc !== profileImageSrc

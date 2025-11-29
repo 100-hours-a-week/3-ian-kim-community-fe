@@ -43,8 +43,6 @@ function PostListPage() {
         {posts.map((post) => (
           <PostCard post={post} key={post.postId} onCardClick={() => handleCardClick(post)} />
         ))}
-
-        <div ref={target} style={{ height: '1rem' }} />
       </section>
     )
   }
@@ -59,7 +57,7 @@ function PostListPage() {
         {posts.length === 0 && EmptyPage()}
         {posts.length > 0 && ListPage()}
 
-        <div ref={target} style={{ height: '1rem' }} />
+        <div ref={target} />
       </div>
     </>
   )
