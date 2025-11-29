@@ -10,7 +10,7 @@ function PostPage() {
     <>
       <div className={styles['post-detail-page']}>
         <PostSection postId={postId} />
-        <CommentSection />
+        <CommentSection postId={postId} />
       </div>
     </>
   )
