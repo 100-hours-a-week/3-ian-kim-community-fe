@@ -7,8 +7,9 @@ import useInput from '@/hooks/useInput.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import { useRef, useState } from 'react'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll.jsx'
-import { createComment, getComments } from '@/api/comment.js'
+import { createComment, getComments, updateComment } from '@/api/comment.js'
 import CommentCreateRequest from '@/api/dto/request/CommentCreateRequest.js'
+import CommentUpdateRequest from '@/api/dto/request/CommentUpdateRequest.js'
 
 function CommentSection({ postId }) {
   const [mode, setMode] = useState(COMMENT_MODE.CREATE)
@@ -67,12 +68,15 @@ function CommentSection({ postId }) {
     } catch (err) {}
   }
 
-  const handleEditComment = (comment, content) => {
-    // TODO: 댓글 수정 API 연결
-    setComments((prev) => {
-      prev.find((c) => c.commentId === comment.commentId).content = content
-      return [...prev]
-    })
+  const handleEditComment = async (comment, content) => {
+    try {
+      await updateComment(comment.commentId, new CommentUpdateRequest({ content }))
+      alert('답변이 수정되었습니다.')
+      setComments((prev) => {
+        prev.find((c) => c.commentId === comment.commentId).content = content
+        return [...prev]
+      })
+    } catch (err) {}
   }
 
   const handleDeleteComment = () => {
