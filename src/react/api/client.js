@@ -35,11 +35,7 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     const { code } = toApiErrorResponse(error.response.data)
-
-    if (String(code).startsWith('500')) {
-      alert(getErrorMessage(code))
-    }
-
+    alert(getErrorMessage(code))
     throw error
   },
 )
