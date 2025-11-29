@@ -1,9 +1,26 @@
+import { getImage } from '@/api/image.js'
 import styles from '@/components/image/Thumbnail.module.css'
+import { useEffect, useState } from 'react'
 
-function Thumbnail({ imgSrc, size }) {
+function Thumbnail({ imageName, size }) {
+  const [imageSrc, setImageSrc] = useState(null)
+
+  useEffect(() => {
+    const getThumbnail = async () => {
+      try {
+        const response = await getImage(imageName)
+        setImageSrc(response.imageSrc)
+      } catch (err) {}
+    }
+
+    if (imageName) {
+      getThumbnail()
+    }
+  }, [imageName])
+
   return (
     <>
-      <img src={imgSrc} className={`${styles.thumbnail} ${imgSrc || 'hidden'}`} style={{ width: size, height: size }} />
+      <img src={imageSrc} className={`${styles.thumbnail} ${imageSrc || 'hidden'}`} style={{ width: size, height: size }} />
     </>
   )
 }
