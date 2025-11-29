@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
-import { deletePost, getPost } from '@/api/post.js'
+import { deletePost, getPost, togglePostLike } from '@/api/post.js'
 import { useEffect, useState } from 'react'
 
 function PostSection({ postId }) {
@@ -32,13 +32,15 @@ function PostSection({ postId }) {
     } catch (err) {}
   }
 
-  const handleLikeClick = () => {
-    // TODO: 게시글 좋아요 API 연결
-    setPost((prev) => {
-      const liked = !prev.liked
-      const likeCount = liked ? prev.likeCount + 1 : prev.likeCount - 1
-      return { ...prev, liked, likeCount }
-    })
+  const handleLikeClick = async () => {
+    try {
+      await togglePostLike(post.postId)
+      setPost((prev) => {
+        const liked = !prev.liked
+        const likeCount = liked ? prev.likeCount + 1 : prev.likeCount - 1
+        return { ...prev, liked, likeCount }
+      })
+    } catch (err) {}
   }
 
   const handleEditClick = () => {
