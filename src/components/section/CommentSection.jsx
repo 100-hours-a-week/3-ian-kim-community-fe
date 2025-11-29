@@ -5,7 +5,7 @@ import Modal from '@/components/modal/Modal.jsx'
 import styles from '@/components/section/CommentSection.module.css'
 import useInput from '@/hooks/useInput.jsx'
 import useModal from '@/hooks/useModal.jsx'
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll.jsx'
 import { createComment, deleteComment, getComments, updateComment } from '@/api/comment.js'
 import CommentCreateRequest from '@/api/dto/request/CommentCreateRequest.js'
@@ -22,14 +22,14 @@ function CommentSection({ postId }) {
 
   const contentInput = useInput('')
 
-  const handleGetNextComments = async () => {
+  const handleGetNextComments = useCallback(async () => {
     try {
       const { content, page } = await getComments(postId, pageNo)
       setPageNo((prev) => prev + 1)
       setHasNextPage(page.number < page.totalPages)
       setComments((prev) => [...prev, ...content])
     } catch (err) {}
-  }
+  }, [pageNo])
 
   const { target } = useInfiniteScroll({ hasNextPage, onIntersect: handleGetNextComments })
 
@@ -121,7 +121,7 @@ function CommentSection({ postId }) {
         {comments.length === 0 && EmptyPage()}
         {comments.length > 0 && ListPage()}
 
-        <div ref={target} style={{ height: '1rem' }} />
+        <div ref={target} />
       </section>
 
       <Modal title={'답변을 삭제하시겠습니까?'} content={'삭제한 내용은 복구할 수 없습니다.'} modal={modal} />
