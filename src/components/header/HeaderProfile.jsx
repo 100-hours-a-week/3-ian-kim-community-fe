@@ -6,18 +6,30 @@ import Button from '@/components/button/Button.jsx'
 import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
 import { logoutUser } from '@/api/user.js'
 import { useAuthStore } from '@/stores/authStore.js'
+import { getImage } from '@/api/image.js'
 
 function HeaderProfile() {
   const navigate = useNavigate()
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
+  const user = useAuthStore((state) => state.user)
   const resetUser = useAuthStore((state) => state.resetUser)
   const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
+  const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
 
   useEffect(() => {
     const handleOutsideClick = () => {
       setIsDropdownOpen(false)
+    }
+
+    const getProfileImage = async () => {
+      const response = await getImage(user.profileImageName)
+      setProfileImageSrc(response.imageSrc)
+    }
+
+    if (user.profileImageName) {
+      getProfileImage()
     }
 
     window.addEventListener('click', handleOutsideClick)
