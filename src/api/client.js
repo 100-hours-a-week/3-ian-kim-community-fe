@@ -37,7 +37,7 @@ apiClient.interceptors.response.use(
     if (!error.response) {
       // 네트워크 에러
       alert('네트워크 연결을 확인해주세요.')
-      return
+      return Promise.reject(code)
     }
 
     const status = error.response.status
