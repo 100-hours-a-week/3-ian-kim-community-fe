@@ -3,7 +3,7 @@ import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
 import styles from '@/components/profile/ProfilePair.module.css'
 import { useEffect, useState } from 'react'
 
-function ProfilePair({ imageName, nickname, nicknameSize, iconSize }) {
+function ProfilePair({ imageName, nickname, nicknameSize, iconSize, isDeletedUser }) {
   const [imageSrc, setImageSrc] = useState(null)
 
   useEffect(() => {
@@ -22,7 +22,8 @@ function ProfilePair({ imageName, nickname, nicknameSize, iconSize }) {
   return (
     <>
       <div className={styles['profile-pair']}>
-        <ProfileIcon image={imageSrc} size={iconSize} />
+        {!isDeletedUser && <ProfileIcon image={imageSrc} size={iconSize} />}
+
         <span className={styles['nickname']} style={{ fontSize: nicknameSize }}>
           {nickname}
         </span>
