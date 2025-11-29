@@ -1,10 +1,16 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const useImageUpload = (initImageSrc, initImageName) => {
   const inputRef = useRef(null)
   const [image, setImage] = useState(null)
-  const [imgSrc, setimgSrc] = useState(initImageSrc)
+  const [imgSrc, setImgSrc] = useState(initImageSrc)
   const [imgName, setImgName] = useState(initImageName)
+
+  useEffect(() => {
+    if (initImageSrc) {
+      setImgSrc(initImageSrc)
+    }
+  }, [initImageSrc])
 
   const handleImageClick = () => {
     inputRef.current.click()
@@ -15,7 +21,7 @@ const useImageUpload = (initImageSrc, initImageName) => {
 
     if (!uploadedImage) {
       setImage(null)
-      setimgSrc(initImageSrc)
+      setImgSrc(initImageSrc)
       setImgName(initImageName)
       return
     }
@@ -24,7 +30,7 @@ const useImageUpload = (initImageSrc, initImageName) => {
 
     reader.onload = () => {
       setImage(uploadedImage)
-      setimgSrc(reader.result)
+      setImgSrc(reader.result)
       setImgName(uploadedImage.name)
     }
 
