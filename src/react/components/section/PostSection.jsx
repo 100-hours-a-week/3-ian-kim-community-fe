@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
-import { getPost } from '@/api/post.js'
+import { deletePost, getPost } from '@/api/post.js'
 import { useEffect, useState } from 'react'
 
 function PostSection({ postId }) {
@@ -24,9 +24,12 @@ function PostSection({ postId }) {
     getPostDetail()
   }, [])
 
-  const handleDeletePost = () => {
-    // TODO: 게시글 삭제 API 연결
-    navigate(ROUTES.POST_LIST)
+  const handleDeletePost = async () => {
+    try {
+      await deletePost(post.postId)
+      alert('게시글이 삭제되었습니다.')
+      navigate(ROUTES.POST_LIST)
+    } catch (err) {}
   }
 
   const handleLikeClick = () => {
