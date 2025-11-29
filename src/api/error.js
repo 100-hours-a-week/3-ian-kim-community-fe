@@ -22,10 +22,10 @@ const ERROR_MESSAGE = Object.freeze({
   5002: '이미지 업로드에 실패했습니다',
 })
 
-export const getErrorMessage = (code) => {
-  if (String(code).startsWith('401') && code !== '4011') {
-    return '로그인이 필요합니다.'
-  }
+export const getLoginRequiredMessage = () => {
+  return '로그인이 필요합니다.'
+}
 
+export const getErrorMessage = (code) => {
   return ERROR_MESSAGE[code] || '서버에 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
 }
