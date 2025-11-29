@@ -13,10 +13,11 @@ function HeaderProfile() {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-  const user = useAuthStore((state) => state.user)
+  const profileImageName = useAuthStore((state) => state.profileImageName)
   const resetUser = useAuthStore((state) => state.resetUser)
   const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
   const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
+  const setLoading = useAuthStore((state) => state.setLoading)
 
   useEffect(() => {
     const handleOutsideClick = () => {
@@ -24,18 +25,18 @@ function HeaderProfile() {
     }
 
     const getProfileImage = async () => {
-      const response = await getImage(user.profileImageName)
+      const response = await getImage(profileImageName)
       setProfileImageSrc(response.imageSrc)
     }
 
-    if (user.profileImageName) {
+    if (profileImageName) {
       getProfileImage()
     }
 
     window.addEventListener('click', handleOutsideClick)
 
     return () => window.removeEventListener('click', handleOutsideClick)
-  }, [])
+  }, [profileImageName])
 
   const handleIconClick = (e) => {
     e.stopPropagation()
@@ -55,6 +56,7 @@ function HeaderProfile() {
       await logoutUser()
       alert('로그아웃에 성공했습니다.')
       resetUser(null)
+      setLoading(true)
       navigate(ROUTES.LOGIN)
     } catch (err) {}
   }

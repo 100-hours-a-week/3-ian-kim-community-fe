@@ -7,6 +7,8 @@ export const ENDPOINTS = {
 
   NICKNAME_VALIDATION: '/users/nickname-validation',
 
+  CHECK_LOGIN: '/users/check',
+
   MY_ACCOUNT: '/user',
 
   EDIT_ACCOUNT: '/user',
