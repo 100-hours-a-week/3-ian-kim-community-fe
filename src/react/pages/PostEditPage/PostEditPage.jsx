@@ -1,3 +1,5 @@
+import PostUpdateRequest from '@/api/dto/request/PostUpdateRequest.js'
+import { updatePost } from '@/api/post.js'
 import PostForm from '@/components/form/PostForm.jsx'
 import useImageUpload from '@/hooks/useImageUpload.jsx'
 import useInput from '@/hooks/useInput.jsx'
@@ -7,34 +9,45 @@ import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
 function PostEditPage() {
-  const { post } = useLocation().state
   const navigate = useNavigate()
+  const { state } = useLocation()
 
   useEffect(() => {
-    if (!post) {
+    if (!state) {
       alert('게시글 정보가 없습니다. 다시 시도해주세요.')
       navigate(ROUTES.HOME)
+      return
     }
-  }, [post, navigate])
+  }, [])
 
-  if (!post) {
+  if (!state) {
     return
   }
 
+  const { post, thumbnailSrc } = state
+
   const titleInput = useInput(post.title, Validators.postTitle)
   const contentInput = useInput(post.content, Validators.postContent)
-  const imageInput = useImageUpload(null)
+  const imageInput = useImageUpload(thumbnailSrc, post.originImageName)
 
   const isTitleChanged = titleInput.value !== post.title
   const isContentChanged = contentInput.value !== post.content
-  const isImageChanged = false
+  const isImageChanged = imageInput.imgSrc !== thumbnailSrc
 
   const inputsValid = checkInputsValid([titleInput, contentInput]) && (isTitleChanged || isContentChanged || isImageChanged)
 
-  const handleEditClick = () => {
-    // TODO: 게시글 수정 API 연결
-    alert('수정이 완료되었습니다.')
-    navigate(ROUTES.POST(post.postId))
+  const handleEditClick = async () => {
+    const request = {
+      ...(isTitleChanged && { title: titleInput.value }),
+      ...(isContentChanged && { content: contentInput.value }),
+      ...(isImageChanged && { image: imageInput.image }),
+    }
+
+    try {
+      await updatePost(post.postId, new PostUpdateRequest(request))
+      alert('수정이 완료되었습니다.')
+      navigate(ROUTES.POST(post.postId))
+    } catch (err) {}
   }
 
   return (

@@ -1,7 +1,6 @@
 import { toPageResponse } from '@/api/dto/response/PageResponse.js'
 import { toPostDetailResponse } from '@/api/dto/response/PostDetailResponse.js'
 import { toPostResponse } from '@/api/dto/response/PostResponse.js'
-import { toPostUpdateResponse } from '@/api/dto/response/PostUpdateResponse.js'
 import { ENDPOINTS } from '@/api/endpoint.js'
 import { apiDelete, apiFormData, apiGet, apiPatch, HTTP_METHOD } from '@/api/http.js'
 
@@ -22,8 +21,7 @@ export const createPost = async (request) => {
 }
 
 export const updatePost = async (postId, request) => {
-  const response = await apiFormData(ENDPOINTS.UPDATE_POST(postId), HTTP_METHOD.PATCH, request)
-  return toPostUpdateResponse(response)
+  await apiFormData(ENDPOINTS.UPDATE_POST(postId), HTTP_METHOD.PATCH, request)
 }
 
 export const deletePost = async (postId) => {

@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
 
-const useImageUpload = (initImageSrc) => {
+const useImageUpload = (initImageSrc, initImageName) => {
   const inputRef = useRef(null)
   const [image, setImage] = useState(null)
   const [imgSrc, setimgSrc] = useState(initImageSrc)
-  const [imgName, setImgName] = useState('')
+  const [imgName, setImgName] = useState(initImageName)
 
   const handleImageClick = () => {
     inputRef.current.click()
@@ -16,7 +16,7 @@ const useImageUpload = (initImageSrc) => {
     if (!uploadedImage) {
       setImage(null)
       setimgSrc(initImageSrc)
-      setImgName('')
+      setImgName(initImageName)
       return
     }
 
