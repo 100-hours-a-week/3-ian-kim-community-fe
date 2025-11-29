@@ -20,7 +20,7 @@ function PostCard({ post, onCardClick }) {
           </div>
 
           <div className={styles['post-info']}>
-            <ProfilePair nickname={post.authorNickname} nicknameSize={'0.9rem'} iconSize={'1.25rem'} />
+            <ProfilePair imageName={post.authorProfileImageName} nickname={post.authorNickname} nicknameSize={'0.9rem'} iconSize={'1.8rem'} />
             <span>{post.createdDate}</span>
           </div>
         </div>

@@ -20,10 +20,15 @@ function PostSection({ postId }) {
 
   useEffect(() => {
     const getPostDetail = async () => {
-      const response = await getPost(postId)
-      setPost(response)
-      const thumbnailSrcResponse = await getImage(response.imageName)
-      setThumbnailSrc(thumbnailSrcResponse.imageSrc)
+      try {
+        const response = await getPost(postId)
+        setPost(response)
+
+        if (response.imageName) {
+          const thumbnailSrcResponse = await getImage(response.imageName)
+          setThumbnailSrc(thumbnailSrcResponse.imageSrc)
+        }
+      } catch (err) {}
     }
 
     getPostDetail()
@@ -68,7 +73,7 @@ function PostSection({ postId }) {
 
         <div className={styles['post-meta']}>
           <div className={styles['post-info']}>
-            <ProfilePair nickname={post.authorNickname} nicknameSize={'1rem'} iconSize={'1.6rem'} />
+            <ProfilePair imageName={post.authorProfileImageName} nickname={post.authorNickname} nicknameSize={'1rem'} iconSize={'1.6rem'} />
 
             <div className={styles['post-detail-info']}>
               <InfoTextPair name={'작성일'} value={post.createdDate} />
