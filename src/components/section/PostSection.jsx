@@ -73,7 +73,7 @@ function PostSection({ postId }) {
 
         <div className={styles['post-meta']}>
           <div className={styles['post-info']}>
-            <ProfilePair imageName={post.authorProfileImageName} nickname={post.authorNickname} nicknameSize={'1rem'} iconSize={'1.6rem'} />
+            <ProfilePair imageName={post.authorProfileImageName} nickname={post.authorNickname} nicknameSize={'1rem'} iconSize={'1.6rem'} isDeletedUser={post.authorId === null} />
 
             <div className={styles['post-detail-info']}>
               <InfoTextPair name={'작성일'} value={post.createdDate} />

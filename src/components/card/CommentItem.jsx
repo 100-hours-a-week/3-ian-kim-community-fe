@@ -8,7 +8,7 @@ function CommentItem({ comment, onEditClick, onDeleteClick }) {
       <li className={styles['comment-item']}>
         <div className={styles['comment-header']}>
           <div className={styles['comment-info']}>
-            <ProfilePair imageName={comment.authorProfileImageName} nickname={comment.authorNickname} nicknameSize={'0.9rem'} iconSize={'1.4rem'} />
+            <ProfilePair imageName={comment.authorProfileImageName} nickname={comment.authorNickname} nicknameSize={'0.9rem'} iconSize={'1.4rem'} isDeletedUser={comment.authorId === null} />
             <span>{comment.createdDate}</span>
           </div>
 

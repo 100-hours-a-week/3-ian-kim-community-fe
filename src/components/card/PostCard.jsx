@@ -4,6 +4,7 @@ import InfoTextPair from '@/components/text/InfoTextPair.jsx'
 import ProfilePair from '@/components/profile/ProfilePair.jsx'
 
 function PostCard({ post, onCardClick }) {
+  console.log(post)
   return (
     <>
       <article className={`${styles['post-card']} border`} onClick={onCardClick}>
@@ -20,7 +21,7 @@ function PostCard({ post, onCardClick }) {
           </div>
 
           <div className={styles['post-info']}>
-            <ProfilePair imageName={post.authorProfileImageName} nickname={post.authorNickname} nicknameSize={'0.9rem'} iconSize={'1.8rem'} />
+            <ProfilePair imageName={post.authorProfileImageName} nickname={post.authorNickname} nicknameSize={'0.9rem'} iconSize={'1.8rem'} isDeletedUser={post.authorId === null} />
             <span>{post.createdDate}</span>
           </div>
         </div>
