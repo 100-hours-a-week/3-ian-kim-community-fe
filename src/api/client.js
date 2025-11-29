@@ -1,6 +1,8 @@
 import { toApiErrorResponse } from '@/api/dto/response/ApiErrorResponse.js'
 import { getErrorMessage } from '@/api/error.js'
 import { COOKIE_NAME, HEADER_NAME } from '@/common/constants/name.js'
+import { ROUTES } from '@/routes/routes.js'
+import { useAuthStore } from '@/stores/authStore.js'
 import { getCookie } from '@/utils/cookie.js'
 import axios from 'axios'
 
@@ -34,8 +36,30 @@ apiClient.interceptors.response.use(
     return response.data.data
   },
   (error) => {
+    if (!error.response) {
+      // 네트워크 에러
+      alert('네트워크 연결을 확인해주세요.')
+      return
+    }
+
+    const status = error.response.status
     const { code } = toApiErrorResponse(error.response.data)
-    alert(getErrorMessage(code))
-    throw error
+
+    if (status === 401 && code !== '4011') {
+      useAuthStore.getState().resetUser()
+      alert(getErrorMessage(code))
+      window.location.href = ROUTES.LOGIN
+    }
+
+    if (status === 403 || status === 404) {
+      alert(getErrorMessage(code))
+      window.location.href = ROUTES.HOME
+    }
+
+    if (status === 500) {
+      alert(getErrorMessage(code))
+    }
+
+    return Promise.reject(code)
   },
 )

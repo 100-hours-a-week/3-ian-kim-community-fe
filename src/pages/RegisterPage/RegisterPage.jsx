@@ -1,4 +1,5 @@
 import RegisterRequest from '@/api/dto/request/RegisterRequest.js'
+import { getErrorMessage } from '@/api/error.js'
 import { registerUser } from '@/api/user.js'
 import AuthFormFooter from '@/components/footer/AuthFormFooter.jsx'
 import Form from '@/components/form/Form.jsx'
@@ -28,7 +29,7 @@ function RegisterPage() {
 
   const handleRegisterClick = async () => {
     try {
-      const response = await registerUser(
+      await registerUser(
         new RegisterRequest({
           email: emailInput.value,
           password: passwordInput.value,
@@ -39,7 +40,9 @@ function RegisterPage() {
 
       alert('회원가입에 성공했습니다.')
       navigate(ROUTES.LOGIN)
-    } catch (e) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   return (

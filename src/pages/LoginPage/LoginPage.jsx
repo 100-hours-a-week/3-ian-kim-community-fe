@@ -9,7 +9,7 @@ import Form from '@/components/form/Form.jsx'
 import { loginUser } from '@/api/user.js'
 import LoginRequest from '@/api/dto/request/LoginRequest.js'
 import { useAuthStore } from '@/stores/authStore.js'
-import { getImage } from '@/api/image.js'
+import { getErrorMessage } from '@/api/error.js'
 
 function LoginPage() {
   const navigate = useNavigate()
@@ -20,7 +20,6 @@ function LoginPage() {
   const inputsValid = checkInputsValid([emailInput, passwordInput])
 
   const setUser = useAuthStore((state) => state.setUser)
-  const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
 
   const handleLinkClick = () => {
     navigate(ROUTES.REGISTER)
@@ -31,12 +30,11 @@ function LoginPage() {
       const loginResponse = await loginUser(new LoginRequest({ email: emailInput.value, password: passwordInput.value }))
       setUser(loginResponse)
 
-      const profileImageResponse = await getImage(loginResponse.profileImageName)
-      setProfileImageSrc(profileImageResponse.imageSrc)
-
       alert('로그인에 성공했습니다.')
       navigate(ROUTES.HOME)
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   return (
