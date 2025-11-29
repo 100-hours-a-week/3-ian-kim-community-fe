@@ -1,7 +1,9 @@
+import styles from '@/components/image/Thumbnail.module.css'
+
 function Thumbnail({ imgSrc, size }) {
   return (
     <>
-      <img src={imgSrc} style={{ width: size, height: size, objectFit: 'cover' }} />
+      <img src={imgSrc} className={`${styles.thumbnail} ${imgSrc || 'hidden'}`} style={{ width: size, height: size }} />
     </>
   )
 }
