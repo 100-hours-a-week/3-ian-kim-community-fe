@@ -11,7 +11,8 @@ export const getComments = async (postId, page) => {
 }
 
 export const createComment = async (postId, request) => {
-  await apiPost(ENDPOINTS.CREATE_COMMENT(postId), request)
+  const response = await apiPost(ENDPOINTS.CREATE_COMMENT(postId), request)
+  return toCommentResponse(response)
 }
 
 export const updateComment = async (commentId, request) => {
