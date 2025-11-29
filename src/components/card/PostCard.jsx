@@ -2,15 +2,21 @@ import styles from '@/components/card/PostCard.module.css'
 import { formatToCompactNumber } from '@/utils/format.js'
 import InfoTextPair from '@/components/text/InfoTextPair.jsx'
 import ProfilePair from '@/components/profile/ProfilePair.jsx'
+import Thumbnail from '@/components/image/Thumbnail.jsx'
 
 function PostCard({ post, onCardClick }) {
-  console.log(post)
   return (
     <>
       <article className={`${styles['post-card']} border`} onClick={onCardClick}>
         <div className={styles['card-body']}>
-          <div className={styles['title']}>{post.title.slice(0, 26)}</div>
-          <div className={styles['content']}>{post.content.length >= 40 ? post.content.slice(0, 40) + '...' : post.content}</div>
+          <div className={styles['card-text']}>
+            <div className={styles['title']}>{post.title.slice(0, 26)}</div>
+            <div className={styles['content']}>{post.content.length >= 40 ? post.content.slice(0, 40) + '...' : post.content}</div>
+          </div>
+
+          <div className={styles['thumbnail']}>
+            <Thumbnail imageName={post.imageName} size={'4rem'} />
+          </div>
         </div>
 
         <div className={styles['card-footer']}>

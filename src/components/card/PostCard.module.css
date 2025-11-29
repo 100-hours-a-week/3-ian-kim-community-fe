@@ -1,10 +1,8 @@
-.post-card * {
-  box-sizing: content-box;
-}
-
 .post-card {
   cursor: pointer;
   height: 10rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-card:hover {
@@ -13,22 +11,34 @@
 }
 
 .card-body {
+  flex: 3;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0.0625rem solid #d3d3d3;
+  border-radius: 0;
+  padding: 1rem 1.25rem;
+}
+
+.thumbnail {
+  margin: auto 0;
+  text-align: right;
+  flex: 1;
+}
+
+.card-text {
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   text-align: left;
-  border-bottom: 0.0625rem solid #d3d3d3;
-  border-radius: 0;
-  height: 5rem;
-  padding: 1rem 1.25rem;
 }
 
 .card-footer {
+  flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 1.5rem;
-  padding: 0.75rem 1.25rem 0 1.25rem;
+  padding: 0.5rem 1rem;
   font-size: 0.8rem;
 }
 
@@ -57,5 +67,4 @@
   justify-content: left;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.625rem 0;
 }

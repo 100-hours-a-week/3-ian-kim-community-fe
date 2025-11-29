@@ -9,7 +9,6 @@ import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import { deletePost, getPost, togglePostLike } from '@/api/post.js'
 import { useEffect, useState } from 'react'
-import { getImage } from '@/api/image.js'
 import Thumbnail from '@/components/image/Thumbnail.jsx'
 
 function PostSection({ postId }) {
@@ -23,11 +22,6 @@ function PostSection({ postId }) {
       try {
         const response = await getPost(postId)
         setPost(response)
-
-        if (response.imageName) {
-          const thumbnailSrcResponse = await getImage(response.imageName)
-          setThumbnailSrc(thumbnailSrcResponse.imageSrc)
-        }
       } catch (err) {}
     }
 
@@ -68,7 +62,7 @@ function PostSection({ postId }) {
       <section className={styles['post-detail']}>
         <div className={styles['post-header']}>
           <h3 className={styles['post-title']}>{post.title}</h3>
-          <Thumbnail imgSrc={thumbnailSrc} size={'5rem'} />
+          <Thumbnail imageName={post.imageName} size={'5rem'} />
         </div>
 
         <div className={styles['post-meta']}>
