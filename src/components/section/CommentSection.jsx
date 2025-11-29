@@ -72,10 +72,7 @@ function CommentSection({ postId }) {
     try {
       await updateComment(comment.commentId, new CommentUpdateRequest({ content }))
       alert('답변이 수정되었습니다.')
-      setComments((prev) => {
-        prev.find((c) => c.commentId === comment.commentId).content = content
-        return [...prev]
-      })
+      setComments((prev) => prev.map((c) => (c.commentId === comment.commentId ? { ...c, content } : c)))
     } catch (err) {}
   }
 
