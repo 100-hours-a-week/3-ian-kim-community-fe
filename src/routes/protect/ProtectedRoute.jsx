@@ -4,14 +4,14 @@ import { useAuthStore } from '@/stores/authStore.js'
 import { Navigate, Outlet } from 'react-router'
 
 const ProtectedRoute = () => {
-  const user = useAuthStore((state) => state.user)
+  const userId = useAuthStore((state) => state.userId)
   const loading = useAuthStore((state) => state.loading)
 
   if (loading) {
     return
   }
 
-  if (!user) {
+  if (!userId) {
     alert(getLoginRequiredMessage())
     return <Navigate to={ROUTES.LOGIN} replace />
   }

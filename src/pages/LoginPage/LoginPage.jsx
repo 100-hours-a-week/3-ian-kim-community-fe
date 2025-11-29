@@ -19,7 +19,8 @@ function LoginPage() {
 
   const inputsValid = checkInputsValid([emailInput, passwordInput])
 
-  const setUser = useAuthStore((state) => state.setUser)
+  const setUserId = useAuthStore((state) => state.setUserId)
+  const setProfileImageName = useAuthStore((state) => state.setProfileImageName)
 
   const handleLinkClick = () => {
     navigate(ROUTES.REGISTER)
@@ -27,8 +28,9 @@ function LoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const loginResponse = await loginUser(new LoginRequest({ email: emailInput.value, password: passwordInput.value }))
-      setUser(loginResponse)
+      const response = await loginUser(new LoginRequest({ email: emailInput.value, password: passwordInput.value }))
+      setUserId(response.userId)
+      setProfileImageName(response.profileImageName)
 
       alert('로그인에 성공했습니다.')
       navigate(ROUTES.HOME)

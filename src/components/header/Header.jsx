@@ -7,7 +7,7 @@ import { ROUTES } from '@/routes/routes.js'
 import { useAuthStore } from '@/stores/authStore.js'
 
 function Header() {
-  const user = useAuthStore((store) => store.user)
+  const userId = useAuthStore((store) => store.userId)
 
   return (
     <>
@@ -15,7 +15,7 @@ function Header() {
         <div className={styles['header-content']}>
           <HeaderLogo size='1.5rem' />
 
-          {user ? <HeaderProfile /> : <Guest />}
+          {userId ? <HeaderProfile /> : <Guest />}
         </div>
       </header>
     </>

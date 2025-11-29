@@ -18,7 +18,7 @@ function PostEditPage() {
       navigate(ROUTES.HOME)
       return
     }
-  }, [])
+  }, [state])
 
   if (!state) {
     return

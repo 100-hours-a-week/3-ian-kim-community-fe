@@ -9,24 +9,39 @@ import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import Button from '@/components/button/Button.jsx'
 import Form from '@/components/form/Form.jsx'
-import { deleteAccount, updateAccount } from '@/api/user.js'
+import { deleteAccount, getMyAccount, updateAccount } from '@/api/user.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import AccountUpdateRequest from '@/api/dto/request/AccountUpdateRequest.js'
 import { getImage } from '@/api/image.js'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
+import { useEffect, useState } from 'react'
 
 function AccountEditPage() {
   const navigate = useNavigate()
+  const [user, setUser] = useState(null)
 
-  const user = useAuthStore((state) => state.user)
+  const setProfileImageName = useAuthStore((state) => state.setProfileImageName)
   const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
   const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
   const resetUser = useAuthStore((state) => state.resetUser)
   const setLoading = useAuthStore((state) => state.setLoading)
 
-  const nicknameInput = useInput(user?.nickname || '', Validators.nickname)
+  const nicknameInput = useInput('', Validators.nickname)
   const imageInput = useImageUpload(profileImageSrc)
+
+  useEffect(() => {
+    const getAccount = async () => {
+      try {
+        const response = await getMyAccount()
+        setUser(response)
+        nicknameInput.setValue(response.nickname)
+        setProfileImageName(response.profileImageName)
+      } catch (err) {}
+    }
+
+    getAccount()
+  }, [])
 
   const isNicknameChanged = () => nicknameInput.value !== user.nickname
   const isProfileImageChanged = () => imageInput.imgSrc !== profileImageSrc
@@ -44,9 +59,11 @@ function AccountEditPage() {
     try {
       const response = await updateAccount(new AccountUpdateRequest(request))
       alert('회원정보가 수정되었습니다.')
+      setProfileImageName(response.profileImageName)
 
       const profileImageResponse = await getImage(response.profileImageName)
       setProfileImageSrc(profileImageResponse.imageSrc)
+      setUser((prev) => ({ ...prev, nickname: nicknameInput.value }))
     } catch (err) {}
   }
 

@@ -1,6 +1,7 @@
 import { toAccountResponse } from '@/api/dto/response/AccountResponse.js'
 import { toAccountUpdateResponse } from '@/api/dto/response/AccountUpdateResponse.js'
 import { toLoginResponse } from '@/api/dto/response/LoginResponse.js'
+import { toUserLoginCheckResponse } from '@/api/dto/response/UserLoginCheckResponse.js'
 import { toUserValidationResponse } from '@/api/dto/response/UserValidationResponse.js'
 import { ENDPOINTS } from '@/api/endpoint.js'
 import { apiDelete, apiFormData, apiGet, apiPatch, apiPost, HTTP_METHOD } from '@/api/http.js'
@@ -44,4 +45,9 @@ export const deleteAccount = async () => {
 
 export const logoutUser = async () => {
   await apiPost(ENDPOINTS.LOGOUT)
+}
+
+export const checkLoginUser = async () => {
+  const response = await apiGet(ENDPOINTS.CHECK_LOGIN)
+  return toUserLoginCheckResponse(response)
 }

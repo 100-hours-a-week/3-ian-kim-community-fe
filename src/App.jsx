@@ -13,41 +13,8 @@ import AuthLayout from '@/layout/AuthLayout/AuthLayout.jsx'
 import MainLayout from '@/layout/MainLayout/MainLayout.jsx'
 import PostLayout from '@/layout/PostLayout/PostLayout.jsx'
 import ProtectedRoute from '@/routes/protect/ProtectedRoute.jsx'
-import { useAuthStore } from '@/stores/authStore.js'
-import { useEffect } from 'react'
-import { getMyAccount } from '@/api/user.js'
 
 function App() {
-  const user = useAuthStore((state) => state.user)
-  const setUser = useAuthStore((state) => state.setUser)
-  const resetUser = useAuthStore((state) => state.resetUser)
-  const loading = useAuthStore((state) => state.loading)
-  const setLoading = useAuthStore((state) => state.setLoading)
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const response = await getMyAccount()
-        setUser(response)
-      } catch (errCode) {
-        resetUser()
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    if (!user) {
-      checkLogin()
-      return
-    }
-
-    setLoading(false)
-  }, [user, setUser])
-
-  if (loading) {
-    return
-  }
-
   return (
     <>
       <Routes>
