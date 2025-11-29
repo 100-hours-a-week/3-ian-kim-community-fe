@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
+import { getPost } from '@/api/post.js'
 import { useEffect, useState } from 'react'
-import { dummyPostDetails } from '@/assets/dummy/post.js'
 
 function PostSection({ postId }) {
   const navigate = useNavigate()
@@ -16,8 +16,12 @@ function PostSection({ postId }) {
   const [post, setPost] = useState({})
 
   useEffect(() => {
-    // TODO: 게시글 조회 API 연결
-    setPost(dummyPostDetails[Number(postId)])
+    const getPostDetail = async () => {
+      const response = await getPost(postId)
+      setPost(response)
+    }
+
+    getPostDetail()
   }, [])
 
   const handleDeletePost = () => {
@@ -43,10 +47,6 @@ function PostSection({ postId }) {
   }
 
   const modal = useModal(handleDeletePost)
-
-  if (!post) {
-    return
-  }
 
   return (
     <>
