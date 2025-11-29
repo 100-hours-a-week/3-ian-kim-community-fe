@@ -20,10 +20,6 @@ function HeaderProfile() {
   const setLoading = useAuthStore((state) => state.setLoading)
 
   useEffect(() => {
-    const handleOutsideClick = () => {
-      setIsDropdownOpen(false)
-    }
-
     const getProfileImage = async () => {
       const response = await getImage(profileImageName)
       setProfileImageSrc(response.imageSrc)
@@ -32,11 +28,17 @@ function HeaderProfile() {
     if (profileImageName) {
       getProfileImage()
     }
+  }, [profileImageName])
+
+  useEffect(() => {
+    const handleOutsideClick = () => {
+      setIsDropdownOpen(false)
+    }
 
     window.addEventListener('click', handleOutsideClick)
 
     return () => window.removeEventListener('click', handleOutsideClick)
-  }, [profileImageName])
+  }, [])
 
   const handleIconClick = (e) => {
     e.stopPropagation()
