@@ -9,16 +9,21 @@ import Modal from '@/components/modal/Modal.jsx'
 import useModal from '@/hooks/useModal.jsx'
 import { deletePost, getPost, togglePostLike } from '@/api/post.js'
 import { useEffect, useState } from 'react'
+import { getImage } from '@/api/image.js'
+import Thumbnail from '@/components/image/Thumbnail.jsx'
 
 function PostSection({ postId }) {
   const navigate = useNavigate()
 
   const [post, setPost] = useState({})
+  const [thumbnailSrc, setThumbnailSrc] = useState(null)
 
   useEffect(() => {
     const getPostDetail = async () => {
       const response = await getPost(postId)
       setPost(response)
+      const thumbnailSrcResponse = await getImage(response.imageName)
+      setThumbnailSrc(thumbnailSrcResponse.imageSrc)
     }
 
     getPostDetail()
@@ -44,7 +49,7 @@ function PostSection({ postId }) {
   }
 
   const handleEditClick = () => {
-    navigate(ROUTES.POST_EDIT, { state: { post } })
+    navigate(ROUTES.POST_EDIT, { state: { post, thumbnailSrc } })
   }
 
   const handleDeleteClick = () => {
@@ -56,9 +61,12 @@ function PostSection({ postId }) {
   return (
     <>
       <section className={styles['post-detail']}>
-        <h3 className={styles['post-title']}>{post.title}</h3>
-
         <div className={styles['post-header']}>
+          <h3 className={styles['post-title']}>{post.title}</h3>
+          <Thumbnail imgSrc={thumbnailSrc} size={'5rem'} />
+        </div>
+
+        <div className={styles['post-meta']}>
           <div className={styles['post-info']}>
             <ProfilePair nickname={post.authorNickname} nicknameSize={'1rem'} iconSize={'1.6rem'} />
 
