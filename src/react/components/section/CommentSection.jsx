@@ -5,15 +5,14 @@ import Modal from '@/components/modal/Modal.jsx'
 import styles from '@/components/section/CommentSection.module.css'
 import useInput from '@/hooks/useInput.jsx'
 import useModal from '@/hooks/useModal.jsx'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll.jsx'
+import { getComments } from '@/api/comment.js'
 
-function CommentSection() {
-  useEffect(() => {
-    handleGetNextComments()
-  }, [])
-
+function CommentSection({ postId }) {
   const [mode, setMode] = useState(COMMENT_MODE.CREATE)
+  const [pageNo, setPageNo] = useState(0)
+  const [hasNextPage, setHasNextPage] = useState(true)
   const [comments, setComments] = useState([])
 
   const targetComment = useRef(null)
@@ -21,11 +20,16 @@ function CommentSection() {
 
   const contentInput = useInput('')
 
-  const handleGetNextComments = () => {
-    // TODO: 댓글 목록 다음 페이지 조회 API 연결
+  const handleGetNextComments = async () => {
+    try {
+      const { content, page } = await getComments(postId, pageNo)
+      setPageNo((prev) => prev + 1)
+      setHasNextPage(page.number < page.totalPages)
+      setComments((prev) => [...prev, ...content])
+    } catch (err) {}
   }
 
-  const { targetRef, pageNoRef, updateHasNextPage } = useInfiniteScroll(handleGetNextComments)
+  const { target } = useInfiniteScroll({ hasNextPage, onIntersect: handleGetNextComments })
 
   const handleEditClick = (comment) => {
     targetComment.current = comment
@@ -75,6 +79,20 @@ function CommentSection() {
 
   const modal = useModal(handleDeleteComment)
 
+  const EmptyPage = () => {
+    return <h4>아직 작성된 답변이 없습니다.</h4>
+  }
+
+  const ListPage = () => {
+    return (
+      <ul className={styles['comment-list']}>
+        {comments.map((comment) => (
+          <CommentItem comment={comment} key={comment.commentId} onEditClick={handleEditClick} onDeleteClick={handleDeleteClick} />
+        ))}
+      </ul>
+    )
+  }
+
   return (
     <>
       <section className={styles['comment-section']}>
@@ -85,13 +103,10 @@ function CommentSection() {
 
         <CommentForm mode={mode} initContent={initContent.current} inputs={[contentInput]} onButtonClick={handleActionComment} />
 
-        <ul className={styles['comment-list']}>
-          {comments.map((comment) => (
-            <CommentItem comment={comment} key={comment.commentId} onEditClick={handleEditClick} onDeleteClick={handleDeleteClick} />
-          ))}
-        </ul>
+        {comments.length === 0 && EmptyPage()}
+        {comments.length > 0 && ListPage()}
 
-        <div ref={targetRef} />
+        <div ref={target} style={{ height: '1rem' }} />
       </section>
 
       <Modal title={'답변을 삭제하시겠습니까?'} content={'삭제한 내용은 복구할 수 없습니다.'} modal={modal} />
