@@ -23,12 +23,14 @@ function AccountEditPage() {
   const [user, setUser] = useState(null)
   const profileImageSrc = useAuthStore((state) => state.profileImageSrc)
   const setProfileImageSrc = useAuthStore((state) => state.setProfileImageSrc)
+  const resetUser = useAuthStore((state) => state.resetUser)
+  const setLoading = useAuthStore((state) => state.setLoading)
 
   useEffect(() => {
     const getAccount = async () => {
       try {
         const response = await getMyAccount()
-        setUser({ ...response })
+        setUser(response)
       } catch (err) {}
     }
 
@@ -48,7 +50,7 @@ function AccountEditPage() {
   const isProfileImageChanged = () => imageInput.imgSrc !== profileImageSrc
 
   const inputsValid = (() => {
-    return isProfileImageChanged || (checkInputsValid([nicknameInput]) && isNicknameChanged())
+    return isProfileImageChanged() || (checkInputsValid([nicknameInput]) && isNicknameChanged())
   })()
 
   const handleEditClick = async () => {
@@ -74,6 +76,8 @@ function AccountEditPage() {
     try {
       await deleteAccount()
       alert('회원탈퇴가 완료되었습니다.')
+      resetUser()
+      setLoading(true)
       navigate(ROUTES.LOGIN)
     } catch (err) {}
   }
