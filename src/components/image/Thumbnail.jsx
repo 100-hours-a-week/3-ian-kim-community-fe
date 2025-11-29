@@ -2,7 +2,7 @@ import { getImage } from '@/api/image.js'
 import styles from '@/components/image/Thumbnail.module.css'
 import { useEffect, useState } from 'react'
 
-function Thumbnail({ imageName, size }) {
+function Thumbnail({ imageName, size, onImageChange }) {
   const [imageSrc, setImageSrc] = useState(null)
 
   useEffect(() => {
@@ -10,6 +10,7 @@ function Thumbnail({ imageName, size }) {
       try {
         const response = await getImage(imageName)
         setImageSrc(response.imageSrc)
+        onImageChange(response.imageSrc)
       } catch (err) {}
     }
 

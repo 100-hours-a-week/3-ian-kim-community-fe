@@ -55,6 +55,10 @@ function PostSection({ postId }) {
     modal.openModal()
   }
 
+  const handleThumbnailChange = (newThumbnailSrc) => {
+    setThumbnailSrc(newThumbnailSrc)
+  }
+
   const modal = useModal(handleDeletePost)
 
   return (
@@ -62,7 +66,7 @@ function PostSection({ postId }) {
       <section className={styles['post-detail']}>
         <div className={styles['post-header']}>
           <h3 className={styles['post-title']}>{post.title}</h3>
-          <Thumbnail imageName={post.imageName} size={'5rem'} />
+          <Thumbnail imageName={post.imageName} size={'5rem'} onImageChange={handleThumbnailChange} />
         </div>
 
         <div className={styles['post-meta']}>
