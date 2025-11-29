@@ -12,8 +12,42 @@ import FormLayout from '@/layout/FormLayout/FormLayout.jsx'
 import AuthLayout from '@/layout/AuthLayout/AuthLayout.jsx'
 import MainLayout from '@/layout/MainLayout/MainLayout.jsx'
 import PostLayout from '@/layout/PostLayout/PostLayout.jsx'
+import ProtectedRoute from '@/routes/protect/ProtectedRoute.jsx'
+import { useAuthStore } from '@/stores/authStore.js'
+import { useEffect } from 'react'
+import { getMyAccount } from '@/api/user.js'
 
 function App() {
+  const user = useAuthStore((state) => state.user)
+  const setUser = useAuthStore((state) => state.setUser)
+  const resetUser = useAuthStore((state) => state.resetUser)
+  const loading = useAuthStore((state) => state.loading)
+  const setLoading = useAuthStore((state) => state.setLoading)
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const response = await getMyAccount()
+        setUser(response)
+      } catch (errCode) {
+        resetUser()
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (!user) {
+      checkLogin()
+      return
+    }
+
+    setLoading(false)
+  }, [user, setUser])
+
+  if (loading) {
+    return
+  }
+
   return (
     <>
       <Routes>
@@ -25,22 +59,28 @@ function App() {
         </Route>
 
         <Route element={<MainLayout />}>
-          <Route path='my'>
-            <Route path='edit' element={<FormLayout />}>
-              <Route path='account' element={<AccountEditPage />} />
-              <Route path='password' element={<PasswordEditPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='my'>
+              <Route path='edit' element={<FormLayout />}>
+                <Route path='account' element={<AccountEditPage />} />
+                <Route path='password' element={<PasswordEditPage />} />
+              </Route>
             </Route>
           </Route>
 
           <Route path='post'>
             <Route element={<PostLayout />}>
               <Route index element={<PostListPage />} />
-              <Route path=':postId' element={<PostPage />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path=':postId' element={<PostPage />} />
+              </Route>
             </Route>
 
-            <Route element={<FormLayout />}>
-              <Route path='create' element={<PostCreatePage />} />
-              <Route path='edit' element={<PostEditPage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route element={<FormLayout />}>
+                <Route path='create' element={<PostCreatePage />} />
+                <Route path='edit' element={<PostEditPage />} />
+              </Route>
             </Route>
           </Route>
         </Route>
