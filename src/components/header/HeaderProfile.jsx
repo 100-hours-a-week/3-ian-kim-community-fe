@@ -7,6 +7,7 @@ import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
 import { logoutUser } from '@/api/user.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { getImage } from '@/api/image.js'
+import { getErrorMessage } from '@/api/error.js'
 
 function HeaderProfile() {
   const navigate = useNavigate()
@@ -60,7 +61,9 @@ function HeaderProfile() {
       resetUser(null)
       setLoading(true)
       navigate(ROUTES.LOGIN)
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   return (

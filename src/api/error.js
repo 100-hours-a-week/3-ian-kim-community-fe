@@ -20,6 +20,9 @@ const ERROR_MESSAGE = Object.freeze({
   // 500 Internal Server Error
   5001: '서버에 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
   5002: '이미지 업로드에 실패했습니다',
+
+  // Network Error
+  6000: '네트워크 연결을 확인해주세요.',
 })
 
 export const getLoginRequiredMessage = () => {

@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/api/error.js'
 import { getImage } from '@/api/image.js'
 import styles from '@/components/image/Thumbnail.module.css'
 import { useEffect, useState } from 'react'
@@ -11,7 +12,9 @@ function Thumbnail({ imageName, size, onImageChange }) {
         const response = await getImage(imageName)
         setImageSrc(response.imageSrc)
         onImageChange(response.imageSrc)
-      } catch (err) {}
+      } catch (errCode) {
+        alert(getErrorMessage(errCode))
+      }
     }
 
     if (imageName) {

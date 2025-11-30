@@ -16,6 +16,7 @@ import { getImage } from '@/api/image.js'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/routes/routes.js'
 import { useEffect, useState } from 'react'
+import { getErrorMessage } from '@/api/error.js'
 
 function AccountEditPage() {
   const navigate = useNavigate()
@@ -37,7 +38,9 @@ function AccountEditPage() {
         setUser(response)
         nicknameInput.setValue(response.nickname)
         setProfileImageName(response.profileImageName)
-      } catch (err) {}
+      } catch (errCode) {
+        alert(getErrorMessage(errCode))
+      }
     }
 
     getAccount()
@@ -60,11 +63,15 @@ function AccountEditPage() {
       const response = await updateAccount(new AccountUpdateRequest(request))
       alert('회원정보가 수정되었습니다.')
       setProfileImageName(response.profileImageName)
-
-      const profileImageResponse = await getImage(response.profileImageName)
-      setProfileImageSrc(profileImageResponse.imageSrc)
       setUser((prev) => ({ ...prev, nickname: nicknameInput.value }))
-    } catch (err) {}
+
+      if (response.profileImageName) {
+        const profileImageResponse = await getImage(response.profileImageName)
+        setProfileImageSrc(profileImageResponse.imageSrc)
+      }
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   const handleDeleteClick = () => {
@@ -78,7 +85,9 @@ function AccountEditPage() {
       resetUser()
       setLoading(true)
       navigate(ROUTES.LOGIN)
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   const modal = useModal(handleAcceptClick)

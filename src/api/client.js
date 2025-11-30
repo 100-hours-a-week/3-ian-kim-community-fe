@@ -1,5 +1,4 @@
 import { toApiErrorResponse } from '@/api/dto/response/ApiErrorResponse.js'
-import { getErrorMessage } from '@/api/error.js'
 import { COOKIE_NAME, HEADER_NAME } from '@/common/constants/name.js'
 import { getCookie } from '@/utils/cookie.js'
 import axios from 'axios'
@@ -36,17 +35,10 @@ apiClient.interceptors.response.use(
   (error) => {
     if (!error.response) {
       // 네트워크 에러
-      alert('네트워크 연결을 확인해주세요.')
-      return Promise.reject(code)
+      return Promise.reject(6000)
     }
 
-    const status = error.response.status
     const { code } = toApiErrorResponse(error.response.data)
-
-    if (status === 403 || status === 404 || status === 500) {
-      alert(getErrorMessage(code))
-    }
-
     return Promise.reject(code)
   },
 )

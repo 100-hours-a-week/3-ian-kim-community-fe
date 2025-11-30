@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/api/error.js'
 import { getPosts } from '@/api/post.js'
 import Button from '@/components/button/Button.jsx'
 import PostCard from '@/components/card/PostCard.jsx'
@@ -28,7 +29,9 @@ function PostListPage() {
       setPageNo((prev) => prev + 1)
       setHasNextPage(page.number < page.totalPages)
       setPosts((prev) => [...prev, ...content])
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }, [pageNo])
 
   const { target } = useInfiniteScroll({ hasNextPage, onIntersect: handleGetNextPosts })
