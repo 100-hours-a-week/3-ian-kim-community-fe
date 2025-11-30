@@ -1,0 +1,7 @@
+.profile-pair {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0;
+}

@@ -1,0 +1,113 @@
+import styles from '@/components/section/PostSection.module.css'
+import { formatToCompactNumber } from '@/utils/format.js'
+import InfoTextPair from '@/components/text/InfoTextPair.jsx'
+import ProfilePair from '@/components/profile/ProfilePair.jsx'
+import ActionButtons from '@/components/button/ActionButtons.jsx'
+import { useNavigate } from 'react-router'
+import { ROUTES } from '@/routes/routes.js'
+import Modal from '@/components/modal/Modal.jsx'
+import useModal from '@/hooks/useModal.jsx'
+import { deletePost, getPost, togglePostLike } from '@/api/post.js'
+import { useEffect, useState } from 'react'
+import Thumbnail from '@/components/image/Thumbnail.jsx'
+import { useAuthStore } from '@/stores/authStore.js'
+import { getErrorMessage } from '@/api/error.js'
+
+function PostSection({ postId }) {
+  const navigate = useNavigate()
+
+  const [post, setPost] = useState({})
+  const [thumbnailSrc, setThumbnailSrc] = useState(null)
+
+  const userId = useAuthStore((state) => state.userId)
+
+  useEffect(() => {
+    const getPostDetail = async () => {
+      try {
+        const response = await getPost(postId)
+        setPost(response)
+      } catch (errCode) {
+        alert(getErrorMessage(errCode))
+      }
+    }
+
+    getPostDetail()
+  }, [])
+
+  const handleDeletePost = async () => {
+    try {
+      await deletePost(post.postId)
+      alert('질문이 삭제되었습니다.')
+      navigate(ROUTES.POST_LIST)
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
+  }
+
+  const handleLikeClick = async () => {
+    try {
+      await togglePostLike(post.postId)
+      setPost((prev) => {
+        const liked = !prev.liked
+        const likeCount = liked ? prev.likeCount + 1 : prev.likeCount - 1
+        return { ...prev, liked, likeCount }
+      })
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
+  }
+
+  const handleEditClick = () => {
+    navigate(ROUTES.POST_EDIT, { state: { post, thumbnailSrc } })
+  }
+
+  const handleDeleteClick = () => {
+    modal.openModal()
+  }
+
+  const handleThumbnailChange = (newThumbnailSrc) => {
+    setThumbnailSrc(newThumbnailSrc)
+  }
+
+  const modal = useModal(handleDeletePost)
+
+  return (
+    <>
+      <section className={styles['post-detail']}>
+        <div className={styles['post-header']}>
+          <h3 className={styles['post-title']}>{post.title}</h3>
+          <Thumbnail imageName={post.imageName} size={'5rem'} onImageChange={handleThumbnailChange} />
+        </div>
+
+        <div className={styles['post-meta']}>
+          <div className={styles['post-info']}>
+            <ProfilePair imageName={post.authorProfileImageName} nickname={post.authorNickname} nicknameSize={'1rem'} iconSize={'1.6rem'} isDeletedUser={post.authorId === null} />
+
+            <div className={styles['post-detail-info']}>
+              <InfoTextPair name={'작성일'} value={post.createdDate} />
+              <InfoTextPair name={'수정일'} value={post.updatedDate} />
+              <InfoTextPair name={'조회수'} value={formatToCompactNumber(post.viewCount)} />
+            </div>
+          </div>
+
+          {userId === post.authorId && <ActionButtons onEditClick={handleEditClick} onDeleteClick={handleDeleteClick} />}
+        </div>
+
+        <div className={styles['post-content']}>
+          <p>{post.content}</p>
+
+          <div className={styles['post-stats']}>
+            <button className={`${styles['post-like-btn']} border border-bold ${post.liked ? styles['liked'] : ''}`} onClick={handleLikeClick}>
+              <span className={styles['thumbs-emoji']}>👍</span>
+              <span className={styles['like-cnt']}>{formatToCompactNumber(post.likeCount)}</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <Modal title={'질문을 삭제하시겠습니까?'} content={'삭제한 내용은 복구할 수 없습니다.'} modal={modal} />
+    </>
+  )
+}
+
+export default PostSection
