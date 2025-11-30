@@ -1,8 +1,11 @@
 import ActionButtons from '@/components/button/ActionButtons.jsx'
 import styles from '@/components/card/CommentItem.module.css'
 import ProfilePair from '@/components/profile/ProfilePair.jsx'
+import { useAuthStore } from '@/stores/authStore.js'
 
 function CommentItem({ comment, onEditClick, onDeleteClick }) {
+  const userId = useAuthStore((state) => state.userId)
+
   return (
     <>
       <li className={styles['comment-item']}>
@@ -12,7 +15,7 @@ function CommentItem({ comment, onEditClick, onDeleteClick }) {
             <span>{comment.createdDate}</span>
           </div>
 
-          <ActionButtons onEditClick={() => onEditClick(comment)} onDeleteClick={() => onDeleteClick(comment)} padding={'0.5rem 1rem'} />
+          {userId === comment.authorId && <ActionButtons onEditClick={() => onEditClick(comment)} onDeleteClick={() => onDeleteClick(comment)} padding={'0.5rem 1rem'} />}
         </div>
 
         <p className={styles['comment-content']}>{comment.content}</p>

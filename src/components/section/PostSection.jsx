@@ -10,12 +10,15 @@ import useModal from '@/hooks/useModal.jsx'
 import { deletePost, getPost, togglePostLike } from '@/api/post.js'
 import { useEffect, useState } from 'react'
 import Thumbnail from '@/components/image/Thumbnail.jsx'
+import { useAuthStore } from '@/stores/authStore.js'
 
 function PostSection({ postId }) {
   const navigate = useNavigate()
 
   const [post, setPost] = useState({})
   const [thumbnailSrc, setThumbnailSrc] = useState(null)
+
+  const userId = useAuthStore((state) => state.userId)
 
   useEffect(() => {
     const getPostDetail = async () => {
@@ -80,7 +83,7 @@ function PostSection({ postId }) {
             </div>
           </div>
 
-          <ActionButtons onEditClick={handleEditClick} onDeleteClick={handleDeleteClick} />
+          {userId === post.authorId && <ActionButtons onEditClick={handleEditClick} onDeleteClick={handleDeleteClick} />}
         </div>
 
         <div className={styles['post-content']}>
