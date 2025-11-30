@@ -1,4 +1,5 @@
 import PostCreateRequest from '@/api/dto/request/PostCreateRequest.js'
+import { getErrorMessage } from '@/api/error.js'
 import { createPost } from '@/api/post.js'
 import PostForm from '@/components/form/PostForm.jsx'
 import useImageUpload from '@/hooks/useImageUpload.jsx'
@@ -21,7 +22,9 @@ function PostCreatePage() {
       await createPost(new PostCreateRequest({ title: titleInput.value, content: contentInput.value, image: imageInput.image }))
       alert('질문 작성이 완료되었습니다.')
       navigate(ROUTES.POST_LIST)
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   return (

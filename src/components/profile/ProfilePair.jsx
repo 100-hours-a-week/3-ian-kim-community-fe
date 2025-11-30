@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/api/error.js'
 import { getImage } from '@/api/image.js'
 import ProfileIcon from '@/components/profile/ProfileIcon.jsx'
 import styles from '@/components/profile/ProfilePair.module.css'
@@ -11,7 +12,9 @@ function ProfilePair({ imageName, nickname, nicknameSize, iconSize, isDeletedUse
       try {
         const response = await getImage(imageName)
         setImageSrc(response.imageSrc)
-      } catch (err) {}
+      } catch (errCode) {
+        alert(getErrorMessage(errCode))
+      }
     }
 
     if (imageName) {

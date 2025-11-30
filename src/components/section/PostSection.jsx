@@ -11,6 +11,7 @@ import { deletePost, getPost, togglePostLike } from '@/api/post.js'
 import { useEffect, useState } from 'react'
 import Thumbnail from '@/components/image/Thumbnail.jsx'
 import { useAuthStore } from '@/stores/authStore.js'
+import { getErrorMessage } from '@/api/error.js'
 
 function PostSection({ postId }) {
   const navigate = useNavigate()
@@ -25,7 +26,9 @@ function PostSection({ postId }) {
       try {
         const response = await getPost(postId)
         setPost(response)
-      } catch (err) {}
+      } catch (errCode) {
+        alert(getErrorMessage(errCode))
+      }
     }
 
     getPostDetail()
@@ -36,7 +39,9 @@ function PostSection({ postId }) {
       await deletePost(post.postId)
       alert('질문이 삭제되었습니다.')
       navigate(ROUTES.POST_LIST)
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   const handleLikeClick = async () => {
@@ -47,7 +52,9 @@ function PostSection({ postId }) {
         const likeCount = liked ? prev.likeCount + 1 : prev.likeCount - 1
         return { ...prev, liked, likeCount }
       })
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   const handleEditClick = () => {

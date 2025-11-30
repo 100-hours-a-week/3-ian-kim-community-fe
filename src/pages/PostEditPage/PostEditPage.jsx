@@ -1,4 +1,5 @@
 import PostUpdateRequest from '@/api/dto/request/PostUpdateRequest.js'
+import { getErrorMessage } from '@/api/error.js'
 import { updatePost } from '@/api/post.js'
 import PostForm from '@/components/form/PostForm.jsx'
 import useImageUpload from '@/hooks/useImageUpload.jsx'
@@ -47,7 +48,9 @@ function PostEditPage() {
       await updatePost(post.postId, new PostUpdateRequest(request))
       alert('수정이 완료되었습니다.')
       navigate(ROUTES.POST(post.postId))
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   return (

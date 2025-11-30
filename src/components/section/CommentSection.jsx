@@ -10,6 +10,7 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll.jsx'
 import { createComment, deleteComment, getComments, updateComment } from '@/api/comment.js'
 import CommentCreateRequest from '@/api/dto/request/CommentCreateRequest.js'
 import CommentUpdateRequest from '@/api/dto/request/CommentUpdateRequest.js'
+import { getErrorMessage } from '@/api/error.js'
 
 function CommentSection({ postId }) {
   const [mode, setMode] = useState(COMMENT_MODE.CREATE)
@@ -28,7 +29,9 @@ function CommentSection({ postId }) {
       setPageNo((prev) => prev + 1)
       setHasNextPage(page.number < page.totalPages)
       setComments((prev) => [...prev, ...content])
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }, [pageNo])
 
   const { target } = useInfiniteScroll({ hasNextPage, onIntersect: handleGetNextComments })
@@ -65,7 +68,9 @@ function CommentSection({ postId }) {
       const response = await createComment(postId, new CommentCreateRequest({ content }))
       alert('답변이 작성되었습니다.')
       setComments((prev) => [response, ...prev])
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   const handleEditComment = async (comment, content) => {
@@ -73,7 +78,9 @@ function CommentSection({ postId }) {
       await updateComment(comment.commentId, new CommentUpdateRequest({ content }))
       alert('답변이 수정되었습니다.')
       setComments((prev) => prev.map((c) => (c.commentId === comment.commentId ? { ...c, content } : c)))
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   const handleDeleteComment = async () => {
@@ -86,7 +93,9 @@ function CommentSection({ postId }) {
       alert('답변이 삭제되었습니다.')
       setComments((prev) => prev.filter((c) => c.commentId !== targetComment.current.commentId))
       modal.onCancel()
-    } catch (err) {}
+    } catch (errCode) {
+      alert(getErrorMessage(errCode))
+    }
   }
 
   const modal = useModal(handleDeleteComment)
